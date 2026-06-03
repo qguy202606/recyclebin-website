@@ -4,8 +4,8 @@
     "date": "2026-04-26",
     "title": "Drive to Recycle Saturday - Irvine",
     "desc": "City of Irvine community recycling event. Bring recyclable materials for a chance to win cash and prizes for IUSD schools.",
-    "location": "Irvine, CA (check City of Irvine website for exact location)",
-    "body": "High-energy, family-friendly event. The community collects and brings recyclable materials. Prizes benefit Irvine Unified School District schools.",
+    "location": "Irvine, CA",
+    "body": "High-energy, family-friendly event. Community collects and brings recyclable materials. Prizes benefit Irvine Unified School District schools.",
     "join_url": "https://cityofirvine.org/news-media/news-article/take-part-drive-recycle-saturday-april-26"
   },
   {
@@ -13,17 +13,44 @@
     "date": "2026-04-18",
     "title": "OCWR Free Community Compost Giveaway",
     "desc": "Free compost distribution for Orange County residents in celebration of Earth Day.",
-    "location": "Orange County (check oclandfills.com for exact location)",
-    "body": "Free compost available for OC residents. Hosted by OC Waste & Recycling in partnership with community organizations.",
+    "location": "Orange County, CA",
+    "body": "Free compost available for OC residents. Hosted by OC Waste & Recycling.",
     "join_url": "https://oclandfills.com/news/ocwr-hosts-free-community-compost-giveaway-april-18"
   },
   {
-    "id": "ocwr-hhw-huntington-beach",
-    "date": "2026-06-06",
+    "id": "hb-veterans-cleanup-july-12",
+    "date": "2026-07-12",
     "title": "Huntington Beach Cleanup with Veterans!",
     "desc": "Open to anyone. Join veterans and volunteers for a 2.5 hour community cleanup on Huntington Beach.",
     "location": "405 Pacific Coast Hwy, Huntington Beach, CA 92648",
-    "body": "Doors open at 6:45 AM, cleanup from 9:00 to 11:30 AM. Gloves and bags provided. Optional 21+ veteran social afterward.",
+    "body": "Doors open at 6:45 AM, cleanup 9:00 to 11:30 AM. Gloves and bags provided. Optional 21+ veteran social afterward.",
     "join_url": "https://www.eventbrite.com/e/huntington-beach-cleanup-with-veterans-tickets-1989396031082"
+  },
+  {
+    "id": "lb-72nd-place-cleanup-june-6",
+    "date": "2026-06-06",
+    "title": "LBC Beach Cleanup",
+    "desc": "Community cleanup at 72nd Place in Long Beach. Food and refreshments provided.",
+    "location": "72nd Place, Long Beach, CA 90803",
+    "body": "9:00 AM - 10:00 AM. Gloves and trash bags provided. Easy parking.",
+    "join_url": "https://www.eventbrite.com/e/lbc-beach-cleanup-tickets-1990519285767"
+  },
+  {
+    "id": "south-gate-tire-recycling-aug-22",
+    "date": "2026-08-22",
+    "title": "Tire Recycling Event (South Gate Park)",
+    "desc": "Drop off old tires at South Gate Park. Family-friendly, 6 hour event.",
+    "location": "4855 Tweedy Ave, South Gate, CA 90280",
+    "body": "9:00 AM - 3:00 PM. Drop off worn-out tires safely and help keep the environment clean.",
+    "join_url": "https://www.eventbrite.com/e/tire-recycling-event-south-gate-park-tickets-1982304779959"
+  },
+  {
+    "id": "chi-logan-square-cleanup",
+    "date": "2027-03-21",
+    "title": "Logan Square Cleanup with Cleanup Club!",
+    "desc": "Annual neighborhood cleanup and recycling drive in Logan Square, Chicago.",
+    "location": "Katherine Anne Confections, Chicago, IL",
+    "body": "10:00 AM - 1:00 PM. Bring gloves and enthusiasm. Bags and sanitizer provided.",
+    "join_url": "https://www.eventbrite.com/e/2026-kickoff-logan-square-cleanup-with-cleanup-club-tickets-1983728209475"
   }
 ]
