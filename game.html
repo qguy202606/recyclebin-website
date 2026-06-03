@@ -1,0 +1,205 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<link rel="icon" href="/favicon.svg">
+<title>RecycleBin.com - Recycling Challenge Game</title>
+<style>
+  * { margin: 0; padding: 0; box-sizing: border-box; }
+  body { font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', 'Helvetica Neue', Arial, sans-serif; line-height: 1.6; color: #fff; background: #0b0b0b; }
+  .container { max-width: 900px; margin: 0 auto; padding: 0 20px; }
+  header { background: #0b0b0b; border-bottom: 1px solid #222; position: sticky; top: 0; z-index: 100; }
+  nav { display: flex; justify-content: space-between; align-items: center; padding: 20px 0; }
+  .logo { font-size: 24px; font-weight: 700; color: #fff; text-decoration: none; display: flex; align-items: center; gap: 8px; }
+  .logo span { background: #0f9d58; color: #fff; padding: 4px 10px; border-radius: 8px; font-size: 20px; }
+  .nav-right { display: flex; align-items: center; gap: 20px; }
+  .nav-links { display: flex; gap: 28px; list-style: none; }
+  .nav-links a { text-decoration: none; color: #c9c9c9; font-weight: 500; transition: color 0.2s; }
+  .nav-links a:hover { color: #0f9d58; }
+  .lang-toggle { background: #1a1a1a; border: 1px solid #333; color: #fff; padding: 6px 12px; border-radius: 8px; cursor: pointer; font-size: 13px; font-weight: 600; }
+  .page-header { padding: 80px 0 40px; text-align: center; }
+  .page-header h1 { font-size: clamp(30px, 4vw, 44px); font-weight: 800; margin-bottom: 16px; }
+  .page-header p { color: #9a9a9a; font-size: 18px; max-width: 640px; margin: 0 auto; }
+
+  .game-panel { background: #111; border: 1px solid #1f1f1f; border-radius: 20px; padding: 28px; margin-top: 30px; }
+  .game-panel h2 { font-size: 20px; margin-bottom: 14px; }
+  .game-panel .hint { color: #9a9a9a; font-size: 14px; margin-top: 12px; }
+  .options { display: grid; grid-template-columns: 1fr 1fr; gap: 14px; margin-top: 22px; }
+  .option-btn { padding: 16px; background: #141414; color: #f3f3f3; border: 1px solid #2e2e2e; border-radius: 12px; font-size: 15px; cursor: pointer; text-align: left; transition: transform .1s, border-color .2s; }
+  .option-btn:hover:not(:disabled) { border-color: #0f9d58; transform: translateY(-2px); }
+  .option-btn:disabled { opacity: .7; cursor: default; }
+  .option-btn.correct { border-color: #0f9d58; background: #11211a; }
+  .option-btn.wrong { border-color: #a63d2f; background: #1f1111; }
+
+  .stats { display: flex; justify-content: space-between; align-items: center; margin-bottom: 18px; }
+  .stat-pill { background: #141414; border: 1px solid #2e2e2e; color: #e8e8e8; padding: 8px 14px; border-radius: 999px; font-size: 14px; font-weight: 600; }
+  .progress-track { height: 10px; background: #1a1a1a; border-radius: 999px; overflow: hidden; margin-top: 18px; }
+  .progress-bar { height: 100%; background: #0f9d58; width: 0%; transition: width .4s; }
+
+  .end-card { text-align: center; }
+  .end-card .score { font-size: 52px; font-weight: 800; color: #fff; margin: 10px 0; }
+  .end-card .msg { color: #c8c8c8; font-size: 17px; }
+  footer { background: #050505; padding: 40px 0; border-top: 1px solid #141414; text-align: center; color: #555; font-size: 13px; margin-top: 80px; }
+</style>
+</head>
+<body>
+<header>
+  <div class="container">
+    <nav>
+      <a href="index.html" class="logo"><span>Recycle</span> Bin.com</a>
+      <div class="nav-right">
+        <ul class="nav-links">
+          <li><a href="index.html">Home</a></li>
+          <li><a href="guides.html">Guides</a></li>
+          <li><a href="centers.html">Centers</a></li>
+          <li><a href="events.html">Events</a></li>
+          <li><a href="howto.html">How-To</a></li>
+        </ul>
+        <button id="langToggle" class="lang-toggle" type="button">EN</button>
+      </div>
+    </nav>
+  </div>
+</header>
+<main>
+  <section class="page-header">
+    <div class="container">
+      <h1>Recycling Challenge</h1>
+      <p>Can you sort these items correctly? Beat your score and become a recycling pro.</p>
+    </div>
+  </section>
+  <section>
+    <div class="container">
+      <div class="game-panel">
+        <div class="stats">
+          <div class="stat-pill">Score: <span id="score">0</span></div>
+          <div class="stat-pill">Question: <span id="qidx">1</span> / <span id="qtotal">0</span></div>
+        </div>
+        <div class="progress-track"><div id="prog" class="progress-bar"></div></div>
+
+        <div id="play-area">
+          <h2 id="qtext" style="margin-top:22px;">Loading question…</h2>
+          <div id="options" class="options"></div>
+          <p id="hint" class="hint"></p>
+        </div>
+
+        <div id="end-area" class="end-card" style="display:none;">
+          <h2>Game complete</h2>
+          <div id="final-score" class="score">0</div>
+          <p id="final-msg" class="msg"></p>
+          <button id="replay" class="replay-btn" style="max-width:260px;margin:18px auto 0;text-align:center;">Play again</button>
+        </div>
+      </div>
+    </div>
+  </section>
+</main>
+<footer>
+  <div class="container" id="site-footer"></div>
+</footer>
+<script src="/js/site.js"></script>
+<script>
+(function(){
+  RecycleBin.initLayout({active: '/howto.html'});
+  RecycleBin.initI18n();
+
+  var QUESTIONS = [
+    {q:'Where does a rinsed plastic water bottle go?', options:['Trash','Recycling','Compost','E-waste'], answer:1, explain:'PET bottles are widely accepted in curbside recycling.'},
+    {q:'A greasy pizza box belongs in:', options:['Recycling','Compost','Trash','Donate'], answer:2, explain:'Soiled paper contaminates recycling. Tear off the clean top to recycle.'},
+    {q:'Used AA batteries should be taken to:', options:['Curbside bin','HHW facility / battery drop-off','Garden','Recycling'], answer:1, explain:'Batteries are hazardous at scale and need special handling.'},
+    {q:'A clean glass wine bottle goes to:', options:['Trash','Recycling','Compost','Donate'], answer:1, explain:'Glass is infinitely recyclable when clean and sorted.'},
+    {q:'Coffee grounds are best:', options:['Recycled','Composted','Trashed','Burned'], answer:1, explain:'Organics belong in compost, not recycling.'},
+    {q:'Old smartphones belong in:', options:['Trash','Recycling bin','E-waste drop-off','Compost'], answer:2, explain:'E-waste drop-off ensures safe material recovery and data-safe handling.'},
+    {q:'A flattened cardboard box should be:', options:['Trashed','Recycled if clean and dry','Composted','Burned'], answer:1, explain:'Clean, dry cardboard is high-value recycling.'},
+    {q:'Plastic grocery bags go to:', options:['Curbside recycling','Grocery store drop-off','Trash always','Compost'], answer:1, explain:'Thin films jam sorting machines; return them to store bins.'},
+    {q:'Leftover food should go to:', options:['Recycling','Compost or trash','Donate if safe','Any bin'], answer:1, explain:'Food scraps belong in compost where available.'},
+    {q:'Which bin accepts clean aluminum cans?', options:['Trash','Recycling','Compost','Hazardous'], answer:1, explain:'Aluminum cans are high-value, endlessly recyclable metal.'}
+  ];
+
+  var scoreEl = document.getElementById('score');
+  var qidxEl = document.getElementById('qidx');
+  var qtotalEl = document.getElementById('qtotal');
+  var progEl = document.getElementById('prog');
+  var qtext = document.getElementById('qtext');
+  var optionsEl = document.getElementById('options');
+  var hint = document.getElementById('hint');
+  var playArea = document.getElementById('play-area');
+  var endArea = document.getElementById('end-area');
+  var finalScore = document.getElementById('final-score');
+  var finalMsg = document.getElementById('final-msg');
+
+  var order = [];
+  var idx = 0;
+  var score = 0;
+
+  function shuffle(arr){ var a=arr.slice(); for(var i=a.length-1;i>0;i--){var j=Math.floor(Math.random()*(i+1));var t=a[i];a[i]=a[j];a[j]=t;} return a; }
+
+  function start(){
+    order = shuffle(QUESTIONS);
+    idx = 0;
+    score = 0;
+    scoreEl.textContent = '0';
+    qtotalEl.textContent = order.length;
+    endArea.style.display = 'none';
+    playArea.style.display = 'block';
+    next();
+  }
+
+  function next(){
+    if(idx >= order.length){ finish(); return; }
+    var q = order[idx];
+    qidxEl.textContent = idx + 1;
+    progEl.style.width = ((idx) / order.length * 100) + '%';
+    qtext.textContent = q.q;
+    optionsEl.innerHTML = '';
+    hint.textContent = '';
+
+    var buttons = q.options.map(function(text, i){
+      var btn = document.createElement('button');
+      btn.className = 'option-btn';
+      btn.textContent = text;
+      btn.onclick = function(){ choose(i, btn); };
+      return btn;
+    });
+    buttons.forEach(function(b){ optionsEl.appendChild(b); });
+  }
+
+  function choose(selected, btn){
+    var q = order[idx];
+    var all = optionsEl.querySelectorAll('.option-btn');
+    for(var i=0;i<all.length;i++) all[i].disabled = true;
+
+    if(selected === q.answer){
+      btn.classList.add('correct');
+      score += 10;
+      scoreEl.textContent = score;
+      hint.style.color = '#6dd49a';
+    } else {
+      btn.classList.add('wrong');
+      all[q.answer].classList.add('correct');
+      hint.style.color = '#d49a6d';
+    }
+    hint.textContent = q.explain;
+    idx++;
+    setTimeout(next, 900);
+  }
+
+  function finish(){
+    playArea.style.display = 'none';
+    endArea.style.display = 'block';
+    finalScore.textContent = score + ' / ' + (order.length * 10);
+    if(score >= order.length * 8){
+      finalMsg.textContent = 'Impressive. You’re basically a recycling master.';
+    } else if(score >= order.length * 5){
+      finalMsg.textContent = 'Solid effort — you know the basics well.';
+    } else {
+      finalMsg.textContent = 'Nice try. Try again and learn from the explanations.';
+    }
+    progEl.style.width = '100%';
+  }
+
+  document.getElementById('replay').addEventListener('click', start);
+  start();
+})();
+</script>
+</body>
+</html>

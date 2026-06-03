@@ -5,11 +5,9 @@
 (function(){
   'use strict';
 
-  const prefix = '[recyclebin]';
+  var prefix = '[recyclebin]';
 
-  function warn(){ console.warn.apply(console, [prefix].concat([].slice.call(arguments))); }
-
-  const getNavHTML = function(active){
+  function getNavHTML(active){
     var links = [
       {href:'/index.html', key:'nav_home', label:'Home'},
       {href:'/guides.html', key:'nav_guides', label:'Guides'},
@@ -23,7 +21,7 @@
       else if(active.indexOf(l.href.replace(/\.html$/,'')) === 0 && l.href !== '/index.html') cls = 'active';
       return '<li><a href="'+l.href+'" class="'+cls+'" data-i18n="'+l.key+'">'+l.label+'</a></li>';
     }).join('\n        ');
-  };
+  }
 
   function initLayout(opts){
     opts = opts || {};
@@ -33,7 +31,7 @@
     if(header){
       header.innerHTML = '<nav>'
         + getNavHTML(active)
-        + '</div></nav>';
+        + '</nav>';
     }
     if(footer){
       footer.innerHTML = '<p>&copy; 2025 RecycleBin.com. All rights reserved.</p>';
@@ -133,9 +131,43 @@
     });
   }
 
+  function initSearch(inputId, panelId, indexUrl){
+    if(!inputId || !panelId) return;
+    var input = document.getElementById(inputId);
+    var panel = document.getElementById(panelId);
+    if(!input || !panel) return;
+    function hide(){ panel.style.display='none'; panel.innerHTML=''; }
+    function show(){ panel.style.display='block'; }
+    function esc(s){ return (s||'').replace(/&/g,'&amp;').replace(/</g,'&lt;').replace(/>/g,'&gt;'); }
+    fetch(indexUrl, {cache:'no-store'})
+      .then(function(r){ if(!r.ok) throw new Error('fail'); return r.json(); })
+      .then(function(index){ window.__searchIndex = index || []; })
+      .catch(function(){ window.__searchIndex = []; });
+    input.addEventListener('input', function(){
+      var q = (input.value||'').trim().toLowerCase();
+      if(!q){ hide(); return; }
+      var rows = (window.__searchIndex || []).filter(function(x){
+        return (x.title||'').toLowerCase().indexOf(q)!==-1 || (x.desc||'').toLowerCase().indexOf(q)!==-1;
+      });
+      if(!rows.length){ panel.innerHTML='<div style="padding:14px 16px;color:#b0b0b0;font-size:14px;">No results</div>'; show(); return; }
+      panel.innerHTML = rows.slice(0,7).map(function(r){
+        return '<a href="'+esc(r.url)+'" style="display:flex;flex-direction:column;gap:2px;padding:12px 14px;text-decoration:none;color:#f3f3f3;border-bottom:1px solid #1c1c1c;">' +
+          '<div style="font-weight:600;font-size:14px;">'+esc(r.title)+'</div>' +
+          '<div style="font-size:13px;color:#a0a0a0;">'+esc(r.desc||'')+'</div>' +
+        '</a>';
+      }).join('');
+      show();
+    });
+    document.addEventListener('click', function(e){
+      if(!panel.contains(e.target) && e.target !== input) hide();
+    });
+    document.addEventListener('keydown', function(e){
+      if(e.key === 'Escape') hide();
+    });
+  }
+
   function navigateTo(url){ window.location.href = url; }
 
-  // expose
   window.RecycleBin = {
     initLayout: initLayout,
     initI18n: initI18n,
@@ -146,6 +178,7 @@
     renderStateOptions: renderStateOptions,
     setEventStatus: setEventStatus,
     initSharedEvents: initSharedEvents,
+    initSearch: initSearch,
     navigateTo: navigateTo
   };
 })();
