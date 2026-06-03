@@ -160,6 +160,7 @@
       (pos) => {
         const lat=pos.coords.latitude, lng=pos.coords.longitude;
         applyLocation(lat, lng, null, null);
+        renderCenters('nearby', lat, lng);
       },
       () => { renderAfterIP(); },
       { enableHighAccuracy: true, timeout: 8000 }
@@ -183,7 +184,8 @@
 
   function applyLocation(lat, lng, city, region){
     const locText = document.getElementById('location-text');
-    if (locText) locText.innerHTML = `<strong>${city}${region?', '+region:''}${lat!=null ? ' ('+lat.toFixed(2)+', '+lng.toFixed(2)+')' : ''}</strong> <span>— approximate location</span>`;
+    const cityStr = (city && city.trim()) ? city : 'Detected area';
+    if (locText) locText.innerHTML = `<strong>${cityStr}${region ? ', '+region : ''}${lat!=null ? ' ('+lat.toFixed(2)+', '+lng.toFixed(2)+')' : ''}</strong> <span>— approximate location</span>`;
     const country = (region || '').toUpperCase();
     if (country === 'ARIZONA' || country === 'US-AZ') {
       currentCenters = centersByRegion['US-AZ'];
