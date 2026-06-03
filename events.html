@@ -111,6 +111,7 @@
           '<div class="date">' + ev.date + '</div>' +
           '<h3>' + ev.title + '</h3>' +
           '<p>' + ev.desc + '</p>' +
+          (ev.location ? '<p class="small" style="color:#9a9a9a;font-size:13px;">📍 ' + ev.location + '</p>' : '') +
           '<a class="btn" href="event-detail.html?id=' + ev.id + '">Details</a>' +
         '</div>';
       }).join('');
