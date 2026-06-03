@@ -1,0 +1,377 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>RecycleBin.com</title>
+<style>
+  * { margin: 0; padding: 0; box-sizing: border-box; }
+  body { font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', 'Helvetica Neue', Arial, sans-serif; line-height: 1.6; color: #fff; background: #0b0b0b; }
+  .container { max-width: 1200px; margin: 0 auto; padding: 0 20px; }
+
+  /* Header */
+  header { background: #0b0b0b; border-bottom: 1px solid #222; position: sticky; top: 0; z-index: 100; backdrop-filter: blur(8px); }
+  nav { display: flex; justify-content: space-between; align-items: center; padding: 20px 0; }
+  .logo { font-size: 24px; font-weight: 700; color: #fff; text-decoration: none; display: flex; align-items: center; gap: 8px; }
+  .logo span { background: #0f9d58; color: #fff; padding: 4px 10px; border-radius: 8px; font-size: 20px; }
+  .nav-right { display: flex; align-items: center; gap: 20px; }
+  .nav-links { display: flex; gap: 28px; list-style: none; }
+  .nav-links a { text-decoration: none; color: #c9c9c9; font-weight: 500; transition: color 0.2s; }
+  .nav-links a:hover { color: #0f9d58; }
+  .lang-toggle { background: #1a1a1a; border: 1px solid #333; color: #fff; padding: 6px 12px; border-radius: 8px; cursor: pointer; font-size: 13px; font-weight: 600; transition: all 0.2s; }
+  .lang-toggle:hover { border-color: #0f9d58; color: #0f9d58; }
+
+  /* Hero */
+  .hero { padding: 120px 0 100px; text-align: center; background: radial-gradient(circle at center, rgba(15,157,88,0.14) 0%, rgba(11,11,11,0) 60%, rgba(11,11,11,0) 100%); position: relative; overflow: hidden; }
+  .hero::before { content: ''; position: absolute; inset: 0; background: radial-gradient(circle at top right, rgba(102,126,234,0.12), transparent 45%), radial-gradient(circle at bottom left, rgba(240,147,251,0.10), transparent 45%); pointer-events: none; }
+  .hero h1 { font-size: clamp(40px, 6vw, 68px); font-weight: 800; line-height: 1.05; margin-bottom: 24px; color: #fff; letter-spacing: -1px; }
+  .hero h1 em { font-style: normal; color: #0f9d58; }
+  .hero p { font-size: 20px; color: #b0b0b0; max-width: 720px; margin: 0 auto 40px; }
+  .hero-buttons { display: flex; gap: 16px; justify-content: center; flex-wrap: wrap; position: relative; z-index: 1; }
+  .btn { padding: 14px 32px; border-radius: 10px; text-decoration: none; font-weight: 600; font-size: 16px; transition: transform 0.2s, box-shadow 0.2s; display: inline-block; }
+  .btn-primary { background: #0f9d58; color: #fff; }
+  .btn-primary:hover { background: #0b8043; transform: translateY(-2px); box-shadow: 0 8px 20px rgba(15,157,88,0.35); }
+  .btn-secondary { background: #141414; color: #e8e8e8; border: 1px solid #2e2e2e; }
+  .btn-secondary:hover { border-color: #0f9d58; color: #fff; transform: translateY(-2px); }
+
+  /* Quick Links */
+  .quick-links { display: grid; grid-template-columns: repeat(auto-fit, minmax(240px, 1fr)); gap: 18px; margin: 48px 0 0; position: relative; z-index: 1; }
+  .quick-link { padding: 28px; background: #131313; border-radius: 16px; text-decoration: none; color: inherit; transition: transform 0.2s, box-shadow 0.2s; border: 1px solid #1f1f1f; }
+  .quick-link:hover { transform: translateY(-4px); box-shadow: 0 16px 30px rgba(0,0,0,0.35); border-color: #0f9d58; }
+  .quick-link h3 { font-size: 19px; margin-bottom: 6px; color: #0f9d58; }
+  .quick-link p { color: #8a8a8a; font-size: 14px; }
+
+  /* Sections */
+  section { padding: 100px 0; }
+  .section-label { text-transform: uppercase; letter-spacing: 3px; font-size: 13px; font-weight: 600; color: #0f9d58; margin-bottom: 14px; }
+  .section-title { font-size: clamp(28px, 4vw, 44px); font-weight: 800; margin-bottom: 16px; line-height: 1.15; color: #fff; letter-spacing: -0.5px; }
+  .section-subtitle { font-size: 17px; color: #8f8f8f; max-width: 720px; }
+
+  /* Material Cards */
+  .material-grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(280px, 1fr)); gap: 22px; margin-top: 48px; }
+  .material-card { background: #111; border: 1px solid #1f1f1f; border-radius: 20px; padding: 30px; transition: transform 0.2s, box-shadow 0.2s; position: relative; overflow: hidden; }
+  .material-card::before { content: ''; position: absolute; top: -40px; right: -40px; width: 120px; height: 120px; background: radial-gradient(circle, rgba(15,157,88,0.18), transparent 70%); pointer-events: none; }
+  .material-card:hover { transform: translateY(-6px); box-shadow: 0 24px 50px rgba(0,0,0,0.5); border-color: #1f3a2a; }
+  .material-card .icon { width: 56px; height: 56px; background: linear-gradient(135deg, #0f9d58, #34a853); border-radius: 14px; display: flex; align-items: center; justify-content: center; font-size: 28px; margin-bottom: 16px; position: relative; }
+  .material-card .stat { font-size: 34px; font-weight: 800; color: #fff; margin: 10px 0; letter-spacing: -1px; }
+  .material-card h3 { font-size: 20px; margin-bottom: 6px; color: #e9e9e9; }
+  .material-card p { color: #7f7f7f; font-size: 14px; }
+  .material-card .badge { display: inline-block; padding: 4px 12px; background: #11211a; color: #0f9d58; border: 1px solid #1e352a; border-radius: 20px; font-size: 12px; font-weight: 600; margin-bottom: 12px; }
+
+  /* Stats */
+  .stats-section { background: #0a0a0a; color: #fff; border-top: 1px solid #151515; border-bottom: 1px solid #151515; }
+  .stats-section .section-label { color: #0f9d58; }
+  .stats-section .section-title { color: #fff; }
+  .stats-section .section-subtitle { color: #7f7f7f; }
+  .stats-grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(220px, 1fr)); gap: 30px; margin-top: 44px; }
+  .stat-item { text-align: center; padding: 22px; background: #111; border: 1px solid #1c1c1c; border-radius: 18px; }
+  .stat-item .number { font-size: clamp(42px, 5vw, 64px); font-weight: 800; line-height: 1; margin-bottom: 10px; color: #fff; letter-spacing: -1.5px; }
+  .stat-item .label { font-size: 15px; color: #a6a6a6; }
+
+  /* Videos */
+  .video-grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(280px, 1fr)); gap: 22px; margin-top: 44px; }
+  .video-card { background: #0e0e0e; border: 1px solid #1c1c1c; border-radius: 18px; overflow: hidden; transition: transform 0.2s, box-shadow 0.2s; }
+  .video-card:hover { transform: translateY(-5px); box-shadow: 0 24px 45px rgba(0,0,0,0.4); border-color: #1e2a24; }
+  .video-thumb { height: 170px; background: linear-gradient(135deg, rgba(102,126,234,0.25), rgba(118,75,162,0.35)); position: relative; display: flex; align-items: center; justify-content: center; }
+  .video-thumb::after { content: '▶'; font-size: 46px; color: #fff; opacity: 0.9; }
+  .video-thumb.alt { background: linear-gradient(135deg, rgba(240,147,251,0.25), rgba(245,87,108,0.35)); }
+  .video-thumb.alt2 { background: linear-gradient(135deg, rgba(79,172,254,0.25), rgba(0,242,254,0.30)); }
+  .video-info { padding: 22px; }
+  .video-info .source { font-size: 13px; color: #777; margin-bottom: 4px; }
+  .video-info h3 { font-size: 18px; margin-bottom: 8px; color: #e4e4e4; }
+  .video-info p { font-size: 14px; color: #7a7a7a; }
+  .video-link { display: inline-block; margin-top: 12px; color: #0f9d58; text-decoration: none; font-weight: 700; font-size: 14px; }
+
+  /* CTA */
+  .cta-section { background: #080808; text-align: center; border-top: 1px solid #151515; }
+  .cta-section h2 { font-size: 38px; font-weight: 800; margin-bottom: 18px; color: #fff; }
+  .cta-section .btn { margin-top: 10px; }
+
+  /* Footer */
+  footer { background: #050505; padding: 60px 0 24px; border-top: 1px solid #141414; }
+  .footer-grid { display: grid; grid-template-columns: 2fr 1fr 1fr 1fr; gap: 36px; margin-bottom: 36px; }
+  .footer-brand p { color: #777; margin-top: 14px; font-size: 14px; }
+  .footer-col h4 { font-size: 15px; margin-bottom: 14px; color: #cfcfcf; }
+  .footer-col ul { list-style: none; }
+  .footer-col ul li { margin-bottom: 10px; }
+  .footer-col a { color: #666; text-decoration: none; font-size: 14px; transition: color 0.2s; }
+  .footer-col a:hover { color: #0f9d58; }
+  .footer-bottom { border-top: 1px solid #141414; padding-top: 20px; text-align: center; color: #555; font-size: 13px; }
+
+  @media (max-width: 768px) {
+    .nav-links { display: none; }
+    .footer-grid { grid-template-columns: 1fr; gap: 28px; }
+  }
+</style>
+</head>
+<body>
+
+<header>
+  <div class="container">
+    <nav>
+      <a href="index.html" class="logo"><span>Recycle</span> Bin.com</a>
+      <div class="nav-right">
+        <ul class="nav-links">
+          <li><a href="index.html" data-i18n="nav_home">Home</a></li>
+          <li><a href="guides.html" data-i18n="nav_guides">Guides</a></li>
+          <li><a href="centers.html" data-i18n="nav_centers">Centers</a></li>
+          <li><a href="events.html" data-i18n="nav_events">Events</a></li>
+          <li><a href="howto.html" data-i18n="nav_howto">How-To Tutorials</a></li>
+        </ul></div>
+    </nav>
+  </div>
+</header>
+
+<main>
+  <section class="hero" id="home">
+    <div class="container">
+      <h1 data-i18n="hero_title">Waste is a <em>design flaw.</em></h1>
+      <p data-i18n="hero_subtitle">Waste is a design flaw. We believe every material deserves a second life, making recycling part of daily life.</p>
+      <div class="hero-buttons">
+        <a href="#guides" class="btn btn-primary" data-i18n="hero_cta1">Start Learning</a>
+        <a href="#centers" class="btn btn-secondary" data-i18n="hero_cta2">Find a Center</a>
+      </div>
+      <div class="quick-links">
+        <a href="#guides" class="quick-link">
+          <h3 data-i18n="ql_guides_title">📚 Recycling Guides</h3>
+          <p data-i18n="ql_guides_desc">What to recycle, and how</p>
+        </a>
+        <a href="#centers" class="quick-link">
+          <h3 data-i18n="ql_centers_title">📍 Local Centers</h3>
+          <p data-i18n="ql_centers_desc">Find drop-off locations near you</p>
+        </a>
+        <a href="#events" class="quick-link">
+          <h3 data-i18n="ql_events_title">🗓️ Events資訊</h3>
+          <p data-i18n="ql_events_desc">Community recycling activities</p>
+        </a>
+        <a href="#howto" class="quick-link">
+          <h3 data-i18n="ql_howto_title">🎯 How-To Tutorials</h3>
+          <p data-i18n="ql_howto_desc">Step-by-step tutorials</p>
+        </a>
+      </div>
+    </div>
+  </section>
+
+  <section id="materials">
+    <div class="container">
+      <div class="section-label" data-i18n="material_label">MATERIAL INTELLIGENCE</div>
+      <h2 class="section-title" data-i18n="material_title">Every material tells a story</h2>
+      <p class="section-subtitle" data-i18n="material_subtitle">Understanding the lifecycle of materials is the first step toward a circular economy.</p>
+      <div class="material-grid">
+        <div class="material-card">
+          <span class="badge" data-i18n="mat1_badge">Infinitely recyclable</span>
+          <div class="icon">♻️</div>
+          <h3 data-i18n="mat1_title">Glass</h3>
+          <div class="stat">∞</div>
+          <p data-i18n="mat1_desc">Glass can be recycled endlessly without losing purity or quality.</p>
+        </div>
+        <div class="material-card">
+          <span class="badge" data-i18n="mat2_badge">High recovery rate</span>
+          <div class="icon">📦</div>
+          <h3 data-i18n="mat2_title">Paper</h3>
+          <div class="stat">75%</div>
+          <p data-i18n="mat2_desc">About 75% of waste is actually recyclable.</p>
+        </div>
+        <div class="material-card">
+          <span class="badge" data-i18n="mat3_badge">High value</span>
+          <div class="icon">🔋</div>
+          <h3 data-i18n="mat3_title">E-Waste</h3>
+          <div class="stat">$62B</div>
+          <p data-i18n="mat3_desc">Over $62B in recoverable e-waste value per year worldwide.</p>
+        </div>
+        <div class="material-card">
+          <span class="badge" data-i18n="mat4_badge">Energy saver</span>
+          <div class="icon">🥫</div>
+          <h3 data-i18n="mat4_title">Aluminum Cans</h3>
+          <div class="stat">94%</div>
+          <p data-i18n="mat4_desc">Recycling aluminum uses 94% less energy than producing new aluminum.</p>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <section class="stats-section" id="impact">
+    <div class="container">
+      <div class="section-label" data-i18n="impact_label">IMPACT DATA</div>
+      <h2 class="section-title" data-i18n="impact_title">Why recycling matters</h2>
+      <p class="section-subtitle" data-i18n="impact_subtitle">Every recycling action creates measurable change for the planet.</p>
+      <div class="stats-grid">
+        <div class="stat-item">
+          <div class="number">94%</div>
+          <div class="label" data-i18n="s1">Less Energy<br>Recycling aluminum uses 94% less energy</div>
+        </div>
+        <div class="stat-item">
+          <div class="number">7K</div>
+          <div class="label" data-i18n="s2">Gallons Saved<br>Recycling one ton of paper saves 7,000 gallons of water</div>
+        </div>
+        <div class="stat-item">
+          <div class="number">17</div>
+          <div class="label" data-i18n="s3">Trees Preserved<br>Recycling one ton of paper saves 17 mature trees</div>
+        </div>
+        <div class="stat-item">
+          <div class="number">1.5T</div>
+          <div class="label" data-i18n="s4">CO₂ Reduced<br>1.5 tons of CO₂ reduced per household per year</div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <section id="videos">
+    <div class="container">
+      <div class="section-label" data-i18n="video_label">VIDEO LIBRARY</div>
+      <h2 class="section-title" data-i18n="video_title">Watch & Learn</h2>
+      <p class="section-subtitle" data-i18n="video_subtitle">Curated videos explaining recycling, sustainability, and circular economy concepts.</p>
+      <div class="video-grid">
+        <div class="video-card">
+          <div class="video-thumb"></div>
+          <div class="video-info">
+            <div class="source">Kurzgesagt</div>
+            <h3>The Truth About Recycling</h3>
+            <p data-i18n="v1_desc">A deep dive into how recycling really works and what happens to your waste.</p>
+          <a href="https://www.youtube.com/results?search_query=recycling+tutorial" target="_blank" rel="noopener" class="video-link" data-i18n="video_watch">Watch Video →</a>
+          </div>
+        </div>
+        <div class="video-card">
+          <div class="video-thumb alt"></div>
+          <div class="video-info">
+            <div class="source">National Geographic</div>
+            <h3>How to Recycle Properly</h3>
+            <p data-i18n="v2_desc">Step-by-step guide to sorting and preparing your recyclables correctly.</p>
+          <a href="https://www.youtube.com/results?search_query=recycling+tutorial" target="_blank" rel="noopener" class="video-link" data-i18n="video_watch">Watch Video →</a>
+          </div>
+        </div>
+        <div class="video-card">
+          <div class="video-thumb alt2"></div>
+          <div class="video-info">
+            <div class="source">DW Documentary</div>
+            <h3>E-Waste: The Growing Crisis</h3>
+            <p data-i18n="v3_desc">Understanding the electronic waste crisis and how to responsibly recycle devices.</p>
+          <a href="https://www.youtube.com/results?search_query=recycling+tutorial" target="_blank" rel="noopener" class="video-link" data-i18n="video_watch">Watch Video →</a>
+          </div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <section class="cta-section">
+    <div class="container">
+      <h2 data-i18n="cta_title">Ready to close the loop?</h2>
+      <p style="font-size: 18px; color: #9a9a9a; margin-bottom: 24px;" data-i18n="cta_subtitle">Join the circular economy movement and make waste part of the solution.</p>
+      <div class="hero-buttons" style="justify-content: center;">
+        <a href="#guides" class="btn btn-primary" data-i18n="cta_btn1">Explore Guides</a>
+        <a href="#events" class="btn btn-secondary" data-i18n="cta_btn2">View Events</a>
+      </div>
+    </div>
+  </section>
+</main>
+
+<footer>
+  <div class="container">
+    <div class="footer-grid">
+      <div class="footer-brand">
+        <a href="index.html" class="logo"><span>Recycle</span> Bin.com</a>
+        <p data-i18n="footer_desc">Redefining waste as latent resource. Your complete guide to the infinite return of matter.</p>
+      </div>
+      <div class="footer-col">
+        <h4 data-i18n="footer_res">RESOURCES</h4>
+        <ul>
+          <li><a href="guides.html" data-i18n="foot_guides">Recycling Guides</a></li>
+          <li><a href="centers.html" data-i18n="nav_centers">Local Centers</a></li>
+          <li><a href="howto.html" data-i18n="nav_howto">How-To Tutorials</a></li>
+          <li><a href="events.html" data-i18n="nav_events">Events</a></li>
+        </ul>
+      </div>
+      <div class="footer-col">
+        <h4 data-i18n="footer_cat">CATEGORIES</h4>
+        <ul>
+          <li><a href="guides.html" data-i18n="cat_home">Household</a></li>
+          <li><a href="guides/ewaste.html" data-i18n="cat_ewaste">E-Waste</a></li>
+          <li><a href="guides/hazardous.html" data-i18n="cat_hazard">Hazardous Waste</a></li>
+          <li><a href="events/composting.html" data-i18n="cat_compost">Composting</a></li>
+        </ul>
+      </div>
+      <div class="footer-col">
+        <h4 data-i18n="footer_comm">COMMUNITY</h4>
+        <ul>
+          <li><a href="events.html" data-i18n="comm_upcoming">Upcoming Events</a></li>
+          <li><a href="events/beach-cleanup.html" data-i18n="comm_cleanup">Clean-Up Drives</a></li>
+          <li><a href="events/challenge.html" data-i18n="comm_challenge">Recycling Challenges</a></li>
+          <li><a href="index.html" data-i18n="comm_report">Impact Reports</a></li>
+        </ul>
+      </div>
+    </div>
+    <div class="footer-bottom">
+      <p>&copy; 2025 RecycleBin.com. All rights reserved.</p>
+    </div>
+  </div>
+</footer>
+
+<script>
+  const i18n = {
+    'en': {
+      nav_home: 'Home', nav_guides: 'Guides', nav_centers: 'Centers', nav_events: 'Events', nav_howto: 'How-To',
+      hero_title: 'Waste is a <em>design flaw.</em>',
+      hero_subtitle: 'Waste is a design flaw. We believe every material deserves a second life, making recycling part of daily life.',
+      hero_cta1: 'Start Learning', hero_cta2: 'Find a Center',
+      ql_guides_title: '📚 Guides', ql_guides_desc: 'What to recycle, and how',
+      ql_centers_title: '📍 Centers', ql_centers_desc: 'Find drop-off locations near you',
+      ql_events_title: '🗓️ Events', ql_events_desc: 'Community recycling activities',
+      ql_howto_title: '🎯 How-To', ql_howto_desc: 'Step-by-step tutorials',
+      material_label: 'MATERIAL INTELLIGENCE', material_title: 'Every material tells a story',
+      material_subtitle: 'Understanding the lifecycle of materials is the first step toward a circular economy.',
+      mat1_badge: 'Infinitely recyclable', mat1_title: 'Glass', mat1_desc: 'Glass can be recycled endlessly without losing purity or quality.',
+      mat2_badge: 'High recycling rate', mat2_title: 'Paper', mat2_desc: 'About 75% of waste is actually recyclable.',
+      mat3_badge: 'High value', mat3_title: 'E-Waste', mat3_desc: 'Over $62B in recoverable e-waste value per year worldwide.',
+      mat4_badge: 'Energy saver', mat4_title: 'Aluminum', mat4_desc: 'Recycling aluminum uses 94% less energy than producing new aluminum.',
+      impact_label: 'IMPACT DATA', impact_title: 'Why recycling matters',
+      impact_subtitle: 'Every recycling action creates measurable change for the planet.',
+      s1: 'Less Energy<br>Recycling aluminum uses 94% less energy.',
+      s2: 'Gallons Saved<br>Recycling one ton of paper saves 7,000 gallons of water.',
+      s3: 'Trees Preserved<br>One ton of recycled paper saves 17 mature trees.',
+      s4: 'CO₂ Reduced<br>Recycling can reduce carbon emissions by 1.5 tons per household/year.',
+      video_label: 'VIDEO LIBRARY', video_title: 'Watch & Learn',
+      video_subtitle: 'Curated videos explaining recycling, sustainability, and circular economy concepts.',
+      v1_desc: 'A deep dive into how recycling really works and what happens to your waste.',
+      v2_desc: 'Step-by-step guide to sorting and preparing your recyclables correctly.',
+      v3_desc: 'Understanding the electronic waste crisis and how to responsibly recycle devices.',
+      video_watch: 'Watch on YouTube →',
+      cta_title: 'Ready to close the loop?',
+      cta_subtitle: 'Join the circular economy movement and make waste part of the solution.',
+      cta_btn1: 'Explore Guides', cta_btn2: 'View Events',
+      footer_desc: 'Redefining waste as latent resource. Your complete guide to the infinite return of matter.',
+      footer_res: 'RESOURCES', footer_cat: 'CATEGORIES', footer_comm: 'COMMUNITY',
+      foot_guides: 'Recycling Guides', foot_centers: 'Local Centers', foot_howto: 'How-To Tutorials', foot_events: 'Events',
+      cat_home: 'Household', cat_ewaste: 'E-Waste', cat_hazard: 'Hazardous Waste', cat_compost: 'Composting',
+      comm_upcoming: 'Upcoming Events', comm_cleanup: 'Clean-Up Drives', comm_challenge: 'Recycling Challenges', comm_report: 'Impact Reports'
+    }
+  };
+
+  function toggleLanguage() {
+    const current = document.documentElement.lang || 'en';
+    const next = current === 'en' ? 'en' : 'en';
+    setLanguage(next);
+  }
+
+  function setLanguage(lang) {
+    document.documentElement.lang = lang;
+    localStorage.setItem('recyclebin-lang', lang);
+    const map = i18n[lang] || i18n['en'];
+    document.querySelectorAll('[data-i18n]').forEach(el => {
+      const key = el.getAttribute('data-i18n');
+      const val = map[key];
+      if (!val) return;
+      if (el.tagName === 'INPUT' || el.tagName === 'TEXTAREA') el.value = val;
+      else el.innerHTML = val;
+    });
+  }
+
+  (function init(){
+    const saved = localStorage.getItem('recyclebin-lang');
+    if (saved && (saved === 'en' || saved === 'en')) {
+      setLanguage(saved);
+    }
+  })();
+</script>
+
+</body>
+</html>

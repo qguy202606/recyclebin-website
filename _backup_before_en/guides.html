@@ -1,0 +1,145 @@
+<!DOCTYPE html>
+<html lang="zh-Hant">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>RecycleBin.com - Guides</title>
+<style>
+  * { margin: 0; padding: 0; box-sizing: border-box; }
+  body { font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', 'Helvetica Neue', Arial, sans-serif; line-height: 1.6; color: #fff; background: #0b0b0b; }
+  .container { max-width: 1200px; margin: 0 auto; padding: 0 20px; }
+  header { background: #0b0b0b; border-bottom: 1px solid #222; position: sticky; top: 0; z-index: 100; }
+  nav { display: flex; justify-content: space-between; align-items: center; padding: 20px 0; }
+  .logo { font-size: 24px; font-weight: 700; color: #fff; text-decoration: none; display: flex; align-items: center; gap: 8px; }
+  .logo span { background: #0f9d58; color: #fff; padding: 4px 10px; border-radius: 8px; font-size: 20px; }
+  .nav-right { display: flex; align-items: center; gap: 20px; }
+  .nav-links { display: flex; gap: 28px; list-style: none; }
+  .nav-links a { text-decoration: none; color: #c9c9c9; font-weight: 500; transition: color 0.2s; }
+  .nav-links a:hover { color: #0f9d58; }
+  .nav-links a.active { color: #0f9d58; }
+  .lang-toggle { background: #1a1a1a; border: 1px solid #333; color: #fff; padding: 6px 12px; border-radius: 8px; cursor: pointer; font-size: 13px; font-weight: 600; transition: all 0.2s; }
+  .lang-toggle:hover { border-color: #0f9d58; color: #0f9d58; }
+  .page-header { padding: 80px 0 40px; text-align: center; }
+  .page-header h1 { font-size: 48px; font-weight: 800; margin-bottom: 16px; }
+  .page-header p { color: #8f8f8f; font-size: 18px; max-width: 700px; margin: 0 auto; }
+  .guide-grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(300px, 1fr)); gap: 24px; padding-bottom: 100px; }
+  .guide-card { background: #111; border: 1px solid #1f1f1f; border-radius: 20px; padding: 32px; transition: transform 0.2s, box-shadow 0.2s; }
+  .guide-card:hover { transform: translateY(-5px); box-shadow: 0 20px 40px rgba(0,0,0,0.4); border-color: #1e352a; }
+  .guide-card .icon { width: 56px; height: 56px; background: linear-gradient(135deg, #0f9d58, #34a853); border-radius: 14px; display: flex; align-items: center; justify-content: center; font-size: 28px; margin-bottom: 20px; }
+  .guide-card h3 { font-size: 22px; margin-bottom: 10px; }
+  .guide-card p { color: #8a8a8a; font-size: 15px; margin-bottom: 20px; }
+  .guide-card .tag { display: inline-block; padding: 4px 12px; background: #11211a; color: #0f9d58; border: 1px solid #1e352a; border-radius: 20px; font-size: 12px; font-weight: 600; margin-bottom: 12px; }
+  footer { background: #050505; padding: 40px 0; border-top: 1px solid #141414; text-align: center; color: #555; font-size: 13px; }
+  @media (max-width: 768px) { .nav-links { display: none; } .page-header h1 { font-size: 32px; } }
+</style>
+</head>
+<body>
+<header>
+  <div class="container">
+    <nav>
+      <a href="index.html" class="logo"><span>Recycle</span> Bin.com</a>
+      <div class="nav-right">
+        <ul class="nav-links">
+          <li><a href="index.html" data-i18n="nav_home">首頁</a></li>
+          <li><a href="guides.html" class="active" data-i18n="nav_guides">指南</a></li>
+          <li><a href="centers.html" data-i18n="nav_centers">據點</a></li>
+          <li><a href="events.html" data-i18n="nav_events">活動</a></li>
+          <li><a href="howto.html" data-i18n="nav_howto">教學</a></li>
+        </ul>
+        <button class="lang-toggle" onclick="toggleLanguage()">EN / 中文</button>
+      </div>
+    </nav>
+  </div>
+</header>
+<main>
+  <section class="page-header">
+    <div class="container">
+      <h1 data-i18n="guides_page_title">回收指南</h1>
+      <p data-i18n="guides_page_sub">全面了解如何正確分類與回收各類材料。</p>
+    </div>
+  </section>
+  <section>
+    <div class="container">
+      <div class="guide-grid">
+        <div class="guide-card">
+          <span class="tag" data-i18n="g1_tag">塑膠</span>
+          <div class="icon">🧴</div>
+          <h3 data-i18n="g1_title">塑膠分類入門</h3>
+          <p data-i18n="g1_desc">認識 1-7 號塑膠分類標示，了解哪些塑膠可回收、如何清潔準備。</p>
+          <a href="guides/plastic.html" class="btn btn-primary" style="display:inline-block;padding:10px 24px;background:#0f9d58;color:#fff;border-radius:8px;text-decoration:none;font-size:14px;" data-i18n="read_more">閱讀更多</a>
+        </div>
+        <div class="guide-card">
+          <span class="tag" data-i18n="g2_tag">紙類</span>
+          <div class="icon">📄</div>
+          <h3 data-i18n="g2_title">紙類回收完整指南</h3>
+          <p data-i18n="g2_desc">報紙、紙箱、雜誌、衛生紙——哪些能回收？油漬紙張怎麼辦？</p>
+          <a href="guides/paper.html" class="btn btn-primary" style="display:inline-block;padding:10px 24px;background:#0f9d58;color:#fff;border-radius:8px;text-decoration:none;font-size:14px;" data-i18n="read_more">閱讀更多</a>
+        </div>
+        <div class="guide-card">
+          <span class="tag" data-i18n="g3_tag">玻璃</span>
+          <div class="icon">🍾</div>
+          <h3 data-i18n="g3_title">玻璃回收須知</h3>
+          <p data-i18n="g3_desc">玻璃可無限回收而不損品質，但顏色要分開。了解完整流程。</p>
+          <a href="guides/glass.html" class="btn btn-primary" style="display:inline-block;padding:10px 24px;background:#0f9d58;color:#fff;border-radius:8px;text-decoration:none;font-size:14px;" data-i18n="read_more">閱讀更多</a>
+        </div>
+        <div class="guide-card">
+          <span class="tag" data-i18n="g4_tag">金屬</span>
+          <div class="icon">🥫</div>
+          <h3 data-i18n="g4_title">金屬與鋁罐回收</h3>
+          <p data-i18n="g4_desc">回收鋁節省 94% 能源。了解鐵罐、鋁罐、拆解注意事項。</p>
+          <a href="guides/metal.html" class="btn btn-primary" style="display:inline-block;padding:10px 24px;background:#0f9d58;color:#fff;border-radius:8px;text-decoration:none;font-size:14px;" data-i18n="read_more">閱讀更多</a>
+        </div>
+        <div class="guide-card">
+          <span class="tag" data-i18n="g5_tag">電子垃圾</span>
+          <div class="icon">💻</div>
+          <h3 data-i18n="g5_title">電子垃圾正確回收</h3>
+          <p data-i18n="g5_desc">手機、筆電、電池不能丟一般垃圾。認識合格回收通道與資料安全。</p>
+          <a href="guides/ewaste.html" class="btn btn-primary" style="display:inline-block;padding:10px 24px;background:#0f9d58;color:#fff;border-radius:8px;text-decoration:none;font-size:14px;" data-i18n="read_more">閱讀更多</a>
+        </div>
+        <div class="guide-card">
+          <span class="tag" data-i18n="g6_tag">有害廢棄物</span>
+          <div class="icon">⚠️</div>
+          <h3 data-i18n="g6_title">有害廢棄物處理</h3>
+          <p data-i18n="g6_desc">油漆、清潔劑、燈管、藥品——特殊回收管道與注意事項。</p>
+          <a href="guides/hazardous.html" class="btn btn-primary" style="display:inline-block;padding:10px 24px;background:#0f9d58;color:#fff;border-radius:8px;text-decoration:none;font-size:14px;" data-i18n="read_more">閱讀更多</a>
+        </div>
+      </div>
+    </div>
+  </section>
+</main>
+<footer>
+  <div class="container">
+    <p>&copy; 2025 RecycleBin.com. All rights reserved.</p>
+  </div>
+</footer>
+<script>
+  const i18n = {
+    'zh-Hant': {
+      nav_home:'首頁', nav_guides:'指南', nav_centers:'據點', nav_events:'活動', nav_howto:'教學',
+      guides_page_title:'回收指南', guides_page_sub:'全面了解如何正確分類與回收各類材料。',
+      read_more:'閱讀更多',
+      g1_tag:'塑膠', g1_title:'塑膠分類入門', g1_desc:'認識 1-7 號塑膠分類標示，了解哪些塑膠可回收、如何清潔準備。',
+      g2_tag:'紙類', g2_title:'紙類回收完整指南', g2_desc:'報紙、紙箱、雜誌、衛生紙——哪些能回收？油漬紙張怎麼辦？',
+      g3_tag:'玻璃', g3_title:'玻璃回收須知', g3_desc:'玻璃可以無限次回收而不損品質，但顏色要分開。了解完整流程。',
+      g4_tag:'金屬', g4_title:'金屬與鋁罐回收', g4_desc:'回收鋁節省 94% 能源。了解鐵罐、鋁罐、拆解注意事項。',
+      g5_tag:'電子垃圾', g5_title:'電子垃圾正確回收', g5_desc:'手機、筆電、電池不能丟一般垃圾。認識合格回收管道與資料安全。',
+      g6_tag:'有害廢棄物', g6_title:'有害廢棄物處理', g6_desc:'油漆、清潔劑、燈管、藥品——特殊回收管道與注意事項。'
+    },
+    'en': {
+      nav_home:'Home', nav_guides:'Guides', nav_centers:'Centers', nav_events:'Events', nav_howto:'How-To',
+      guides_page_title:'Recycling Guides', guides_page_sub:'Learn how to sort and recycle each material correctly.',
+      read_more:'Read More',
+      g1_tag:'Plastic', g1_title:'Plastic Sorting 101', g1_desc:'Learn resin codes 1-7, what’s recyclable, and how to prepare plastics for collection.',
+      g2_tag:'Paper', g2_title:'Paper Recycling Guide', g2_desc:'Newspaper, cardboard, magazines, tissue — what can be recycled and how to handle soiled paper.',
+      g3_tag:'Glass', g3_title:'Glass Recycling Essentials', g3_desc:'Glass can be endlessly recycled without quality loss, but colors must be separated. Learn the full process.',
+      g4_tag:'Metal', g4_title:'Metal & Aluminum Cans', g4_desc:'Recycling aluminum saves 94% energy. Learn about steel, aluminum, cans, and prep tips.',
+      g5_tag:'E-Waste', g5_title:'E-Waste Recycling', g5_desc:'Phones, laptops, and batteries never go in regular trash. Find certified channels and data safety tips.',
+      g6_tag:'Hazardous', g6_title:'Hazardous Waste Handling', g6_desc:'Paint, cleaners, bulbs, and medicine — special collection and precautions.'
+    }
+  };
+  function toggleLanguage(){ const c=document.documentElement.lang||'zh-Hant'; setLanguage(c==='zh-Hant'?'en':'zh-Hant'); }
+  function setLanguage(l){ document.documentElement.lang=l; localStorage.setItem('recyclebin-lang',l); const m=i18n[l]||i18n['zh-Hant']; document.querySelectorAll('[data-i18n]').forEach(el=>{ const k=el.getAttribute('data-i18n'); const v=m[k]; if(!v)return; el.innerHTML=v; }); }
+  (function(){ const s=localStorage.getItem('recyclebin-lang'); if(s&&(s==='en'||s==='zh-Hant')) setLanguage(s); })();
+</script>
+</body>
+</html>

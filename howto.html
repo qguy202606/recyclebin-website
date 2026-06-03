@@ -1,0 +1,126 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>RecycleBin.com - How-To</title>
+<style>
+  * { margin: 0; padding: 0; box-sizing: border-box; }
+  body { font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', 'Helvetica Neue', Arial, sans-serif; line-height: 1.6; color: #fff; background: #0b0b0b; }
+  .container { max-width: 1200px; margin: 0 auto; padding: 0 20px; }
+  header { background: #0b0b0b; border-bottom: 1px solid #222; position: sticky; top: 0; z-index: 100; }
+  nav { display: flex; justify-content: space-between; align-items: center; padding: 20px 0; }
+  .logo { font-size: 24px; font-weight: 700; color: #fff; text-decoration: none; display: flex; align-items: center; gap: 8px; }
+  .logo span { background: #0f9d58; color: #fff; padding: 4px 10px; border-radius: 8px; font-size: 20px; }
+  .nav-right { display: flex; align-items: center; gap: 20px; }
+  .nav-links { display: flex; gap: 28px; list-style: none; }
+  .nav-links a { text-decoration: none; color: #c9c9c9; font-weight: 500; transition: color 0.2s; }
+  .nav-links a:hover { color: #0f9d58; }
+  .nav-links a.active { color: #0f9d58; }
+  .lang-toggle { background: #1a1a1a; border: 1px solid #333; color: #fff; padding: 6px 12px; border-radius: 8px; cursor: pointer; font-size: 13px; font-weight: 600; transition: all 0.2s; }
+  .lang-toggle:hover { border-color: #0f9d58; color: #0f9d58; }
+  .page-header { padding: 80px 0 40px; text-align: center; }
+  .page-header h1 { font-size: 48px; font-weight: 800; margin-bottom: 16px; }
+  .page-header p { color: #8f8f8f; font-size: 18px; max-width: 700px; margin: 0 auto; }
+  .howto-list { display: grid; grid-template-columns: repeat(auto-fit, minmax(300px, 1fr)); gap: 24px; padding-bottom: 100px; }
+  .howto-card { background: #111; border: 1px solid #1f1f1f; border-radius: 20px; padding: 28px; transition: transform 0.2s, box-shadow 0.2s; }
+  .howto-card:hover { transform: translateY(-5px); box-shadow: 0 20px 40px rgba(0,0,0,0.4); border-color: #1e352a; }
+  .howto-card .step { width: 40px; height: 40px; background: #0f9d58; color: #fff; border-radius: 10px; display: flex; align-items: center; justify-content: center; font-weight: 800; font-size: 18px; margin-bottom: 16px; }
+  .howto-card h3 { font-size: 20px; margin-bottom: 8px; color: #e9e9e9; }
+  .howto-card p { color: #8a8a8a; font-size: 14px; margin-bottom: 18px; }
+  .howto-card .btn { display: inline-block; padding: 10px 22px; background: #0f9d58; color: #fff; border-radius: 8px; text-decoration: none; font-size: 14px; }
+  footer { background: #050505; padding: 40px 0; border-top: 1px solid #141414; text-align: center; color: #555; font-size: 13px; }
+  @media (max-width: 768px) { .nav-links { display: none; } .page-header h1 { font-size: 32px; } }
+</style>
+</head>
+<body>
+<header>
+  <div class="container">
+    <nav>
+      <a href="index.html" class="logo"><span>Recycle</span> Bin.com</a>
+      <div class="nav-right">
+        <ul class="nav-links">
+          <li><a href="index.html" data-i18n="nav_home">Home</a></li>
+          <li><a href="guides.html" data-i18n="nav_guides">Guides</a></li>
+          <li><a href="centers.html" data-i18n="nav_centers">Centers</a></li>
+          <li><a href="events.html" data-i18n="nav_events">Events</a></li>
+          <li><a href="howto.html" class="active" data-i18n="nav_howto">How-To Tutorials</a></li>
+        </ul></div>
+    </nav>
+  </div>
+</header>
+<main>
+  <section class="page-header">
+    <div class="container">
+      <h1 data-i18n="howto_page_title">Step-by-Step Recycling</h1>
+      <p data-i18n="howto_page_sub">Practical tutorials to make recycling simple and correct.</p>
+    </div>
+  </section>
+  <section>
+    <div class="container">
+      <div class="howto-list">
+        <div class="howto-card">
+          <div class="step" data-i18n="ht1_num">1</div>
+          <h3 data-i18n="ht1_title">Prep Your Materials</h3>
+          <p data-i18n="ht1_desc">Clean containers, remove food residue, and sort. The first step to higher recycling rates.</p>
+          <a href="guides.html" class="btn" data-i18n="start">Start Learning</a>
+        </div>
+        <div class="howto-card">
+          <div class="step" data-i18n="ht2_num">2</div>
+          <h3 data-i18n="ht2_title">Know Your Local Rules</h3>
+          <p data-i18n="ht2_desc">Recycling rules vary by area. Check your curbside guide and schedule.</p>
+          <a href="guides.html" class="btn" data-i18n="start">Start Learning</a>
+        </div>
+        <div class="howto-card">
+          <div class="step" data-i18n="ht3_num">3</div>
+          <h3 data-i18n="ht3_title">Sort Correctly</h3>
+          <p data-i18n="ht3_desc">Paper, plastic, glass, and metal — learn to identify and separate quickly.</p>
+          <a href="guides.html" class="btn" data-i18n="start">Start Learning</a>
+        </div>
+        <div class="howto-card">
+          <div class="step" data-i18n="ht4_num">4</div>
+          <h3 data-i18n="ht4_title">Handle Hazardous Items Safely</h3>
+          <p data-i18n="ht4_desc">Batteries, bulbs, and chemicals — store and deliver to collection sites.</p>
+          <a href="guides.html" class="btn" data-i18n="start">Start Learning</a>
+        </div>
+        <div class="howto-card">
+          <div class="step" data-i18n="ht5_num">5</div>
+          <h3 data-i18n="ht5_title">Start Composting at Home</h3>
+          <p data-i18n="ht5_desc">Turn kitchen scraps into soil food and cut your trash footprint.</p>
+          <a href="guides.html" class="btn" data-i18n="start">Start Learning</a>
+        </div>
+        <div class="howto-card">
+          <div class="step" data-i18n="ht6_num">6</div>
+          <h3 data-i18n="ht6_title">Track Your Impact</h3>
+          <p data-i18n="ht6_desc">Record collections, estimate carbon savings, and celebrate progress.</p>
+          <a href="guides.html" class="btn" data-i18n="start">Start Learning</a>
+        </div>
+      </div>
+    </div>
+  </section>
+</main>
+<footer>
+  <div class="container">
+    <p>&copy; 2025 RecycleBin.com. All rights reserved.</p>
+  </div>
+</footer>
+<script>
+  const i18n = {
+    'en': {
+      nav_home:'Home', nav_guides:'Guides', nav_centers:'Centers', nav_events:'Events', nav_howto:'How-To',
+      howto_page_title:'Step-by-Step Recycling', howto_page_sub:'Practical tutorials to make recycling simple and correct.',
+      start:'Start Learning',
+      ht1_num:'1', ht1_title:'Prep Your Materials', ht1_desc:'Clean containers, remove food residue, and sort. The first step to higher recycling rates.',
+      ht2_num:'2', ht2_title:'Know Your Local Rules', ht2_desc:'Recycling rules vary by area. Check your curbside guide and schedule.',
+      ht3_num:'3', ht3_title:'Sort Correctly', ht3_desc:'Paper, plastic, glass, and metal — learn to identify and separate quickly.',
+      ht4_num:'4', ht4_title:'Handle Hazardous Items Safely', ht4_desc:'Batteries, bulbs, and chemicals — store and deliver to collection sites.',
+      ht5_num:'5', ht5_title:'Start Composting at Home', ht5_desc:'Turn kitchen scraps into soil food and cut your trash footprint.',
+      ht6_num:'6', ht6_title:'Track Your Impact', ht6_desc:'Record collections, estimate carbon savings, and celebrate progress.'
+    }
+  };
+  function toggleLanguage(){ const c=document.documentElement.lang||'en'; setLanguage(c==='en'?'en':'en'); }
+  function setLanguage(l){ document.documentElement.lang=l; localStorage.setItem('recyclebin-lang',l); const m=i18n[l]||i18n['en']; document.querySelectorAll('[data-i18n]').forEach(el=>{ const k=el.getAttribute('data-i18n'); const v=m[k]; if(!v)return; el.innerHTML=v; }); }
+  (function(){ const s=localStorage.getItem('recyclebin-lang'); if(s&&(s==='en'||s==='en')) setLanguage(s); })();
+</script>
+</body>
+</html>

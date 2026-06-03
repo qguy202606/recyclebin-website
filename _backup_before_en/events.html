@@ -1,0 +1,139 @@
+<!DOCTYPE html>
+<html lang="zh-Hant">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>RecycleBin.com - Events</title>
+<style>
+  * { margin: 0; padding: 0; box-sizing: border-box; }
+  body { font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', 'Helvetica Neue', Arial, sans-serif; line-height: 1.6; color: #fff; background: #0b0b0b; }
+  .container { max-width: 1200px; margin: 0 auto; padding: 0 20px; }
+  header { background: #0b0b0b; border-bottom: 1px solid #222; position: sticky; top: 0; z-index: 100; }
+  nav { display: flex; justify-content: space-between; align-items: center; padding: 20px 0; }
+  .logo { font-size: 24px; font-weight: 700; color: #fff; text-decoration: none; display: flex; align-items: center; gap: 8px; }
+  .logo span { background: #0f9d58; color: #fff; padding: 4px 10px; border-radius: 8px; font-size: 20px; }
+  .nav-right { display: flex; align-items: center; gap: 20px; }
+  .nav-links { display: flex; gap: 28px; list-style: none; }
+  .nav-links a { text-decoration: none; color: #c9c9c9; font-weight: 500; transition: color 0.2s; }
+  .nav-links a:hover { color: #0f9d58; }
+  .nav-links a.active { color: #0f9d58; }
+  .lang-toggle { background: #1a1a1a; border: 1px solid #333; color: #fff; padding: 6px 12px; border-radius: 8px; cursor: pointer; font-size: 13px; font-weight: 600; transition: all 0.2s; }
+  .lang-toggle:hover { border-color: #0f9d58; color: #0f9d58; }
+  .page-header { padding: 80px 0 40px; text-align: center; }
+  .page-header h1 { font-size: 48px; font-weight: 800; margin-bottom: 16px; }
+  .page-header p { color: #8f8f8f; font-size: 18px; max-width: 700px; margin: 0 auto; }
+  .event-list { display: grid; grid-template-columns: repeat(auto-fit, minmax(300px, 1fr)); gap: 24px; padding-bottom: 100px; }
+  .event-card { background: #111; border: 1px solid #1f1f1f; border-radius: 20px; padding: 28px; transition: transform 0.2s, box-shadow 0.2s; }
+  .event-card:hover { transform: translateY(-5px); box-shadow: 0 20px 40px rgba(0,0,0,0.4); border-color: #1e352a; }
+  .event-card .date { display: inline-block; padding: 6px 12px; background: #11211a; color: #0f9d58; border: 1px solid #1e352a; border-radius: 10px; font-size: 13px; font-weight: 700; margin-bottom: 14px; }
+  .event-card h3 { font-size: 20px; margin-bottom: 6px; color: #e9e9e9; }
+  .event-card p { color: #8a8a8a; font-size: 14px; margin-bottom: 18px; }
+  .event-card .btn { display: inline-block; padding: 10px 22px; background: #0f9d58; color: #fff; border-radius: 8px; text-decoration: none; font-size: 14px; }
+  footer { background: #050505; padding: 40px 0; border-top: 1px solid #141414; text-align: center; color: #555; font-size: 13px; }
+  @media (max-width: 768px) { .nav-links { display: none; } .page-header h1 { font-size: 32px; } }
+</style>
+</head>
+<body>
+<header>
+  <div class="container">
+    <nav>
+      <a href="index.html" class="logo"><span>Recycle</span> Bin.com</a>
+      <div class="nav-right">
+        <ul class="nav-links">
+          <li><a href="index.html" data-i18n="nav_home">首頁</a></li>
+          <li><a href="guides.html" data-i18n="nav_guides">指南</a></li>
+          <li><a href="centers.html" data-i18n="nav_centers">據點</a></li>
+          <li><a href="events.html" class="active" data-i18n="nav_events">活動</a></li>
+          <li><a href="howto.html" data-i18n="nav_howto">教學</a></li>
+        </ul>
+        <button class="lang-toggle" onclick="toggleLanguage()">EN / 中文</button>
+      </div>
+    </nav>
+  </div>
+</header>
+<main>
+  <section class="page-header">
+    <div class="container">
+      <h1 data-i18n="events_page_title">近期活動</h1>
+      <p data-i18n="events_page_sub">參與社區淨灘、回收挑戰與環境教育活動。</p>
+    </div>
+  </section>
+  <section>
+    <div class="container">
+      <div class="event-list">
+        <div class="event-card">
+          <div class="date" data-i18n="e1_date">2025-06-15</div>
+          <h3 data-i18n="e1_title">海灘淨灘總動員</h3>
+          <p data-i18n="e1_desc">與我們一起清理海岸線垃圾，恢復沙灘與海洋的美麗。</p>
+          <a href="events/beach-cleanup.html" class="btn" data-i18n="join">我要參加</a>
+        </div>
+        <div class="event-card">
+          <div class="date" data-i18n="e2_date">2025-07-02</div>
+          <h3 data-i18n="e2_title">社區回收挑戰賽</h3>
+          <p data-i18n="e2_desc">二十八天回收挑戰，累積積分換取獎品與公益徽章。</p>
+          <a href="events/challenge.html" class="btn" data-i18n="join">我要參加</a>
+        </div>
+        <div class="event-card">
+          <div class="date" data-i18n="e3_date">2025-07-20</div>
+          <h3 data-i18n="e3_title">家庭 composting 工作坊</h3>
+          <p data-i18n="e3_desc">學習如何在家堆肥，減少廚餘並肥沃你的花園。</p>
+          <a href="events/composting.html" class="btn" data-i18n="join">我要參加</a>
+        </div>
+        <div class="event-card">
+          <div class="date" data-i18n="e4_date">2025-08-05</div>
+          <h3 data-i18n="e4_title">電子產品回收日</h3>
+          <p data-i18n="e4_desc">免費回收舊手機、筆電、電池，並提供資料抹除教學。</p>
+          <a href="events/e-waste-day.html" class="btn" data-i18n="join">我要參加</a>
+        </div>
+        <div class="event-card">
+          <div class="date" data-i18n="e5_date">2025-08-22</div>
+          <h3 data-i18n="e5_title">校園永續講座</h3>
+          <p data-i18n="e5_desc">邀請環境教育講者分享循環經濟在學校的實踐案例。</p>
+          <a href="events/campus-talk.html" class="btn" data-i18n="join">我要參加</a>
+        </div>
+        <div class="event-card">
+          <div class="date" data-i18n="e6_date">2025-09-10</div>
+          <h3 data-i18n="e6_title">週末拼布購物袋 DIY</h3>
+          <p data-i18n="e6_desc">利用回收布料製作專屬購物袋，減少一次性塑膠袋。</p>
+          <a href="events/tote-bag-diy.html" class="btn" data-i18n="join">我要參加</a>
+        </div>
+      </div>
+    </div>
+  </section>
+</main>
+<footer>
+  <div class="container">
+    <p>&copy; 2025 RecycleBin.com. All rights reserved.</p>
+  </div>
+</footer>
+<script>
+  const i18n = {
+    'zh-Hant': {
+      nav_home:'首頁', nav_guides:'指南', nav_centers:'據點', nav_events:'活動', nav_howto:'教學',
+      events_page_title:'近期活動', events_page_sub:'參與社區淨灘、回收挑戰與環境教育活動。',
+      e1_date:'2025-06-15', e1_title:'海灘淨灘總動員', e1_desc:'與我們一起清理海岸線垃圾，恢復沙灘與海洋的美麗。',
+      e2_date:'2025-07-02', e2_title:'社區回收挑戰賽', e2_desc:'二十八天回收挑戰，累積積分換取獎品與公益徽章。',
+      e3_date:'2025-07-20', e3_title:'家庭 composting 工作坊', e3_desc:'學習如何在家堆肥，減少廚餘並肥沃你的花園。',
+      e4_date:'2025-08-05', e4_title:'電子產品回收日', e4_desc:'免費回收舊手機、筆電、電池，並提供資料抹除教學。',
+      e5_date:'2025-08-22', e5_title:'校園永續講座', e5_desc:'邀請環境教育講者分享循環經濟在學校的實踐案例。',
+      e6_date:'2025-09-10', e6_title:'週末拼布購物袋 DIY', e6_desc:'利用回收布料製作專屬購物袋，減少一次性塑膠袋。',
+      join:'我要參加'
+    },
+    'en': {
+      nav_home:'Home', nav_guides:'Guides', nav_centers:'Centers', nav_events:'Events', nav_howto:'How-To',
+      events_page_title:'Upcoming Events', events_page_sub:'Join clean-ups, challenges, and sustainability workshops.',
+      e1_date:'Jun 15, 2025', e1_title:'Beach Cleanup Rally', e1_desc:'Join us to remove coastal litter and restore the shoreline and ocean.',
+      e2_date:'Jul 2, 2025', e2_title:'Community Recycling Challenge', e2_desc:'28-day recycling challenge with points, prizes, and impact badges.',
+      e3_date:'Jul 20, 2025', e3_title:'Home Composting Workshop', e3_desc:'Learn to compost at home, reduce food scraps, and enrich your garden.',
+      e4_date:'Aug 5, 2025', e4_title:'E-Waste Recycling Day', e4_desc:'Free drop-off for devices and batteries, plus secure data wipe guidance.',
+      e5_date:'Aug 22, 2025', e5_title:'Campus Sustainability Talk', e5_desc:'Environmental educators share real circular economy projects in schools.',
+      e6_date:'Sep 10, 2025', e6_title:'Weekend Tote Bag DIY', e6_desc:'Upcycle fabric into a custom tote bag to cut single-use plastic.',
+      join:'Join Now'
+    }
+  };
+  function toggleLanguage(){ const c=document.documentElement.lang||'zh-Hant'; setLanguage(c==='zh-Hant'?'en':'zh-Hant'); }
+  function setLanguage(l){ document.documentElement.lang=l; localStorage.setItem('recyclebin-lang',l); const m=i18n[l]||i18n['zh-Hant']; document.querySelectorAll('[data-i18n]').forEach(el=>{ const k=el.getAttribute('data-i18n'); const v=m[k]; if(!v)return; el.innerHTML=v; }); }
+  (function(){ const s=localStorage.getItem('recyclebin-lang'); if(s&&(s==='en'||s==='zh-Hant')) setLanguage(s); })();
+</script>
+</body>
+</html>

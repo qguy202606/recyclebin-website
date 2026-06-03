@@ -1,0 +1,227 @@
+<!DOCTYPE html>
+<html lang="zh-Hant">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>RecycleBin.com - Centers</title>
+<style>
+  * { margin: 0; padding: 0; box-sizing: border-box; }
+  body { font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', 'Helvetica Neue', Arial, sans-serif; line-height: 1.6; color: #fff; background: #0b0b0b; }
+  .container { max-width: 1200px; margin: 0 auto; padding: 0 20px; }
+  header { background: #0b0b0b; border-bottom: 1px solid #222; position: sticky; top: 0; z-index: 100; }
+  nav { display: flex; justify-content: space-between; align-items: center; padding: 20px 0; }
+  .logo { font-size: 24px; font-weight: 700; color: #fff; text-decoration: none; display: flex; align-items: center; gap: 8px; }
+  .logo span { background: #0f9d58; color: #fff; padding: 4px 10px; border-radius: 8px; font-size: 20px; }
+  .nav-right { display: flex; align-items: center; gap: 20px; }
+  .nav-links { display: flex; gap: 28px; list-style: none; }
+  .nav-links a { text-decoration: none; color: #c9c9c9; font-weight: 500; transition: color 0.2s; }
+  .nav-links a:hover { color: #0f9d58; }
+  .nav-links a.active { color: #0f9d58; }
+  .lang-toggle { background: #1a1a1a; border: 1px solid #333; color: #fff; padding: 6px 12px; border-radius: 8px; cursor: pointer; font-size: 13px; font-weight: 600; transition: all 0.2s; }
+  .lang-toggle:hover { border-color: #0f9d58; color: #0f9d58; }
+  .page-header { padding: 80px 0 40px; text-align: center; }
+  .page-header h1 { font-size: 48px; font-weight: 800; margin-bottom: 16px; }
+  .page-header p { color: #8f8f8f; font-size: 18px; max-width: 700px; margin: 0 auto; }
+  .location-bar { background: #111; border: 1px solid #1e352a; border-radius: 14px; padding: 16px 20px; display: flex; align-items: center; justify-content: space-between; gap: 16px; margin: 0 0 40px; flex-wrap: wrap; }
+  .loc-left { display: flex; align-items: center; gap: 12px; color: #a6a6a6; font-size: 14px; }
+  .loc-left .dot { width: 10px; height: 10px; border-radius: 50%; background: #0f9d58; box-shadow: 0 0 0 4px rgba(15,157,88,0.25); animation: pulse 2s infinite; }
+  @keyframes pulse { 0% { box-shadow: 0 0 0 0 rgba(15,157,88,0.5); } 70% { box-shadow: 0 0 0 10px rgba(15,157,88,0); } 100% { box-shadow: 0 0 0 0 rgba(15,157,88,0); } }
+  .loc-left strong { color: #fff; }
+  .btn { padding: 10px 18px; border-radius: 8px; text-decoration: none; font-weight: 600; font-size: 14px; transition: transform 0.2s, opacity 0.2s; display: inline-flex; align-items: center; gap: 6px; border: none; cursor: pointer; }
+  .btn-primary { background: #0f9d58; color: #fff; }
+  .btn-primary:hover { background: #0b8043; transform: translateY(-1px); }
+  .btn-secondary { background: #141414; color: #e8e8e8; border: 1px solid #2e2e2e; }
+  .btn-secondary:hover { border-color: #0f9d58; color: #fff; }
+  .center-grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(300px, 1fr)); gap: 24px; padding-bottom: 100px; }
+  .center-card { background: #111; border: 1px solid #1f1f1f; border-radius: 20px; padding: 28px; transition: transform 0.2s, box-shadow 0.2s; }
+  .center-card:hover { transform: translateY(-5px); box-shadow: 0 20px 40px rgba(0,0,0,0.4); border-color: #1e352a; }
+  .center-card h3 { font-size: 20px; margin-bottom: 6px; color: #e9e9e9; }
+  .center-card .addr { color: #8a8a8a; font-size: 14px; margin-bottom: 4px; }
+  .center-card .distance { color: #0f9d58; font-size: 13px; font-weight: 700; margin-bottom: 14px; display: flex; align-items: center; gap: 6px; }
+  .center-card .meta { display: flex; gap: 16px; color: #8a8a8a; font-size: 13px; font-weight: 600; margin-bottom: 16px; }
+  .center-card .btn { display: inline-flex; }
+  footer { background: #050505; padding: 40px 0; border-top: 1px solid #141414; text-align: center; color: #555; font-size: 13px; }
+  .hidden { display: none; }
+  .error-msg { background: #1a0f0f; border: 1px solid #3a1f1f; color: #ff8a80; padding: 14px; border-radius: 10px; font-size: 14px; margin-bottom: 20px; }
+  @media (max-width: 768px) { .nav-links { display: none; } .page-header h1 { font-size: 32px; } }
+</style>
+</head>
+<body>
+<header>
+  <div class="container">
+    <nav>
+      <a href="index.html" class="logo"><span>Recycle</span> Bin.com</a>
+      <div class="nav-right">
+        <ul class="nav-links">
+          <li><a href="index.html" data-i18n="nav_home">首頁</a></li>
+          <li><a href="guides.html" data-i18n="nav_guides">指南</a></li>
+          <li><a href="centers.html" class="active" data-i18n="nav_centers">據點</a></li>
+          <li><a href="events.html" data-i18n="nav_events">活動</a></li>
+          <li><a href="howto.html" data-i18n="nav_howto">教學</a></li>
+        </ul>
+        <button class="lang-toggle" onclick="toggleLanguage()">EN / 中文</button>
+      </div>
+    </nav>
+  </div>
+</header>
+<main>
+  <section class="page-header">
+    <div class="container">
+      <h1 data-i18n="centers_page_title">尋找回收據點</h1>
+      <p data-i18n="centers_page_sub">根據你的位置，顯示最近的回收站與據點。</p>
+    </div>
+  </section>
+  <section>
+    <div class="container">
+      <div id="location-error" class="error-msg hidden" data-i18n="geo_error">無法取得位置，顯示所有據點。</div>
+      <div class="location-bar">
+        <div class="loc-left">
+          <div class="dot"></div>
+          <div>
+            <div data-i18n="detecting" class="hidden">正在偵測位置...</div>
+            <div id="location-text"><strong data-i18n="loc_unknown">位置未知</strong> <span data-i18n="loc_hint">— 點擊按鈕以偵測</span></div>
+          </div>
+        </div>
+        <div style="display:flex; gap:10px;">
+          <button class="btn btn-primary" onclick="detectLocation()" id="btn-detect" data-i18n="detect_btn">偵測我的位置</button>
+          <button class="btn btn-secondary" onclick="resetLocation()" data-i18n="reset_btn">顯示全部</button>
+        </div>
+      </div>
+      <div class="center-grid" id="centers-grid"></div>
+    </div>
+  </section>
+</main>
+<footer>
+  <div class="container">
+    <p>&copy; 2025 RecycleBin.com. All rights reserved.</p>
+  </div>
+</footer>
+
+<script>
+  const i18n = {
+    'zh-Hant': {
+      nav_home:'首頁', nav_guides:'指南', nav_centers:'據點', nav_events:'活動', nav_howto:'教學',
+      centers_page_title:'尋找回收據點', centers_page_sub:'根據你的位置，顯示最近的回收站與據點。',
+      geo_error:'無法取得位置，顯示所有據點。', detecting:'正在偵測位置...',
+      loc_unknown:'位置未知', loc_hint:'— 點擊按鈕以偵測',
+      detect_btn:'偵測我的位置', reset_btn:'顯示全部',
+      c1_name:'台中回收中心', c1_addr:'台中市西屯區文心路三段 100 號', c1_hours:'09:00 - 18:00', get_dir:'取得路線',
+      c2_name:'台北資源回收站', c2_addr:'台北市中山區南京東路二段 88 號', c2_hours:'08:30 - 17:30',
+      c3_name:'高雄環保園區', c3_addr:'高雄市苓雅區三多一路 150 號', c3_hours:'09:00 - 20:00',
+      c4_name:'台南資源分類站', c4_addr:'台南市東區中華路二段 75 號', c4_hours:'10:00 - 18:00',
+      c5_name:'新北回收廣場', c5_addr:'新北市板橋區文化路一段 200 號', c5_hours:'08:00 - 17:00',
+      c6_name:'桃園循環中心', c6_addr:'桃園市中壢區環北路 50 號', c6_hours:'09:30 - 18:30'
+    },
+    'en': {
+      nav_home:'Home', nav_guides:'Guides', nav_centers:'Centers', nav_events:'Events', nav_howto:'How-To',
+      centers_page_title:'Find a Center', centers_page_sub:'Showing drop-off and recycling centers near you.',
+      geo_error:'Unable to detect location. Showing all centers.', detecting:'Detecting location...',
+      loc_unknown:'Location unknown', loc_hint:"— tap 'Detect' to find nearby centers",
+      detect_btn:'Detect My Location', reset_btn:'Show All',
+      c1_name:'Taichung Recycling Center', c1_addr:'No. 100, Wenxin Rd. Sec. 3, Xitun, Taichung', c1_hours:'09:00 - 18:00', get_dir:'Directions',
+      c2_name:'Taipei Resource Station', c2_addr:'No. 88, Nanjing E. Rd. Sec. 2, Zhongshan, Taipei', c2_hours:'08:30 - 17:30',
+      c3_name:'Kaohsiung Eco Park', c3_addr:'No. 150, Sanduo 1st Rd., Lingya, Kaohsiung', c3_hours:'09:00 - 20:00',
+      c4_name:'Tainan Sort Center', c4_addr:'No. 75, Zhonghua Rd. Sec. 2, East, Tainan', c4_hours:'10:00 - 18:00',
+      c5_name:'New Taipei Recycle Plaza', c5_addr:'No. 200, Wenhua Rd. Sec. 1, Banqiao, New Taipei', c5_hours:'08:00 - 17:00',
+      c6_name:'Taoyuan Loop Center', c6_addr:'No. 50, Huanbei Rd., Zhongli, Taoyuan', c6_hours:'09:30 - 18:30'
+    }
+  };
+
+  const centers = [
+    { id:'c1', lat:24.1895, lng:120.6452, name_i18n:'c1_name', addr_i18n:'c1_addr', hours_i18n:'c1_hours' },
+    { id:'c2', lat:25.0576, lng:121.5358, name_i18n:'c2_name', addr_i18n:'c2_addr', hours_i18n:'c2_hours' },
+    { id:'c3', lat:22.6226, lng:120.2856, name_i18n:'c3_name', addr_i18n:'c3_addr', hours_i18n:'c3_hours' },
+    { id:'c4', lat:22.9926, lng:120.2186, name_i18n:'c4_name', addr_i18n:'c4_addr', hours_i18n:'c4_hours' },
+    { id:'c5', lat:25.0176, lng:121.4732, name_i18n:'c5_name', addr_i18n:'c5_addr', hours_i18n:'c5_hours' },
+    { id:'c6', lat:24.9711, lng:121.2225, name_i18n:'c6_name', addr_i18n:'c6_addr', hours_i18n:'c6_hours' }
+  ];
+
+  let currentLang = document.documentElement.lang || 'zh-Hant';
+
+  function toggleLanguage(){ const c=document.documentElement.lang||'zh-Hant'; setLanguage(c==='zh-Hant'?'en':'zh-Hant'); }
+  function setLanguage(l){
+    document.documentElement.lang=l; localStorage.setItem('recyclebin-lang',l); currentLang=l;
+    const m=i18n[l]||i18n['zh-Hant'];
+    document.querySelectorAll('[data-i18n]').forEach(el=>{ const v=m[el.getAttribute('data-i18n')]; if(!v)return; el.innerHTML=v; });
+    renderCenters(window._centerMode || 'all', window._userLat, window._userLng);
+  }
+  function getLabel(i18nKey){ return (i18n[currentLang] || i18n['zh-Hant'])[i18nKey] || i18nKey; }
+
+  function renderCenters(mode, lat, lng){
+    const grid = document.getElementById('centers-grid');
+    if (!grid) return;
+    window._centerMode = mode; window._userLat = lat; window._userLng = lng;
+    let list = centers.map(c => {
+      let distance = null;
+      if (mode === 'nearby' && typeof lat === 'number' && typeof lng === 'number') {
+        distance = haversine(lat, lng, c.lat, c.lng);
+      }
+      return { ...c, distance };
+    });
+    if (mode === 'nearby') {
+      list = list.filter(c => c.distance !== null).sort((a,b) => a.distance - b.distance);
+    }
+    grid.innerHTML = list.map(c => `
+      <div class="center-card">
+        <h3>${getLabel(c.name_i18n)}</h3>
+        <div class="addr">${getLabel(c.addr_i18n)}</div>
+        <div class="distance">
+          <span>${c.distance !== null ? '📍 ' + c.distance.toFixed(1) + ' km' : ''}</span>
+        </div>
+        <div class="meta"><span data-i18n="hours">${currentLang === 'en' ? 'Hours' : '營業時間'}</span><span>${getLabel(c.hours_i18n)}</span></div>
+        <a target="_blank" rel="noopener" class="btn btn-primary" data-i18n="get_dir">${currentLang === 'en' ? 'Directions' : '取得路線'}</a>
+      </div>
+    `).join('');
+  }
+
+  function haversine(lat1, lng1, lat2, lng2){
+    const R=6371; const dLat=(lat2-lat1)*Math.PI/180; const dLng=(lng2-lng1)*Math.PI/180;
+    const a=Math.sin(dLat/2)**2+Math.cos(lat1*Math.PI/180)*Math.cos(lat2*Math.PI/180)*Math.sin(dLng/2)**2;
+    return R*2*Math.atan2(Math.sqrt(a), Math.sqrt(1-a));
+  }
+
+  function detectLocation(){
+    const locText = document.getElementById('location-text');
+    const errorBox = document.getElementById('location-error');
+    if (!locText) return;
+    if (!navigator.geolocation) { showError(currentLang==='en'?'Geolocation not supported.':'此瀏覽器不支援定位，顯示所有據點。'); renderCenters('all', null, null); return; }
+    errorBox.classList.add('hidden');
+    locText.innerHTML = `<strong>${getLabel('detecting')}</strong>`;
+    navigator.geolocation.getCurrentPosition(
+      (pos) => {
+        const lat=pos.coords.latitude, lng=pos.coords.longitude;
+        window._userLat=lat; window._userLng=lng;
+        locText.innerHTML = `<strong>${lat.toFixed(3)}, ${lng.toFixed(3)}</strong> <span>${currentLang==='en'?'— showing nearest centers':' — 顯示最近的據點'}</span>`;
+        renderCenters('nearby', lat, lng);
+      },
+      () => { fallbackIP(); },
+      { enableHighAccuracy: true, timeout: 8000 }
+    );
+  }
+
+  function fallbackIP(){
+    fetch('https://ipapi.co/json/')
+      .then(r => r.json())
+      .then(d => {
+        const lat = d.latitude, lng = d.longitude, city = d.city || '', region = d.region || '';
+        window._userLat=lat; window._userLng=lng;
+        const locText = document.getElementById('location-text');
+        if (locText) locText.innerHTML = `<strong>${city}${region?', '+region:''} (${lat.toFixed(2)}, ${lng.toFixed(2)})</strong> <span>${currentLang==='en'?'— approximate location':' — 約略位置'}</span>`;
+        renderCenters('nearby', lat, lng);
+      })
+      .catch(() => { showError(currentLang==='en'?'Location detection failed.':'位置偵測失敗'); renderCenters('all', null, null); });
+  }
+
+  function showError(msg){
+    const b=document.getElementById('location-error'); if(b){ b.textContent=msg; b.classList.remove('hidden'); }
+  }
+  function resetLocation(){ renderCenters('all', null, null); const locText=document.getElementById('location-text'); if(locText) locText.innerHTML=`<strong>${getLabel('loc_unknown')}</strong> <span>${getLabel('loc_hint')}</span>`; }
+
+  (function(){
+    const s=localStorage.getItem('recyclebin-lang'); if(s&&(s==='en'||s==='zh-Hant')) setLanguage(s);
+    renderCenters('all', null, null);
+    detectLocation();
+  })();
+</script>
+</body>
+</html>
