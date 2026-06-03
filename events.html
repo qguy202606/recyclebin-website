@@ -98,13 +98,16 @@
       const res = await fetch('events.json', {cache: 'no-store'});
       if (!res.ok) throw new Error('fetch failed');
       const data = await res.json();
+      console.log('[events] raw data:', data);
       if (!Array.isArray(data)) throw new Error('bad data');
       const selected = stateFilter ? stateFilter.value : 'ALL';
       const filtered = selected === 'ALL' ? data : data.filter(ev => (ev.state || '') === selected);
       const states = Array.from(new Set((data || []).map(ev => ev.state).filter(Boolean))).sort();
+      console.log('[events] states:', states, 'selected:', selected);
       if (stateFilter) {
         stateFilter.innerHTML = ['<option value="ALL">All United States</option>', ...states.map(s => `<option value="${s}">${s}</option>`).join('')];
         stateFilter.value = selected;
+        console.log('[events] filter options:', stateFilter.innerHTML);
       }
       if (!filtered.length) {
         status.textContent = i18n['en'].no_events;
