@@ -1,57 +1,36 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-<meta charset="UTF-8">
-<meta name="viewport" content="width=device-width, initial-scale=1.0">
-<link rel="icon" href="/favicon.svg">
+<meta charset="UTF-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1" />
 <title>RecycleBin.com - Events</title>
-<style>
-  * { margin: 0; padding: 0; box-sizing: border-box; }
-  body { font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', 'Helvetica Neue', Arial, sans-serif; line-height: 1.6; color: #fff; background: #0b0b0b; }
-  .container { max-width: 1200px; margin: 0 auto; padding: 0 20px; }
-  .btn { padding: 5px 9px; border-radius: 8px; background: #0f9d58; color: #fff; border: none; font-size: 12px; font-weight: 600; cursor: pointer; }
-  .btn:hover { filter: brightness(1.1); }
-
-  header { background: #0b0b0b; border-bottom: 1px solid #222; position: sticky; top: 0; z-index: 100; }
-  nav { display: flex; justify-content: space-between; align-items: center; padding: 20px 0; }
-  .logo { font-size: 24px; font-weight: 700; color: #fff; text-decoration: none; display: flex; align-items: center; gap: 8px; }
-  .logo span { background: #0f9d58; color: #fff; padding: 4px 10px; border-radius: 8px; font-size: 20px; }
-  .nav-right { display: flex; align-items: center; gap: 20px; }
-  .nav-links { display: flex; gap: 28px; list-style: none; }
-  .nav-links a { text-decoration: none; color: #c9c9c9; font-weight: 500; transition: color 0.2s; }
-  .nav-links a:hover { color: #0f9d58; }
-  .lang-toggle { background: #1a1a1a; border: 1px solid #333; color: #fff; padding: 6px 12px; border-radius: 8px; cursor: pointer; font-size: 13px; font-weight: 600; }
-.loader-spin{display:inline-block;width:12px;height:12px;border:2px solid rgba(255,255,255,.15);border-top-color:#0f9d58;border-radius:50%;animation:dspin .75s linear infinite;vertical-align:middle;margin-right:8px}
-@keyframes dspin{to{transform:rotate(360deg)}}
-</style>
+<link rel="stylesheet" href="/css/main.css" />
 </head>
 <body>
 <header>
-  <div class="container">
-    <nav>
-      <a href="index.html" class="logo"><span>Recycle</span> Bin.com</a>
-      <div class="nav-right">
-        <ul class="nav-links">
-          <li><a href="index.html" data-i18n="nav_home">Home</a></li>
-          <li><a href="guides.html" data-i18n="nav_guides">Guides</a></li>
-          <li><a href="centers.html" data-i18n="nav_centers">Centers</a></li>
-          <li><a href="events.html" class="active" data-i18n="nav_events">Events</a></li>
-          <li><a href="howto.html" data-i18n="nav_howto">How-To</a></li>
-        </ul>
-        <button id="langToggle" class="lang-toggle" type="button">EN</button>
-      </div>
-    </nav>
+  <div class="container header-inner">
+    <a href="/index.html" class="logo"><span>Recycle</span>Bin.com</a>
+    <div class="nav-right">
+      <ul class="nav-links">
+        <li><a href="/guides.html" data-i18n="nav_guides">Guides</a></li>
+        <li><a href="/centers.html" data-i18n="nav_centers">Centers</a></li>
+        <li><a href="/events.html" class="active" data-i18n="nav_events">Events</a></li>
+        <li><a href="/howto.html" data-i18n="nav_howto">How-To</a></li>
+      </ul>
+      <button id="langToggle" class="lang-toggle" type="button">EN</button>
+    </div>
   </div>
 </header>
+
 <main>
-  <section class="page-header" style="padding:80px 0 40px;text-align:center;">
+  <section class="page-header">
     <div class="container">
       <h1 data-i18n="nav_events">Events</h1>
-      <p style="color:#9a9a9a;margin-top:12px;">Community recycling, cleanup, and education.</p>
-      <div class="filter-bar" style="margin-top:22px;display:inline-flex;align-items:center;gap:10px;">
-        <label for="stateSelect" style="color:#b0b0b0;font-weight:500;">Filter state:</label>
-        <select id="stateSelect" style="background:#141414;color:#e8e8e8;border:1px solid #2e2e2e;border-radius:10px;padding:9px 12px;font-size:14px;min-width:180px;">
-          <option value="ALL">All United States</option>
+      <p data-i18n="events_sub">Community recycling, cleanup, and education.</p>
+      <div class="filter-bar">
+        <label for="stateSelect" data-i18n="filter_state">Filter state:</label>
+        <select id="stateSelect">
+          <option value="ALL" data-i18n="filter_all">All United States</option>
         </select>
       </div>
     </div>
@@ -59,100 +38,95 @@
 
   <section>
     <div class="container">
-      <div id="feed-status" class="feed-notice" style="background:#121212;border:1px solid #262626;color:#c5c5c5;padding:10px 14px;border-radius:12px;font-size:14px;margin-bottom:14px;">
-        <span class="loader-spin"></span>Loading events...
-      </div>
-      <div class="event-list" id="event-list" style="display:grid;grid-template-columns:repeat(auto-fit,minmax(300px,1fr));gap:20px;padding-bottom:120px;"></div>
+      <div id="feed-status" class="feed-notice" data-i18n="loading">Loading events…</div>
+      <div id="event-list" class="event-list"></div>
     </div>
   </section>
 </main>
+
 <footer>
-  <div class="container" id="site-footer"></div>
+  <div class="container">
+    <p>&copy; 2025 RecycleBin.com</p>
+  </div>
 </footer>
 
 <script src="/js/site.js"></script>
 <script>
-  // Data-driven events module using shared layout + i18n.
-  (function(){
-    var listEl = document.getElementById('event-list');
-    var statusEl = document.getElementById('feed-status');
-    var stateSelect = document.getElementById('stateSelect');
-    var current = 'ALL';
+(function () {
+  var listEl = document.getElementById('event-list');
+  var statusEl = document.getElementById('feed-status');
+  var stateSelect = document.getElementById('stateSelect');
+  var current = 'ALL';
 
-    function renderStates(states){
-      if(!stateSelect) return;
-      stateSelect.innerHTML = '';
-      var all = document.createElement('option');
-      all.value = 'ALL';
-      all.textContent = RecycleBin.t('filter_all');
-      stateSelect.appendChild(all);
-      (states || []).forEach(function(s){
-        var opt = document.createElement('option');
-        opt.value = s; opt.textContent = s;
-        stateSelect.appendChild(opt);
-      });
-    }
+  function renderStates(states) {
+    if (!stateSelect) return;
+    stateSelect.innerHTML = '<option value="ALL">' + RecycleBin.t('filter_all') + '</option>';
+    (states || []).forEach(function (s) {
+      var opt = document.createElement('option');
+      opt.value = s;
+      opt.textContent = s;
+      stateSelect.appendChild(opt);
+    });
+  }
 
-    function card(ev){
-      return '<div class="event-card">' +
+  function card(ev) {
+    return (
+      '<div class="event-card">' +
         '<div class="date">' + ev.date + '</div>' +
         (ev.state ? '<div class="badge">' + ev.state + '</div>' : '') +
-        '<h3 style="font-size:20px;margin:8px 0 4px;color:#f3f3f3;">' + ev.title + '</h3>' +
-        '<p style="color:#919191;font-size:14px;margin-bottom:8px;">' + ev.desc + '</p>' +
-        (ev.location ? '<p style="color:#888;font-size:13px;margin-bottom:14px;">📍 ' + ev.location + '</p>' : '') +
-        '<div style="display:flex;gap:10px;flex-wrap:wrap;margin-top:4px;">' +
-          '<a class="btn" href="/event-detail.html?id=' + ev.id + '">Details</a>' +
-          (ev.join_url ? '<a class="btn btn-secondary" style="background:#141414;color:#e8e8e8;border:1px solid #2e2e2e;" target="_blank" rel="noopener" href="' + ev.join_url + '">Join</a>' : '') +
+        '<h3>' + ev.title + '</h3>' +
+        (ev.desc ? '<p>' + ev.desc + '</p>' : '') +
+        (ev.location ? '<p class="meta">' + ev.location + '</p>' : '') +
+        '<div class="actions">' +
+          '<a class="btn btn-primary" href="/event-detail.html?id=' + ev.id + '">' + RecycleBin.t('read_more') + '</a>' +
+          (ev.join_url ? '<a class="btn btn-secondary" target="_blank" rel="noopener" href="' + ev.join_url + '">' + RecycleBin.t('event_join') + '</a>' : '') +
         '</div>' +
-      '</div>';
+      '</div>'
+    );
+  }
+
+  function render(data) {
+    var items;
+    if (current === 'ALL') {
+      items = data.slice();
+    } else {
+      items = data.filter(function (x) { return x.state === current; });
     }
-
-    function render(data){
-      var filtered = current === 'ALL' ? data.slice() : data.filter(function(x){ return x.state === current; });
-      if(!filtered.length){
-        statusEl.textContent = RecycleBin.t('status_none');
-        listEl.innerHTML = '';
-        return;
-      }
-      statusEl.textContent = RecycleBin.t('status_loaded');
-      listEl.innerHTML = filtered.map(card).join('');
+    if (!items.length) {
+      statusEl.textContent = RecycleBin.t('status_none');
+      listEl.innerHTML = '';
+      return;
     }
+    statusEl.textContent = RecycleBin.t('status_loaded');
+    listEl.innerHTML = items.map(card).join('');
+  }
 
-    async function initLayout(){
-      RecycleBin.initLayout({active: '/events.html'});
-      RecycleBin.initI18n();
-    }
+  async function init() {
+    RecycleBin.initLayout({ active: '/events.html' });
+    RecycleBin.initI18n();
+  }
 
-    async function load(){
-      var res = await fetch('/events.json', {cache: 'no-store'});
-      if(!res.ok) throw new Error('fetch failed');
-      var data = await res.json();
-      if(!Array.isArray(data)) throw new Error('bad data');
+  async function load() {
+    var res = await fetch('/events.json', { cache: 'no-store' });
+    if (!res.ok) throw new Error('fetch failed');
+    var data = await res.json();
+    if (!Array.isArray(data)) throw new Error('bad data');
 
-      var map = {};
-      data.forEach(function(ev){
-        map[ev.id] = ev;
-      });
+    window.__eventsData = data;
+    var states = data.map(function (e) { return e.state; });
+    renderStates(Array.from(new Set(states.filter(Boolean))).sort());
+    render(data);
+  }
 
-      window.__eventsMap = window.__eventsMap || {};
-      Object.keys(map).forEach(function(k){ window.__eventsMap[k] = map[k]; });
-      window.__eventsData = data;
+  if (stateSelect) {
+    stateSelect.addEventListener('change', function () {
+      current = stateSelect.value;
+      render(window.__eventsData || []);
+    });
+  }
 
-      var unique = Array.from(new Set(states.filter(Boolean))).sort();
-      renderStates(unique);
-      render(data);
-      initLayout();
-    }
-
-    if(stateSelect){
-      stateSelect.addEventListener('change', function(){
-        current = stateSelect.value;
-        render(window.__eventsData || []);
-      });
-    }
-
-    load();
-  })();
+  load().then(init);
+})();
 </script>
 </body>
 </html>
