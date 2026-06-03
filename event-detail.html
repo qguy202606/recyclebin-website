@@ -114,9 +114,9 @@
       const meta = document.getElementById('event-meta');
       const body = document.getElementById('event-body');
       if (!id){
-        header.innerHTML = '<h1 data-i18n="detail_title">Event Detail</h1>';
-        meta.textContent = 'No event selected.';
-        body.innerHTML = '<div class="empty">No event selected.</div>';
+        header.innerHTML = '<h1 data-i18n="detail_title">Events</h1>';
+        meta.textContent = 'Pick an upcoming event to view details.';
+        body.innerHTML = '<div class="empty"><a class="btn btn-primary" href="events.html">Browse events</a></div>';
         return;
       }
       try {
@@ -128,7 +128,7 @@
         if (!ev){
           header.innerHTML = '<h1 data-i18n="detail_title">Event Detail</h1>';
           meta.textContent = 'Event not found.';
-          body.innerHTML = '<div class="empty">Event not found.</div>';
+          body.innerHTML = '<div class="empty">Event not found. <a class="btn btn-secondary" href="events.html">Back to Events</a></div>';
           return;
         }
         const dateStr = ev.date || '';
@@ -139,6 +139,7 @@
         body.innerHTML = '<div class="detail">' +
           '<div class="date">' + dateStr + '</div>' +
           (locStr ? '<div class="location">' + locStr + '</div>' : '') +
+          (ev.state ? '<div class="badge" style="margin-bottom:10px;">' + ev.state + '</div>' : '') +
           '<h2 data-i18n="detail_title">About this event</h2>' +
           '<p>' + (ev.desc || '') + '</p>' +
           '<p>' + (ev.body || '') + '</p>' +
@@ -150,7 +151,7 @@
       } catch (e){
         header.innerHTML = '<h1 data-i18n="detail_title">Event Detail</h1>';
         meta.textContent = 'Failed to load event.';
-        body.innerHTML = '<div class="empty">Failed to load event.</div>';
+        body.innerHTML = '<div class="empty">Failed to load event. <a class="btn btn-secondary" href="events.html">Back to Events</a></div>';
       }
     }
     getEvent();
