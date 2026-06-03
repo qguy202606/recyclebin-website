@@ -1,0 +1,64 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>RecycleBin.com - Coming Soon</title>
+  <style>
+    * { margin: 0; padding: 0; box-sizing: border-box; }
+    body {
+      font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, Helvetica, Arial, sans-serif;
+      background: #ffffff;
+      color: #111111;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      min-height: 100vh;
+      padding: 20px;
+    }
+    .box {
+      text-align: center;
+      max-width: 520px;
+    }
+    .logo {
+      font-size: 28px;
+      font-weight: 800;
+      margin-bottom: 24px;
+      letter-spacing: -0.3px;
+    }
+    .logo span {
+      background: #000;
+      color: #fff;
+      padding: 6px 12px;
+      border-radius: 8px;
+      font-size: 22px;
+    }
+    h1 {
+      font-size: 32px;
+      font-weight: 800;
+      margin-bottom: 10px;
+    }
+    p {
+      color: #555;
+      font-size: 17px;
+      line-height: 1.6;
+      margin-bottom: 18px;
+    }
+    .note {
+      color: #777;
+      font-size: 14px;
+    }
+  </style>
+</head>
+<body>
+  <div class="box">
+    <div class="logo"><span>Recycle</span> Bin.com</div>
+    <h1>Coming Soon</h1>
+    <p>We're getting things ready. The site will be back online shortly.</p>
+    <p class="note">&copy; <span id="footerYear">2026</span> RecycleBin.com. All rights reserved.</p>
+  </div>
+  <script>
+    try { var y = new Date().getFullYear(); var el = document.getElementById('footerYear'); if (el) el.textContent = y; } catch (e) {}
+  </script>
+</body>
+</html>
