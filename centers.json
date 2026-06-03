@@ -1,0 +1,98 @@
+[
+  {
+    "id": "irvine",
+    "lat": 33.6839,
+    "lng": -117.8267,
+    "name": "Irvine Recycling Center",
+    "addr": "8 Middleton St., Irvine, CA 92620",
+    "hours": "09:00 - 18:00"
+  },
+  {
+    "id": "los-angeles",
+    "lat": 34.0522,
+    "lng": -118.2437,
+    "name": "Los Angeles Recycling Center",
+    "addr": "Downtown LA, Los Angeles, CA 90017",
+    "hours": "08:30 - 17:30"
+  },
+  {
+    "id": "san-diego",
+    "lat": 32.7157,
+    "lng": -117.1611,
+    "name": "San Diego Recycling Center",
+    "addr": "4565 Convoy St, San Diego, CA 92111",
+    "hours": "09:00 - 20:00"
+  },
+  {
+    "id": "anaheim",
+    "lat": 33.8363,
+    "lng": -117.9175,
+    "name": "Anaheim Recycling Center",
+    "addr": "1000 S Anaheim Blvd, Anaheim, CA 92805",
+    "hours": "10:00 - 18:00"
+  },
+  {
+    "id": "santa-ana",
+    "lat": 33.7455,
+    "lng": -117.8676,
+    "name": "Santa Ana Recycling Center",
+    "addr": "600 Ward St, Santa Ana, CA 92701",
+    "hours": "08:00 - 17:00"
+  },
+  {
+    "id": "long-beach",
+    "lat": 33.7701,
+    "lng": -118.1637,
+    "name": "Long Beach Recycling Center",
+    "addr": "2000 E Anaheim St, Long Beach, CA 90804",
+    "hours": "09:30 - 18:30"
+  },
+  {
+    "id": "phoenix",
+    "lat": 33.4484,
+    "lng": -112.074,
+    "name": "Phoenix Recycling Center",
+    "addr": "321 N 11th Ave, Phoenix, AZ 85007",
+    "hours": "08:00 - 17:00"
+  },
+  {
+    "id": "tempe",
+    "lat": 33.3062,
+    "lng": -111.8445,
+    "name": "Tempe Recycling Center",
+    "addr": "1550 E Apache Blvd, Tempe, AZ 85281",
+    "hours": "09:00 - 18:00"
+  },
+  {
+    "id": "avondale",
+    "lat": 33.4353,
+    "lng": -112.2376,
+    "name": "Avondale Recycling Center",
+    "addr": "11925 W Lower Buckeye Rd, Avondale, AZ 85323",
+    "hours": "08:30 - 17:30"
+  },
+  {
+    "id": "goodyear",
+    "lat": 33.5806,
+    "lng": -112.2374,
+    "name": "Goodyear Recycling Center",
+    "addr": "1701 N Litchfield Rd, Goodyear, AZ 85395",
+    "hours": "09:00 - 18:00"
+  },
+  {
+    "id": "surprise",
+    "lat": 33.6045,
+    "lng": -112.3816,
+    "name": "Surprise Recycling Center",
+    "addr": "15920 N Bullard Ave, Surprise, AZ 85374",
+    "hours": "08:00 - 17:00"
+  },
+  {
+    "id": "chandler",
+    "lat": 33.2844,
+    "lng": -111.8792,
+    "name": "Chandler Recycling Center",
+    "addr": "225 N Combs Rd, Chandler, AZ 85226",
+    "hours": "09:00 - 18:00"
+  }
+]

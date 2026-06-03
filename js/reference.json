@@ -1,0 +1,107 @@
+[
+  {
+    "item": "Aluminum can",
+    "material": "Metal",
+    "do": "Place in curbside recycling bin. Rinse lightly if needed.",
+    "dont": "Do not crush if your local program asks for intact cans.",
+    "local_note": "Most California programs accept aluminum cans."
+  },
+  {
+    "item": "Batteries (AA/AAA)",
+    "material": "E-Waste / Hazardous",
+    "do": "Drop at hardware store or Household Hazardous Waste (HHW) facility.",
+    "dont": "Do not place in curbside bin or trash.",
+    "local_note": "Orange County HHW facilities accept household batteries."
+  },
+  {
+    "item": "Cardboard box",
+    "material": "Paper",
+    "do": "Flatten and place in recycling bin. Keep dry.",
+    "dont": "Do not recycle if contaminated with food or grease.",
+    "local_note": "Irvine accepts flattened cardboard in curbside recycling."
+  },
+  {
+    "item": "Coffee cup (paper)",
+    "material": "Paper / Mixed",
+    "do": "Check local guidelines; some cities accept in recycling.",
+    "dont": "Often not accepted due to plastic lining.",
+    "local_note": "Many California cities do NOT accept disposable coffee cups."
+  },
+  {
+    "item": "E-waste (phone/laptop)",
+    "material": "E-Waste",
+    "do": "Drop at certified e-waste recyclers or HHW events.",
+    "dont": "Never put in regular trash or recycling.",
+    "local_note": "Many retailers offer free e-waste drop-off in California."
+  },
+  {
+    "item": "Food scraps",
+    "material": "Organic",
+    "do": "Compost at home or use organic waste collection if available.",
+    "dont": "Do not put in curbside recycling.",
+    "local_note": "Irvine offers organic waste collection for some residents."
+  },
+  {
+    "item": "Glass bottle",
+    "material": "Glass",
+    "do": "Rinse and recycle in glass bin if accepted locally.",
+    "dont": "Do not mix broken glass with curbside recycling.",
+    "local_note": "Glass is accepted in Orange County recycling programs."
+  },
+  {
+    "item": "Light bulb (LED/CFL)",
+    "material": "E-Waste / Hazardous",
+    "do": "CFL: HHW drop-off. LED: some stores accept returns.",
+    "dont": "Do not put in curbside bin.",
+    "local_note": "Home Depot and Lowe’s often accept CFLs."
+  },
+  {
+    "item": "Plastic bottle",
+    "material": "Plastic",
+    "do": "Empty, rinse, and recycle. Keep caps on if accepted.",
+    "dont": "Do not recycle plastic bags or film.",
+    "local_note": "Most California curbside programs accept PET bottles."
+  },
+  {
+    "item": "Plastic bag",
+    "material": "Plastic / Film",
+    "do": "Return to grocery store drop-off if available.",
+    "dont": "Do not place in curbside recycling.",
+    "local_note": "Many supermarkets in Irvine offer bag recycling bins."
+  },
+  {
+    "item": "Pizza box (greasy)",
+    "material": "Paper / Contaminated",
+    "do": "Tear off clean top and recycle; trash greasy bottom.",
+    "dont": "Do not recycle heavily soiled paper.",
+    "local_note": "Common item for contamination — when in doubt, trash it."
+  },
+  {
+    "item": "Styrofoam",
+    "material": "Plastic / Foam",
+    "do": "Generally trash. Some specialized drop-offs accept clean foam.",
+    "dont": "Do not put in curbside recycling.",
+    "local_note": "Rarely accepted in California curbside programs."
+  },
+  {
+    "item": "Tetra Pak (carton)",
+    "material": "Carton",
+    "do": "Rinse and recycle where carton recycling is accepted.",
+    "dont": "Do not recycle if local program excludes cartons.",
+    "local_note": "Check OC Waste & Recycling for carton acceptance."
+  },
+  {
+    "item": "Tire",
+    "material": "Rubber",
+    "do": "Take to tire retailer, auto shop, or HHW event.",
+    "dont": "Do not leave at curbside or dump illegally.",
+    "local_note": "California tire retailers often accept old tires for a fee."
+  },
+  {
+    "item": "Newspaper / office paper",
+    "material": "Paper",
+    "do": "Keep dry and place in curbside paper recycling.",
+    "dont": "Do not recycle if wet or soiled.",
+    "local_note": "Standard curbside paper recyclable in Irvine."
+  }
+]
