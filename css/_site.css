@@ -60,3 +60,13 @@
   background: #2e7d32;
   color: white;
 }
+
+.site-footer .footer-tagline,
+.site-footer .footer-copy {
+  text-align: center;
+  color: #666;
+  font-size: 0.85em;
+}
+.site-footer .footer-copy {
+  padding-bottom: 4px;
+}
