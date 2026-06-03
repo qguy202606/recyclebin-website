@@ -1,29 +1,29 @@
 [
   {
-    "id": "huntington-beach-veterans-cleanup",
-    "date": "2026-07-12",
+    "id": "irvine-drive-recycle-april-26",
+    "date": "2026-04-26",
+    "title": "Drive to Recycle Saturday - Irvine",
+    "desc": "City of Irvine community recycling event. Bring recyclable materials for a chance to win cash and prizes for IUSD schools.",
+    "location": "Irvine, CA (check City of Irvine website for exact location)",
+    "body": "High-energy, family-friendly event. The community collects and brings recyclable materials. Prizes benefit Irvine Unified School District schools.",
+    "join_url": "https://cityofirvine.org/news-media/news-article/take-part-drive-recycle-saturday-april-26"
+  },
+  {
+    "id": "ocwr-free-compost-giveaway-april-18",
+    "date": "2026-04-18",
+    "title": "OCWR Free Community Compost Giveaway",
+    "desc": "Free compost distribution for Orange County residents in celebration of Earth Day.",
+    "location": "Orange County (check oclandfills.com for exact location)",
+    "body": "Free compost available for OC residents. Hosted by OC Waste & Recycling in partnership with community organizations.",
+    "join_url": "https://oclandfills.com/news/ocwr-hosts-free-community-compost-giveaway-april-18"
+  },
+  {
+    "id": "ocwr-hhw-huntington-beach",
+    "date": "2026-06-06",
     "title": "Huntington Beach Cleanup with Veterans!",
     "desc": "Open to anyone. Join veterans and volunteers for a 2.5 hour community cleanup on Huntington Beach.",
     "location": "405 Pacific Coast Hwy, Huntington Beach, CA 92648",
-    "body": "Doors open at 6:45 AM, cleanup from 9:00 to 11:30 AM, optional 21+ veteran social afterward. Gloves and bags provided.",
+    "body": "Doors open at 6:45 AM, cleanup from 9:00 to 11:30 AM. Gloves and bags provided. Optional 21+ veteran social afterward.",
     "join_url": "https://www.eventbrite.com/e/huntington-beach-cleanup-with-veterans-tickets-1989396031082"
-  },
-  {
-    "id": "world-ocean-day-cleanup",
-    "date": "2026-06-08",
-    "title": "World Ocean Day Beach Cleanup",
-    "desc": "Celebrate World Ocean Day with a hands-on beach cleanup at Newport Beach Pier.",
-    "location": "Newport Beach Pier, 1 Newport Pier, Newport Beach, CA 92663",
-    "body": "9:00 AM - 12:00 PM. Bring sunscreen, comfy shoes, and friends. Family friendly.",
-    "join_url": "https://www.eventbrite.com/e/world-ocean-day-beach-cleanup-tickets-1988583194867"
-  },
-  {
-    "id": "lb-72nd-place-cleanup",
-    "date": "2026-06-06",
-    "title": "LBC Beach Cleanup",
-    "desc": "Community cleanup at 72nd Place in Long Beach. Food and refreshments provided.",
-    "location": "72nd Place, Long Beach, CA 90803",
-    "body": "9:00 AM - 10:00 AM. Gloves and trash bags provided. Easy parking at the 72nd lot.",
-    "join_url": "https://www.eventbrite.com/e/lbc-beach-cleanup-tickets-1990519285767"
   }
 ]
