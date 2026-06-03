@@ -1,4 +1,0 @@
-User-agent: *
-Allow: /
-Disallow: /js/search-index.json
-Sitemap: https://qguy202606.github.io/recyclebin-website/sitemap.xml
