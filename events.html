@@ -29,6 +29,8 @@
   .event-card h3 { font-size: 20px; margin-bottom: 6px; color: #e9e9e9; }
   .event-card p { color: #8a8a8a; font-size: 14px; margin-bottom: 18px; }
   .event-card .btn { display: inline-block; padding: 10px 22px; background: #0f9d58; color: #fff; border-radius: 8px; text-decoration: none; font-size: 14px; }
+  .event-card .btn-secondary { background: #141414; color: #e8e8e8; border: 1px solid #2e2e2e; }
+  .feed-notice { background: #111; border: 1px solid #2e2e2e; color: #bfbfbf; padding: 10px 14px; border-radius: 10px; font-size: 14px; margin-bottom: 14px; }
   footer { background: #050505; padding: 40px 0; border-top: 1px solid #141414; text-align: center; color: #555; font-size: 13px; }
   @media (max-width: 768px) { .nav-links { display: none; } .page-header h1 { font-size: 32px; } }
 </style>
@@ -58,14 +60,8 @@
   </section>
   <section>
     <div class="container">
-      <div class="event-list">
-        <div class="event-card">
-          <div class="date" data-i18n="feed_label">External feed</div>
-          <h3 data-i18n="feed_title">Partner Events</h3>
-          <p data-i18n="feed_desc">This section will be populated by an external events provider.</p>
-          <a href="#" class="btn" data-i18n="feed_action">Refresh later</a>
-        </div>
-      </div>
+      <div id="feed-status" class="feed-notice hidden">Loading events...</div>
+      <div class="event-list" id="event-list"></div>
     </div>
   </section>
 </main>
@@ -79,12 +75,41 @@
     'en': {
       nav_home:'Home', nav_guides:'Guides', nav_centers:'Centers', nav_events:'Events', nav_howto:'How-To',
       events_page_title:'Upcoming Events', events_page_sub:'Community events are powered by an external source. Check back soon for listings from partner organizations.',
-      feed_label:'External feed', feed_title:'Partner Events', feed_desc:'This section will be populated by an external events provider.', feed_action:'Refresh later'
+      loading:'Loading events...', no_events:'No events available.', external_feed:'Events are loaded from an external provider.'
     }
   };
-  function toggleLanguage(){ const c=document.documentElement.lang||'en'; setLanguage(c==='en'?'en':'en'); }
   function setLanguage(l){ document.documentElement.lang=l; localStorage.setItem('recyclebin-lang',l); const m=i18n[l]||i18n['en']; document.querySelectorAll('[data-i18n]').forEach(el=>{ const k=el.getAttribute('data-i18n'); const v=m[k]; if(!v)return; el.innerHTML=v; }); }
   (function(){ const s=localStorage.getItem('recyclebin-lang'); if(s&&(s==='en'||s==='en')) setLanguage(s); })();
+
+  async function loadEvents(){
+    const list = document.getElementById('event-list');
+    const status = document.getElementById('feed-status');
+    if (!list || !status) return;
+    status.classList.remove('hidden');
+    status.textContent = i18n['en'].loading;
+    try {
+      const res = await fetch('events.json', {cache: 'no-store'});
+      if (!res.ok) throw new Error('fetch failed');
+      const data = await res.json();
+      if (!Array.isArray(data) || !data.length) {
+        status.textContent = i18n['en'].no_events;
+        return;
+      }
+      status.textContent = i18n['en'].external_feed;
+      list.innerHTML = data.map(ev => `
+        <div class="event-card">
+          <div class="date">${ev.date}</div>
+          <h3>${ev.title}</h3>
+          <p>${ev.desc}</p>
+          <a class="btn" href="${ev.href || '#'}">Details</a>
+        </div>
+      `).join('');
+    } catch (e) {
+      status.textContent = i18n['en'].no_events;
+    }
+  }
+
+  loadEvents();
 </script>
 </body>
 </html>

@@ -1,0 +1,44 @@
+[
+  {
+    "id": "beach-cleanup",
+    "date": "2026-07-04",
+    "title": "Beach Cleanup Rally",
+    "desc": "Join us to remove coastal litter and restore the shoreline and ocean.",
+    "href": "events/beach-cleanup.html"
+  },
+  {
+    "id": "recycling-challenge",
+    "date": "2026-07-18",
+    "title": "Community Recycling Challenge",
+    "desc": "28-day recycling challenge with points, prizes, and impact badges.",
+    "href": "events/challenge.html"
+  },
+  {
+    "id": "composting-workshop",
+    "date": "2026-08-05",
+    "title": "Home Composting Workshop",
+    "desc": "Learn to compost at home, reduce food scraps, and enrich your garden.",
+    "href": "events/composting.html"
+  },
+  {
+    "id": "e-waste-day",
+    "date": "2026-08-22",
+    "title": "E-Waste Recycling Day",
+    "desc": "Free drop-off for devices and batteries, plus secure data wipe guidance.",
+    "href": "events/e-waste-day.html"
+  },
+  {
+    "id": "campus-talk",
+    "date": "2026-09-10",
+    "title": "Campus Sustainability Talk",
+    "desc": "Environmental educators share real circular economy projects in schools.",
+    "href": "events/campus-talk.html"
+  },
+  {
+    "id": "tote-bag-diy",
+    "date": "2026-09-25",
+    "title": "Weekend Tote Bag DIY",
+    "desc": "Upcycle fabric into a custom tote bag to cut single-use plastic.",
+    "href": "events/tote-bag-diy.html"
+  }
+]
