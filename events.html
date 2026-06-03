@@ -53,47 +53,17 @@
   <section class="page-header">
     <div class="container">
       <h1 data-i18n="events_page_title">Upcoming Events</h1>
-      <p data-i18n="events_page_sub">Join clean-ups, challenges, and sustainability workshops.</p>
+      <p data-i18n="events_page_sub">Community events are powered by an external source. Check back soon for listings from partner organizations.</p>
     </div>
   </section>
   <section>
     <div class="container">
       <div class="event-list">
         <div class="event-card">
-          <div class="date" data-i18n="e1_date">2025-06-15</div>
-          <h3 data-i18n="e1_title">Beach Cleanup Rally</h3>
-          <p data-i18n="e1_desc">Join us to remove coastal litter and restore the shoreline and ocean.</p>
-          <a href="events/beach-cleanup.html" class="btn" data-i18n="join">Join Now</a>
-        </div>
-        <div class="event-card">
-          <div class="date" data-i18n="e2_date">2025-07-02</div>
-          <h3 data-i18n="e2_title">Community Recycling Challenge</h3>
-          <p data-i18n="e2_desc">28-day recycling challenge with points, prizes, and impact badges.</p>
-          <a href="events/challenge.html" class="btn" data-i18n="join">Join Now</a>
-        </div>
-        <div class="event-card">
-          <div class="date" data-i18n="e3_date">2025-07-20</div>
-          <h3 data-i18n="e3_title">Home Composting Workshop</h3>
-          <p data-i18n="e3_desc">Learn to compost at home, reduce food scraps, and enrich your garden.</p>
-          <a href="events/composting.html" class="btn" data-i18n="join">Join Now</a>
-        </div>
-        <div class="event-card">
-          <div class="date" data-i18n="e4_date">2025-08-05</div>
-          <h3 data-i18n="e4_title">E-Waste Recycling Day</h3>
-          <p data-i18n="e4_desc">Free drop-off for devices and batteries, plus secure data wipe guidance.</p>
-          <a href="events/e-waste-day.html" class="btn" data-i18n="join">Join Now</a>
-        </div>
-        <div class="event-card">
-          <div class="date" data-i18n="e5_date">2025-08-22</div>
-          <h3 data-i18n="e5_title">Campus Sustainability Talk</h3>
-          <p data-i18n="e5_desc">Environmental educators share real circular economy projects in schools.</p>
-          <a href="events/campus-talk.html" class="btn" data-i18n="join">Join Now</a>
-        </div>
-        <div class="event-card">
-          <div class="date" data-i18n="e6_date">2025-09-10</div>
-          <h3 data-i18n="e6_title">Weekend Tote Bag DIY</h3>
-          <p data-i18n="e6_desc">Upcycle fabric into a custom tote bag to cut single-use plastic.</p>
-          <a href="events/tote-bag-diy.html" class="btn" data-i18n="join">Join Now</a>
+          <div class="date" data-i18n="feed_label">External feed</div>
+          <h3 data-i18n="feed_title">Partner Events</h3>
+          <p data-i18n="feed_desc">This section will be populated by an external events provider.</p>
+          <a href="#" class="btn" data-i18n="feed_action">Refresh later</a>
         </div>
       </div>
     </div>
@@ -108,14 +78,8 @@
   const i18n = {
     'en': {
       nav_home:'Home', nav_guides:'Guides', nav_centers:'Centers', nav_events:'Events', nav_howto:'How-To',
-      events_page_title:'Upcoming Events', events_page_sub:'Join clean-ups, challenges, and sustainability workshops.',
-      e1_date:'Jun 15, 2025', e1_title:'Beach Cleanup Rally', e1_desc:'Join us to remove coastal litter and restore the shoreline and ocean.',
-      e2_date:'Jul 2, 2025', e2_title:'Community Recycling Challenge', e2_desc:'28-day recycling challenge with points, prizes, and impact badges.',
-      e3_date:'Jul 20, 2025', e3_title:'Home Composting Workshop', e3_desc:'Learn to compost at home, reduce food scraps, and enrich your garden.',
-      e4_date:'Aug 5, 2025', e4_title:'E-Waste Recycling Day', e4_desc:'Free drop-off for devices and batteries, plus secure data wipe guidance.',
-      e5_date:'Aug 22, 2025', e5_title:'Campus Sustainability Talk', e5_desc:'Environmental educators share real circular economy projects in schools.',
-      e6_date:'Sep 10, 2025', e6_title:'Weekend Tote Bag DIY', e6_desc:'Upcycle fabric into a custom tote bag to cut single-use plastic.',
-      join:'Join Now'
+      events_page_title:'Upcoming Events', events_page_sub:'Community events are powered by an external source. Check back soon for listings from partner organizations.',
+      feed_label:'External feed', feed_title:'Partner Events', feed_desc:'This section will be populated by an external events provider.', feed_action:'Refresh later'
     }
   };
   function toggleLanguage(){ const c=document.documentElement.lang||'en'; setLanguage(c==='en'?'en':'en'); }
