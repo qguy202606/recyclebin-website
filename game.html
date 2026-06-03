@@ -99,6 +99,26 @@
 <script src="/js/site.js"></script>
 <script>
 (function(){
+  window.__rbErrors = window.__rbErrors || [];
+  window._rbOldErr = window._rbOldErr || window.onerror;
+  window.onerror = function(msg,url,line){
+    window.__rbErrors.push(msg+' @ '+url+':'+line);
+    if(window._rbOldErr) return window._rbOldErr(msg,url,line);
+    return false;
+  };
+  try{
+    if(!window.RecycleBin){
+      var err = new Error('RecycleBin missing before page script');
+      err.file = 'page';
+      window.__rbErrors.push(err.message);
+      throw err;
+    }
+  }catch(e){
+    window.__rbErrors.push(e.message);
+    console.error('[RecycleBin] startup fail', e);
+  }
+})();
+(function(){
   RecycleBin.initLayout({active: '/howto.html'});
   RecycleBin.initI18n();
 
