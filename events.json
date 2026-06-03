@@ -4,41 +4,59 @@
     "date": "2026-07-04",
     "title": "Beach Cleanup Rally",
     "desc": "Join us to remove coastal litter and restore the shoreline and ocean.",
-    "href": "events/beach-cleanup.html"
+    "location": "Main Beach Entrance, Irvine, CA",
+    "body": "We’ll meet at the main beach entrance at 8:00 AM. Gloves, bags, and a quick safety briefing will be provided. All ages welcome. Bring sunscreen, water, and your enthusiasm.",
+    "external_url": "https://example.com/events/beach-cleanup",
+    "href": "event-detail.html?id=beach-cleanup"
   },
   {
     "id": "recycling-challenge",
     "date": "2026-07-18",
     "title": "Community Recycling Challenge",
     "desc": "28-day recycling challenge with points, prizes, and impact badges.",
-    "href": "events/challenge.html"
+    "location": "Virtual / Community-wide",
+    "body": "Sign up as an individual or household. Track recycling activity through the challenge portal. Top scorers win prizes and community recognition.",
+    "external_url": "https://example.com/events/recycling-challenge",
+    "href": "event-detail.html?id=recycling-challenge"
   },
   {
     "id": "composting-workshop",
     "date": "2026-08-05",
     "title": "Home Composting Workshop",
     "desc": "Learn to compost at home, reduce food scraps, and enrich your garden.",
-    "href": "events/composting.html"
+    "location": "Irvine Community Center, 1 Community Dr, Irvine, CA 92612",
+    "body": "A hands-on workshop covering bin setup, compost layering, and troubleshooting. Take home a starter kit. $10 registration covers materials.",
+    "external_url": "https://example.com/events/composting-workshop",
+    "href": "event-detail.html?id=composting-workshop"
   },
   {
     "id": "e-waste-day",
     "date": "2026-08-22",
     "title": "E-Waste Recycling Day",
     "desc": "Free drop-off for devices and batteries, plus secure data wipe guidance.",
-    "href": "events/e-waste-day.html"
+    "location": "City Hall Parking Lot, 4445 Civic Center Dr, Irvine, CA 92602",
+    "body": "Bring old computers, phones, batteries, and cables. On-site data wipe guidance for drives and phones. Free for residents and small business.",
+    "external_url": "https://example.com/events/e-waste-day",
+    "href": "event-detail.html?id=e-waste-day"
   },
   {
     "id": "campus-talk",
     "date": "2026-09-10",
     "title": "Campus Sustainability Talk",
     "desc": "Environmental educators share real circular economy projects in schools.",
-    "href": "events/campus-talk.html"
+    "location": "UCI Student Center, 501 Aldrich Hall, Irvine, CA 92697",
+    "body": "Doors open at 6:00 PM. Speakers from local schools and nonprofits will present classroom projects and circular economy case studies. Free parking after 5 PM.",
+    "external_url": "https://example.com/events/campus-talk",
+    "href": "event-detail.html?id=campus-talk"
   },
   {
     "id": "tote-bag-diy",
     "date": "2026-09-25",
     "title": "Weekend Tote Bag DIY",
     "desc": "Upcycle fabric into a custom tote bag to cut single-use plastic.",
-    "href": "events/tote-bag-diy.html"
+    "location": "RecycleBin Creative Studio, 100 Main St, Irvine, CA 92618",
+    "body": "Bring an old shirt or fabric scrap. We provide sewing kits and stencils. All skill levels welcome. Completed bags can be taken home the same day.",
+    "external_url": "https://example.com/events/tote-bag-diy",
+    "href": "event-detail.html?id=tote-bag-diy"
   }
 ]

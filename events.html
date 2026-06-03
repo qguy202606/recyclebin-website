@@ -101,7 +101,7 @@
           <div class="date">${ev.date}</div>
           <h3>${ev.title}</h3>
           <p>${ev.desc}</p>
-          <a class="btn" href="${ev.href || '#'}">Details</a>
+          <a class="btn" href="event-detail.html?id=${ev.id || '#'}">Details</a>
         </div>
       `).join('');
     } catch (e) {
