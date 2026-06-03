@@ -618,19 +618,10 @@
   </footer>
 </div>
 
+</script>
+<script src="./js/menu.js"></script>
+<script src="./js/_site.js"></script>
 <script>
-// ===== MENU ACTIVE STATE =====
-(function(){
-  const path = window.location.pathname;
-  const page = path.split('/').pop() || 'index.html';
-  document.querySelectorAll('.menu-link').forEach(link => {
-    const href = link.getAttribute('href');
-    if (href && (page === href || (page === '' && href.endsWith('index.html')))) {
-      link.classList.add('active');
-    }
-  });
-})();
-
 // ===== GAME DATA =====
 const trashData = [
   { name: "Plastic Bottle", bin: "recycling", fact: "A plastic bottle takes 450+ years to decompose! 💔", points: 10 },
