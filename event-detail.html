@@ -101,11 +101,8 @@
       const metaItems = [];
       if (ev.location) metaItems.push(`<span>📍 ${ev.location}</span>`);
       if (ev.date) metaItems.push(`<span>🗓 ${ev.date}</span>`);
-      if (metaEl) metaEl.innerHTML = metaItems.join('');
-      if (btnExt) {
-        if (ev.external_url) { btnExt.href = ev.external_url; btnExt.textContent = 'Join Now'; }
-        else { btnExt.href = '../events.html'; btnExt.textContent = 'Back to events'; btnExt.classList.remove('btn-primary'); btnExt.classList.add('btn-secondary'); }
-      }
+      const btnExt = document.getElementById('btn-external');
+      if (btnExt) { btnExt.href = '#'; btnExt.textContent = 'Details only'; btnExt.classList.remove('btn-primary'); btnExt.classList.add('btn-secondary'); }
     } catch (e) {
       showError('Unable to load event details.');
     }
