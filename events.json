@@ -2,6 +2,7 @@
   {
     "id": "irvine-drive-recycle-april-26",
     "date": "2026-04-26",
+    "state": "CA",
     "title": "Drive to Recycle Saturday - Irvine",
     "desc": "City of Irvine community recycling event. Bring recyclable materials for a chance to win cash and prizes for IUSD schools.",
     "location": "Irvine, CA",
@@ -11,6 +12,7 @@
   {
     "id": "ocwr-free-compost-giveaway-april-18",
     "date": "2026-04-18",
+    "state": "CA",
     "title": "OCWR Free Community Compost Giveaway",
     "desc": "Free compost distribution for Orange County residents in celebration of Earth Day.",
     "location": "Orange County, CA",
@@ -20,6 +22,7 @@
   {
     "id": "hb-veterans-cleanup-july-12",
     "date": "2026-07-12",
+    "state": "CA",
     "title": "Huntington Beach Cleanup with Veterans!",
     "desc": "Open to anyone. Join veterans and volunteers for a 2.5 hour community cleanup on Huntington Beach.",
     "location": "405 Pacific Coast Hwy, Huntington Beach, CA 92648",
@@ -29,6 +32,7 @@
   {
     "id": "lb-72nd-place-cleanup-june-6",
     "date": "2026-06-06",
+    "state": "CA",
     "title": "LBC Beach Cleanup",
     "desc": "Community cleanup at 72nd Place in Long Beach. Food and refreshments provided.",
     "location": "72nd Place, Long Beach, CA 90803",
@@ -38,6 +42,7 @@
   {
     "id": "south-gate-tire-recycling-aug-22",
     "date": "2026-08-22",
+    "state": "CA",
     "title": "Tire Recycling Event (South Gate Park)",
     "desc": "Drop off old tires at South Gate Park. Family-friendly, 6 hour event.",
     "location": "4855 Tweedy Ave, South Gate, CA 90280",
@@ -45,8 +50,49 @@
     "join_url": "https://www.eventbrite.com/e/tire-recycling-event-south-gate-park-tickets-1982304779959"
   },
   {
+    "id": "daytona-beach-cleanup-june-7",
+    "date": "2026-06-07",
+    "state": "FL",
+    "title": "BEACH CLEANUP - Daytona Beach (BEACH SQUAD)",
+    "desc": "Beach Squad community cleanup at Sun Splash Park, Daytona Beach.",
+    "location": "Sun Splash Park, Daytona Beach, FL",
+    "body": "8:30 AM start. Part of the Beach Squad cleanup series.",
+    "join_url": "https://www.eventbrite.com/e/beach-cleanup-6726-daytona-beach-fl-beach-squad-registration-1982631796073"
+  },
+  {
+    "id": "tampa-june-trash-cleanup",
+    "date": "2026-06-14",
+    "state": "FL",
+    "title": "June Trash Cleanup - Tampa",
+    "desc": "General trash cleanup at Davis Island Boat Ramp.",
+    "location": "Davis Island Boat Ramp, Tampa, FL",
+    "body": "8:00 AM start. Meet at Davis Island Boat Ramp.",
+    "join_url": "https://www.eventbrite.com/e/june-trash-cleanup-tickets-1976928341888"
+  },
+  {
+    "id": "nj-conference-house-cleanup-june-27",
+    "date": "2026-06-27",
+    "state": "NJ",
+    "title": "Conference House Beach Cleanup",
+    "desc": "Beach cleanup at Conference House Park parking.",
+    "location": "Conference House Park, Staten Island, NY / NJ area",
+    "body": "10:00 AM start. Meet at Conference House Park parking lot.",
+    "join_url": "https://www.eventbrite.com/e/conference-house-beach-cleanup-page-ave-tickets-1989416423075"
+  },
+  {
+    "id": "co-tv-tire-recycling-june-12",
+    "date": "2026-06-12",
+    "state": "CO",
+    "title": "Large TV & Tire Recycling Event",
+    "desc": "Free recycling drop-off for TVs and tires from El Paso County Environmental Division.",
+    "location": "El Paso County Household Hazardous Waste Facility, Colorado Springs, CO",
+    "body": "9:00 AM start. Hosted by El Paso County Environmental Division.",
+    "join_url": "https://www.eventbrite.com/e/friday-june-12-2026-large-tv-tire-recycling-event-registration-1987708852686"
+  },
+  {
     "id": "chi-logan-square-cleanup",
     "date": "2027-03-21",
+    "state": "IL",
     "title": "Logan Square Cleanup with Cleanup Club!",
     "desc": "Annual neighborhood cleanup and recycling drive in Logan Square, Chicago.",
     "location": "Katherine Anne Confections, Chicago, IL",
