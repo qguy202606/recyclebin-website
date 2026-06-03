@@ -2,12 +2,13 @@
 <html lang="en">
 <head>
 <meta charset="UTF-8">
-<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=no">
 <title>RecycleBin.com - Event Detail</title>
 <style>
   * { margin: 0; padding: 0; box-sizing: border-box; }
-  body { font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', 'Helvetica Neue', Arial, sans-serif; line-height: 1.6; color: #fff; background: #0b0b0b; }
-  .container { max-width: 900px; margin: 0 auto; padding: 0 20px; }
+  html, body { height: 100%; }
+  body { font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', 'Helvetica Neue', Arial, sans-serif; line-height: 1.6; color: #fff; background: #0b0b0b; min-height: 100vh; display: flex; flex-direction: column; }
+  .container { max-width: 1200px; margin: 0 auto; padding: 0 20px; }
   header { background: #0b0b0b; border-bottom: 1px solid #222; position: sticky; top: 0; z-index: 100; }
   nav { display: flex; justify-content: space-between; align-items: center; padding: 20px 0; }
   .logo { font-size: 24px; font-weight: 700; color: #fff; text-decoration: none; display: flex; align-items: center; gap: 8px; }
@@ -16,129 +17,104 @@
   .nav-links { display: flex; gap: 28px; list-style: none; }
   .nav-links a { text-decoration: none; color: #c9c9c9; font-weight: 500; transition: color 0.2s; }
   .nav-links a:hover { color: #0f9d58; }
-  .page-header { padding: 80px 0 40px; }
-  .date-badge { display: inline-block; padding: 8px 14px; background: #11211a; color: #0f9d58; border: 1px solid #1e352a; border-radius: 10px; font-weight: 700; margin-bottom: 18px; }
-  .page-header h1 { font-size: 42px; font-weight: 800; letter-spacing: -0.5px; }
-  .page-header .desc { color: #9a9a9a; font-size: 18px; margin-top: 18px; }
-  .meta-row { display: flex; gap: 16px; flex-wrap: wrap; margin-bottom: 10px; color: #bfbfbf; font-size: 14px; }
-  .meta-row span { display: inline-flex; align-items: center; gap: 6px; }
-  .detail-card { background: #111; border: 1px solid #1f1f1f; border-radius: 20px; padding: 28px; margin-top: 30px; }
-  .detail-card h2 { font-size: 22px; margin-bottom: 14px; }
-  .detail-card p { color: #9a9a9a; }
-  .actions { margin-top: 36px; display: flex; gap: 12px; flex-wrap: wrap; }
-  .btn { padding: 12px 24px; border-radius: 10px; text-decoration: none; font-weight: 700; font-size: 15px; display: inline-flex; align-items: center; gap: 8px; }
-  .btn-primary { background: #0f9d58; color: #fff; }
-  .btn-primary:hover { background: #0b8043; }
+  .nav-links a.active { color: #0f9d58; }
+  .page-header { padding: 80px 0 40px; text-align: center; }
+  .page-header h1 { font-size: 48px; font-weight: 800; margin-bottom: 16px; }
+  .page-header .meta { color: #8f8f8f; font-size: 18px; }
+  .detail { max-width: 900px; margin: 0 auto; background: #111; border: 1px solid #1f1f1f; border-radius: 20px; padding: 24px; }
+  .detail .date, .detail .location { display: inline-block; padding: 6px 12px; background: #11211a; color: #0f9d58; border: 1px solid #1e352a; border-radius: 10px; font-size: 13px; font-weight: 700; margin: 6px 8px 6px 0; }
+  .detail h2 { font-size: 24px; margin: 18px 0 10px; }
+  .detail p { color: #c7c7c7; font-size: 15px; margin-bottom: 14px; }
+  .detail .actions { margin-top: 24px; display: flex; gap: 12px; flex-wrap: wrap; }
+  .detail .btn { min-width: 160px; text-align: center; justify-content: center; }
+  footer { background: #050505; padding: 40px 0; border-top: 1px solid #141414; text-align: center; color: #555; font-size: 13px; margin-top: auto; }
+  .btn { display: inline-block; padding: 10px 22px; background: #0f9d58; color: #fff; border-radius: 8px; text-decoration: none; font-size: 14px; border: none; cursor: pointer; min-width: 160px; text-align: center; }
   .btn-secondary { background: #141414; color: #e8e8e8; border: 1px solid #2e2e2e; }
-  footer { background: #050505; padding: 40px 0; border-top: 1px solid #141414; text-align: center; color: #555; font-size: 13px; margin-top: 80px; }
-  .error-msg { background: #1a0f0f; border: 1px solid #3a1f1f; color: #ff8a80; padding: 14px; border-radius: 10px; font-size: 14px; margin-bottom: 20px; }
+  .empty { color: #8f8f8f; padding: 60px 0; text-align: center; }
+  @media (max-width: 768px) { .nav-links { display: none; } .page-header h1 { font-size: 32px; } }
 </style>
 </head>
 <body>
-<header>
-  <div class="container">
-    <nav>
-      <a href="index.html" class="logo"><span>Recycle</span> Bin.com</a>
-      <div class="nav-right">
-        <ul class="nav-links">
-          <li><a href="index.html">Home</a></li>
-          <li><a href="centers.html">Centers</a></li>
-          <li><a href="events.html" class="active">Events</a></li>
-        </ul>
-      </div>
-    </nav>
-  </div>
-</header>
-<main>
-  <section class="page-header">
+  <header>
     <div class="container">
-      <div class="date-badge" id="event-date"></div>
-      <h1 id="event-title"></h1>
-      <div class="meta-row" id="event-meta"></div>
-      <p class="desc" id="event-desc"></p>
+      <nav>
+        <a href="index.html" class="logo"><span>Recycle</span> Bin.com</a>
+        <div class="nav-right">
+          <ul class="nav-links">
+            <li><a href="index.html" data-i18n="nav_home">Home</a></li>
+            <li><a href="guides.html" data-i18n="nav_guides">Guides</a></li>
+            <li><a href="centers.html" data-i18n="nav_centers">Centers</a></li>
+            <li><a href="events.html" class="active" data-i18n="nav_events">Events</a></li>
+            <li><a href="howto.html" data-i18n="nav_howto">How-To</a></li>
+          </ul>
+        </div>
+      </nav>
     </div>
-  </section>
-  <section>
-    <div class="container">
-      <div id="error-box" class="error-msg" style="display:none;"></div>
-      <div class="detail-card">
-        <h2>Event Details</h2>
-        <p id="event-body"></p>
+  </header>
+  <main>
+    <section class="page-header">
+      <div class="container" id="event-header">
+        <h1>Event Detail</h1>
+        <p class="meta" id="event-meta">Loading...</p>
       </div>
-      <div class="actions">
-        <a id="btn-external" class="btn btn-primary" href="#" target="_blank" rel="noopener">Join Now</a>
-        <a href="events.html" class="btn btn-secondary">Back to Events</a>
+    </section>
+    <section>
+      <div class="container" id="event-body">
+        <div class="empty">Loading...</div>
       </div>
-    </div>
-  </section>
-</main>
-<footer>
-  <div class="container">
-    <p>RecycleBin.com</p>
-  </div>
-</footer>
-<script>
-  document.addEventListener('DOMContentLoaded', function() {
-    const params = new URLSearchParams(window.location.search);
-    const id = params.get('id');
-    const errorBox = document.getElementById('error-box');
-
-    if (!id) {
-      if (errorBox) { errorBox.textContent = 'Missing event id.'; errorBox.style.display = 'block'; }
-      return;
-    }
-
-    fetch('events.json', {cache: 'no-store'})
-      .then(function(res) {
+    </section>
+  </main>
+  <footer>
+    <div class="container">&copy; 2025 RecycleBin.com. All rights reserved.</div>
+  </footer>
+  <script>
+    async function getEvent() {
+      const params = new URLSearchParams(window.location.search);
+      const id = params.get('id');
+      const header = document.getElementById('event-header');
+      const meta = document.getElementById('event-meta');
+      const body = document.getElementById('event-body');
+      if (!id) {
+        header.innerHTML = '<h1>Event Detail</h1>';
+        meta.textContent = 'No event selected.';
+        body.innerHTML = '<div class="empty">No event selected.</div>';
+        return;
+      }
+      try {
+        const res = await fetch('events.json', {cache: 'no-store'});
         if (!res.ok) throw new Error('fetch failed');
-        return res.json();
-      })
-      .then(function(data) {
-        var ev = null;
-        if (Array.isArray(data)) {
-          for (var i = 0; i < data.length; i++) {
-            if (data[i].id === id) { ev = data[i]; break; }
-          }
-        }
+        const data = await res.json();
+        if (!Array.isArray(data)) throw new Error('bad data');
+        const ev = data.find(item => item.id === id);
         if (!ev) {
-          if (errorBox) { errorBox.textContent = 'Event not found.'; errorBox.style.display = 'block'; }
+          header.innerHTML = '<h1>Event Detail</h1>';
+          meta.textContent = 'Event not found.';
+          body.innerHTML = '<div class="empty">Event not found.</div>';
           return;
         }
-        var dateEl = document.getElementById('event-date');
-        var titleEl = document.getElementById('event-title');
-        var descEl = document.getElementById('event-desc');
-        var bodyEl = document.getElementById('event-body');
-        var metaEl = document.getElementById('event-meta');
-        var btnExt = document.getElementById('btn-external');
-
-        if (dateEl) dateEl.textContent = ev.date || '';
-        if (titleEl) titleEl.textContent = ev.title || '';
-        if (descEl) descEl.textContent = ev.desc || '';
-        if (bodyEl) bodyEl.textContent = ev.body || ev.desc || '';
-
-        var metaItems = [];
-        if (ev.location) metaItems.push('<span>📍 ' + ev.location + '</span>');
-        if (ev.date) metaItems.push('<span>🗓 ' + ev.date + '</span>');
-        if (metaEl) metaEl.innerHTML = metaItems.join(' | ');
-
-        if (btnExt) {
-          if (ev.join_url && ev.join_url !== '#' ) {
-            btnExt.href = ev.join_url;
-            btnExt.textContent = 'Join Now';
-            btnExt.classList.add('btn-primary');
-            btnExt.classList.remove('btn-secondary');
-          } else {
-            btnExt.href = 'events.html';
-            btnExt.textContent = 'Back to events';
-            btnExt.classList.remove('btn-primary');
-            btnExt.classList.add('btn-secondary');
-          }
-        }
-      })
-      .catch(function() {
-        if (errorBox) { errorBox.textContent = 'Unable to load event details.'; errorBox.style.display = 'block'; }
-      });
-  });
-</script>
+        const dateStr = ev.date || '';
+        const locStr = ev.location || '';
+        const metaParts = [locStr, dateStr].filter(Boolean);
+        header.innerHTML = '<h1>' + ev.title + '</h1>';
+        meta.textContent = metaParts.join(' · ');
+        body.innerHTML = '<div class="detail">' +
+          '<span class="date">' + dateStr + '</span>' +
+          (locStr ? '<span class="location">' + locStr + '</span>' : '') +
+          '<h2>About this event</h2>' +
+          '<p>' + (ev.desc || '') + '</p>' +
+          '<p>' + (ev.body || '') + '</p>' +
+          '<div class="actions">' +
+            '<a class="btn btn-secondary" href="events.html">Back to events</a>' +
+            '<a id="btn-join" class="btn" href="' + (ev.join_url || '#') + '">Join Now</a>' +
+          '</div>' +
+        '</div>';
+      } catch (e) {
+        header.innerHTML = '<h1>Event Detail</h1>';
+        meta.textContent = 'Failed to load event.';
+        body.innerHTML = '<div class="empty">Failed to load event.</div>';
+      }
+    }
+    getEvent();
+  </script>
 </body>
 </html>
