@@ -15,10 +15,7 @@
   .nav-right { display: flex; align-items: center; gap: 20px; }
   .nav-links { display: flex; gap: 28px; list-style: none; }
   .nav-links a { text-decoration: none; color: #c9c9c9; font-weight: 500; transition: color 0.2s; }
-  .nav-links a:hover { color: #0f9d58; }
-  .nav-links a.active { color: #0f9d58; }
-  .lang-toggle { background: #1a1a1a; border: 1px solid #333; color: #fff; padding: 6px 12px; border-radius: 8px; cursor: pointer; font-size: 13px; font-weight: 600; transition: all 0.2s; }
-  .lang-toggle:hover { border-color: #0f9d58; color: #0f9d58; }
+  .nav-links a:hover, .nav-links a.active { color: #0f9d58; }
   .page-header { padding: 80px 0 40px; text-align: center; }
   .page-header h1 { font-size: 48px; font-weight: 800; margin-bottom: 16px; }
   .page-header p { color: #8f8f8f; font-size: 18px; max-width: 700px; margin: 0 auto; }
@@ -31,8 +28,12 @@
   .event-card .btn { display: inline-block; padding: 10px 22px; background: #0f9d58; color: #fff; border-radius: 8px; text-decoration: none; font-size: 14px; }
   .event-card .btn-secondary { background: #141414; color: #e8e8e8; border: 1px solid #2e2e2e; }
   .feed-notice { background: #111; border: 1px solid #2e2e2e; color: #bfbfbf; padding: 10px 14px; border-radius: 10px; font-size: 14px; margin-bottom: 14px; }
+  .hidden { display: none !important; }
   footer { background: #050505; padding: 40px 0; border-top: 1px solid #141414; text-align: center; color: #555; font-size: 13px; }
   @media (max-width: 768px) { .nav-links { display: none; } .page-header h1 { font-size: 32px; } }
+  .filter-bar { margin: 0 auto 10px; max-width: 420px; text-align: center; }
+  .filter-bar label { color: #9a9a9a; font-size: 14px; margin-right: 8px; }
+  #stateSelect { background: #141414; color: #e8e8e8; border: 1px solid #2e2e2e; border-radius: 8px; padding: 8px 12px; font-size: 14px; min-width: 180px; }
 </style>
 </head>
 <body>
@@ -42,100 +43,105 @@
       <a href="index.html" class="logo"><span>Recycle</span> Bin.com</a>
       <div class="nav-right">
         <ul class="nav-links">
-          <li><a href="index.html" data-i18n="nav_home">Home</a></li>
-          <li><a href="guides.html" data-i18n="nav_guides">Guides</a></li>
-          <li><a href="centers.html" data-i18n="nav_centers">Centers</a></li>
-          <li><a href="events.html" class="active" data-i18n="nav_events">Events</a></li>
-          <li><a href="howto.html" data-i18n="nav_howto">How-To Tutorials</a></li>
-        </ul></div>
+          <li><a href="index.html">Home</a></li>
+          <li><a href="guides.html">Guides</a></li>
+          <li><a href="centers.html">Centers</a></li>
+          <li><a href="events.html" class="active">Events</a></li>
+          <li><a href="howto.html">How-To</a></li>
+        </ul>
+      </div>
     </nav>
   </div>
 </header>
 <main>
   <section class="page-header">
     <div class="container">
-      <h1 data-i18n="events_page_title">Upcoming Events</h1>
-      <p data-i18n="events_page_sub">Community events are powered by an external source. Check back soon for listings from partner organizations.</p>
-      <div style="margin-top:24px; display:flex; gap:12px; align-items:center;">
-        <label for="state-filter" style="color:#9a9a9a; font-size:14px;">Filter by state:</label>
-        <select id="state-filter" style="background:#141414; color:#e8e8e8; border:1px solid #2e2e2e; border-radius:8px; padding:8px 12px; font-size:14px; min-width:160px;">
-          <option value="ALL">All United States</option>
-        </select>
+      <h1>Upcoming Events</h1>
+      <p>Community events are powered by an external source. Check back soon for listings from partner organizations.</p>
+      <div class="filter-bar">
+        <label for="stateSelect">Filter by state:</label>
+        <select id="stateSelect"><option value="ALL">All United States</option></select>
       </div>
     </div>
   </section>
   <section>
     <div class="container">
-      <div id="feed-status" class="feed-notice hidden">Loading events...</div>
+      <div id="feed-status" class="feed-notice">Loading events...</div>
       <div class="event-list" id="event-list"></div>
     </div>
   </section>
 </main>
 <footer>
-  <div class="container">
-    <p>&copy; 2025 RecycleBin.com. All rights reserved.</p>
-  </div>
+  <div class="container">&copy; 2025 RecycleBin.com. All rights reserved.</div>
 </footer>
 <script>
-  const i18n = {
-    'en': {
-      nav_home:'Home', nav_guides:'Guides', nav_centers:'Centers', nav_events:'Events', nav_howto:'How-To',
-      events_page_title:'Upcoming Events', events_page_sub:'Community events are powered by an external source. Check back soon for listings from partner organizations.',
-      loading:'Loading events...', no_events:'No events available.', external_feed:'Events are loaded from an external provider.'
-    }
-  };
-  function setLanguage(l){ document.documentElement.lang=l; localStorage.setItem('recyclebin-lang',l); const m=i18n[l]||i18n['en']; document.querySelectorAll('[data-i18n]').forEach(el=>{ const k=el.getAttribute('data-i18n'); const v=m[k]; if(!v)return; el.innerHTML=v; }); }
-  (function(){ const s=localStorage.getItem('recyclebin-lang'); if(s&&(s==='en'||s==='en')) setLanguage(s); })();
-
-  async function loadEvents(){
+  (function(){
     const list = document.getElementById('event-list');
     const status = document.getElementById('feed-status');
-    const stateFilter = document.getElementById('state-filter');
-    if (!list || !status) return;
-    status.classList.remove('hidden');
-    status.textContent = i18n['en'].loading;
-    try {
-      const res = await fetch('events.json', {cache: 'no-store'});
-      if (!res.ok) throw new Error('fetch failed');
-      const data = await res.json();
-      console.log('[events] raw data:', data);
-      if (!Array.isArray(data)) throw new Error('bad data');
-      const selected = stateFilter ? stateFilter.value : 'ALL';
-      const filtered = selected === 'ALL' ? data : data.filter(ev => (ev.state || '') === selected);
-      const states = Array.from(new Set((data || []).map(ev => ev.state).filter(Boolean))).sort();
-      console.log('[events] states:', states, 'selected:', selected);
-      if (stateFilter) {
-        stateFilter.innerHTML = ['<option value="ALL">All United States</option>', ...states.map(s => `<option value="${s}">${s}</option>`).join('')];
-        stateFilter.value = selected;
-        console.log('[events] filter options:', stateFilter.innerHTML);
-      }
-      if (!filtered.length) {
-        status.textContent = i18n['en'].no_events;
+    const stateSelect = document.getElementById('stateSelect');
+    let currentState = 'ALL';
+
+    function renderOptions(states){
+      if (!stateSelect) return;
+      stateSelect.innerHTML = '';
+      const allOpt = document.createElement('option');
+      allOpt.value = 'ALL';
+      allOpt.textContent = 'All United States';
+      stateSelect.appendChild(allOpt);
+      states.forEach(function(s){
+        const opt = document.createElement('option');
+        opt.value = s;
+        opt.textContent = s;
+        stateSelect.appendChild(opt);
+      });
+      console.log('[events] options count:', stateSelect.options.length);
+    }
+
+    function renderEvents(data){
+      const filtered = currentState === 'ALL' ? data : data.filter(function(ev){ return ev.state === currentState; });
+      if (!filtered.length){
+        status.textContent = 'No events available.';
         list.innerHTML = '';
         return;
       }
-      status.textContent = i18n['en'].external_feed;
-      list.innerHTML = filtered.map(ev => `
-        <div class="event-card">
-          <div class="date">${ev.date}</div>
-          <h3>${ev.title}</h3>
-          <p>${ev.desc}</p>
-          <a class="btn" href="event-detail.html?id=${ev.id || '#'}">Details</a>
-        </div>
-      `).join('');
-    } catch (e) {
-      status.textContent = i18n['en'].no_events;
+      status.textContent = 'Events are loaded from an external provider.';
+      list.innerHTML = filtered.map(function(ev){
+        return '<div class="event-card">' +
+          '<div class="date">' + ev.date + '</div>' +
+          '<h3>' + ev.title + '</h3>' +
+          '<p>' + ev.desc + '</p>' +
+          '<a class="btn" href="event-detail.html?id=' + ev.id + '">Details</a>' +
+        '</div>';
+      }).join('');
     }
-  }
 
-  function setupStateFilter(){
-    const stateFilter = document.getElementById('state-filter');
-    if (!stateFilter) return;
-    stateFilter.addEventListener('change', loadEvents);
-  }
+    async function init(){
+      try {
+        const res = await fetch('events.json', {cache: 'no-store'});
+        if (!res.ok) throw new Error('fetch failed');
+        const data = await res.json();
+        console.log('[events] data length:', data.length);
+        if (!Array.isArray(data)) throw new Error('bad data');
+        const states = Array.from(new Set(data.map(function(ev){ return ev.state; }).filter(Boolean))).sort();
+        console.log('[events] states:', states);
+        renderOptions(states);
+        renderEvents(data);
+      } catch (e) {
+        console.error('[events] error:', e);
+        status.textContent = 'No events available.';
+      }
+    }
 
-  loadEvents();
-  setupStateFilter();
+    if (stateSelect){
+      stateSelect.addEventListener('change', function(){
+        currentState = stateSelect.value;
+        console.log('[events] filter changed:', currentState);
+        init();
+      });
+    }
+
+    init();
+  })();
 </script>
 </body>
 </html>
