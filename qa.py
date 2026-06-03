@@ -1,15 +1,40 @@
 #!/usr/bin/env python3
-"""RecycleBin website smoke test — run before push."""
+"""RecycleBin website smoke test — lightweight, production-aware."""
 import re, sys, urllib.request
-from pathlib import Path
+from pathlib import PurePosixPath
 
-ROOT = Path(__file__).resolve().parent
-PAGES = ["index.html", "events.html", "guides.html", "centers.html", "lookup.html", "search.html", "game.html"]
-URL = "https://qguy202606.github.io/recyclebin-website/"
+ROOT = r"C:/Users/opc/source/repos/recyclebin-website"
+DOMAIN = "https://qguy202606.github.io/recyclebin-website"
+
+# 哪些頁面要求是正式「有掛 main.css + local script」的頁面
+REQUIRED_STYLE_PAGES = {
+    "index.html","events.html","guides.html","centers.html",
+    "lookup.html","search.html","game.html","howto.html","event-detail.html"
+}
+
+# 一些靜態 landing 頁不需要強制掛共用 stylesheet（維持現狀）
+# 這裡不強制檢查。
+
+CORE_PAGES = sorted(REQUIRED_STYLE_PAGES)
+URL = DOMAIN + "/"
 
 errors = []
 
-for page in PAGES:
+def norm_href(href):
+    # 只解析真正落盤的 relative/absolute 路徑：不含 query/hash，且是站內 link
+    if href.startswith("mailto:") or href.startswith("tel:") or href.startswith("#"):
+        return None
+    if href.startswith("http://") or href.startswith("https://"):
+        if not href.startswith(DOMAIN):
+            return None
+        href = href[len(DOMAIN):]
+    # 清掉 query/hash
+    p = href.split("?",1)[0].split("#",1)[0]
+    if not p or p.startswith("//"):
+        return None
+    return p.lstrip("/")
+
+for page in CORE_PAGES:
     url = URL + page
     print(f"[FETCH] {url}")
     try:
@@ -19,28 +44,28 @@ for page in PAGES:
         errors.append(f"FAIL fetch {page}: {e}")
         continue
 
-    # 1) CSS check
-    if '/css/main.css' not in html:
-        errors.append(f"FAIL {page}: missing <link rel=\"stylesheet\" href=\"/css/main.css\">")
+    # style / script 規則（只針對 REQUIRED 清單）
+    if page in REQUIRED_STYLE_PAGES:
+        if '/css/main.css' not in html:
+            errors.append(f"FAIL {page}: missing /css/main.css")
+        if not (('js/site.js' in html) or re.search(r'<script[^>]+src="js/[^"]+\.js"', html)):
+            errors.append(f"FAIL {page}: no local script")
 
-    # 2) script src check (robust)
-    has_site_js = "js/site.js" in html
-    has_page_js = bool(re.search(r'<script[^>]+src="js/[^"]+\.js"', html))
-    if not (has_site_js or has_page_js):
-        errors.append(f"FAIL {page}: no local script loaded")
-
-    # 3) Internal link check
-    links = re.findall(r'href="(/[^"]+|https?://qguy202606\.github\.io/recyclebin-website/[^"]+)"', html)
-    for href in set(links):
-        target = ROOT / href.lstrip("/") if href.startswith("/") else href
-        if not target.exists():
-            errors.append(f"FAIL {page}: broken link -> {href}")
-
-    # 4) Console script tag check (alert/console.log used?)
-    inline_scripts = re.findall(r'<script[^>]*>(.*?)</script>', html, re.S)
-    for script in inline_scripts:
-        if "console.log" in script or "alert(" in script:
-            pass  # ignore for now
+    # 只檢查靜態可解析的內部連結（排除 JS 動態路由）
+    links = re.findall(r'href=(["\'])([^"\']+)\1', html)
+    checked = set()
+    for quote, href in links:
+        target = norm_href(href)
+        if target is None:
+            continue
+        if target in checked:
+            continue
+        checked.add(target)
+        if re.search(r'[?*<>\|]', target):
+            continue
+        fs_target = ROOT / PurePosixPath(target)
+        if not fs_target.exists():
+            errors.append(f"FAIL {page}: broken link -> {target}")
 
 if errors:
     print("\n[RESULT] FAIL")
@@ -48,5 +73,5 @@ if errors:
         print(" -", e)
     sys.exit(1)
 else:
-    print("\n[RESULT] PASS — all pages ok")
+    print("\n[RESULT] PASS — all production pages ok")
     sys.exit(0)

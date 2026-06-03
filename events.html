@@ -28,7 +28,7 @@
       <h1 data-i18n="nav_events">Events</h1>
       <p data-i18n="events_sub">Community recycling, cleanup, and education.</p>
       <div class="filter-bar">
-        <label for="stateSelect" data-i18n="filter_state">Filter state:</label>
+        <label for="stateSelect" data-i18n="filter_state">Filter by state:</label>
         <select id="stateSelect">
           <option value="ALL" data-i18n="filter_all">All United States</option>
         </select>
@@ -53,6 +53,7 @@
 <script src="/js/site.js"></script>
 <script>
 (function () {
+  'use strict';
   var listEl = document.getElementById('event-list');
   var statusEl = document.getElementById('feed-status');
   var stateSelect = document.getElementById('stateSelect');
@@ -60,7 +61,7 @@
 
   function renderStates(states) {
     if (!stateSelect) return;
-    stateSelect.innerHTML = '<option value="ALL">' + RecycleBin.t('filter_all') + '</option>';
+    stateSelect.innerHTML = '<option value="ALL">' + (RecycleBin.t('filter_all') || 'All United States') + '</option>';
     (states || []).forEach(function (s) {
       var opt = document.createElement('option');
       opt.value = s;
@@ -78,8 +79,8 @@
         (ev.desc ? '<p>' + ev.desc + '</p>' : '') +
         (ev.location ? '<p class="meta">' + ev.location + '</p>' : '') +
         '<div class="actions">' +
-          '<a class="btn btn-primary" href="/event-detail.html?id=' + ev.id + '">' + RecycleBin.t('read_more') + '</a>' +
-          (ev.join_url ? '<a class="btn btn-secondary" target="_blank" rel="noopener" href="' + ev.join_url + '">' + RecycleBin.t('event_join') + '</a>' : '') +
+          '<a class="btn btn-primary" href="/event-detail.html?id=' + ev.id + '">' + (RecycleBin.t('read_more') || 'Read More') + '</a>' +
+          (ev.join_url ? '<a class="btn btn-secondary" target="_blank" rel="noopener" href="' + ev.join_url + '">' + (RecycleBin.t('event_join') || 'Join Now') + '</a>' : '') +
         '</div>' +
       '</div>'
     );
@@ -93,17 +94,12 @@
       items = data.filter(function (x) { return x.state === current; });
     }
     if (!items.length) {
-      statusEl.textContent = RecycleBin.t('status_none');
-      listEl.innerHTML = '';
+      if (statusEl) statusEl.textContent = (RecycleBin.t('status_none') || 'No events available.');
+      if (listEl) listEl.innerHTML = '';
       return;
     }
-    statusEl.textContent = RecycleBin.t('status_loaded');
-    listEl.innerHTML = items.map(card).join('');
-  }
-
-  async function init() {
-    RecycleBin.initLayout({ active: '/events.html' });
-    RecycleBin.initI18n();
+    if (statusEl) statusEl.textContent = (RecycleBin.t('status_loaded') || '');
+    if (listEl) listEl.innerHTML = items.map(card).join('');
   }
 
   async function toJSON(url) {
@@ -119,13 +115,15 @@
 
   async function load() {
     var data = await toJSON('/events.json');
+    if (!Array.isArray(data)) data = [];
     window.__eventsData = data;
     if (data.length) {
       var states = data.map(function (e) { return e.state; });
       renderStates(Array.from(new Set(states.filter(Boolean))).sort());
       render(data);
     } else {
-      RecycleBin.setEventStatus('status_none');
+      renderStates(['CA','CO','FL','IL','NJ']);
+      render([]);
     }
   }
 
@@ -136,7 +134,9 @@
     });
   }
 
-  load().then(init);
+  RecycleBin.initLayout({ active: '/events.html' });
+  RecycleBin.initI18n();
+  load();
 })();
 </script>
 </body>
