@@ -213,13 +213,13 @@
     const locText = document.getElementById('location-text');
     const cityStr = (city && city.trim()) ? city : 'Detected area';
     if (locText) locText.innerHTML = `<strong>${cityStr}${region ? ', '+region : ''}${lat!=null ? ' ('+lat.toFixed(2)+', '+lng.toFixed(2)+')' : ''}</strong> <span>— approximate location</span>`;
+    if (!currentCenters.length) return;
     const upperRegion = (region || '').toUpperCase();
     if (upperRegion === 'ARIZONA' || upperRegion === 'US-AZ') {
-      currentCenters = allCenters.filter(c => {
-        const s = JSON.stringify(c).toUpperCase();
-        return s.includes('AZ') || s.includes('PHOENIX') || s.includes('TEMPE') || s.includes('AVONDALE') || s.includes('GOODYEAR') || s.includes('SURPRISE') || s.includes('CHANDLER');
-      });
-      if (!currentCenters.length) currentCenters = allCenters.slice();
+      currentCenters = allCenters.filter(c => (c.addr||c.name||'').toUpperCase().includes('AZ'));
+    } else if (typeof lat === 'number' && typeof lng === 'number') {
+      currentCenters = allCenters.map(c => ({...c, distance: haversine(lat, lng, c.lat, c.lng)}))
+        .sort((a,b) => (a.distance ?? Infinity) - (b.distance ?? Infinity));
     } else {
       currentCenters = allCenters.slice();
     }
