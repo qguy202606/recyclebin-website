@@ -1,56 +1,29 @@
 [
   {
-    "id": "beach-cleanup",
-    "date": "2026-07-04",
-    "title": "Beach Cleanup Rally",
-    "desc": "Join us to remove coastal litter and restore the shoreline and ocean.",
-    "location": "Main Beach Entrance, Laguna Beach, CA",
-    "body": "We meet at the main entrance at 8:00 AM. Gloves, bags, and a quick safety briefing provided. All ages welcome.",
-    "join_url": "https://www.eventbrite.com/e/beach-cleanup-rally-1234567890"
+    "id": "huntington-beach-veterans-cleanup",
+    "date": "2026-07-12",
+    "title": "Huntington Beach Cleanup with Veterans!",
+    "desc": "Open to anyone. Join veterans and volunteers for a 2.5 hour community cleanup on Huntington Beach.",
+    "location": "405 Pacific Coast Hwy, Huntington Beach, CA 92648",
+    "body": "Doors open at 6:45 AM, cleanup from 9:00 to 11:30 AM, optional 21+ veteran social afterward. Gloves and bags provided.",
+    "join_url": "https://www.eventbrite.com/e/huntington-beach-cleanup-with-veterans-tickets-1989396031082"
   },
   {
-    "id": "recycling-challenge",
-    "date": "2026-07-18",
-    "title": "Community Recycling Challenge",
-    "desc": "28-day recycling challenge with points, prizes, and impact badges.",
-    "location": "Virtual / Community-wide",
-    "body": "Sign up individually or household-based. Track recycling activity through the challenge portal.",
-    "join_url": "https://www.eventbrite.com/e/community-recycling-challenge-0987654321"
+    "id": "world-ocean-day-cleanup",
+    "date": "2026-06-08",
+    "title": "World Ocean Day Beach Cleanup",
+    "desc": "Celebrate World Ocean Day with a hands-on beach cleanup at Newport Beach Pier.",
+    "location": "Newport Beach Pier, 1 Newport Pier, Newport Beach, CA 92663",
+    "body": "9:00 AM - 12:00 PM. Bring sunscreen, comfy shoes, and friends. Family friendly.",
+    "join_url": "https://www.eventbrite.com/e/world-ocean-day-beach-cleanup-tickets-1988583194867"
   },
   {
-    "id": "composting-workshop",
-    "date": "2026-08-05",
-    "title": "Home Composting Workshop",
-    "desc": "Learn to compost at home, reduce food scraps, and enrich your garden.",
-    "location": "Irvine Community Center, 1 Community Dr, Irvine, CA 92612",
-    "body": "Hands-on workshop with bin setup, compost layering, and troubleshooting. Starter kit included.",
-    "join_url": "https://www.eventbrite.com/e/home-composting-workshop-1122334455"
-  },
-  {
-    "id": "e-waste-day",
-    "date": "2026-08-22",
-    "title": "E-Waste Recycling Day",
-    "desc": "Free drop-off for devices and batteries, plus secure data wipe guidance.",
-    "location": "City Hall Parking Lot, 4445 Civic Center Dr, Irvine, CA 92602",
-    "body": "Bring old computers, phones, batteries, and cables. On-site data wipe guidance available.",
-    "join_url": "https://www.eventbrite.com/e/e-waste-recycling-day-5566778899"
-  },
-  {
-    "id": "campus-talk",
-    "date": "2026-09-10",
-    "title": "Campus Sustainability Talk",
-    "desc": "Environmental educators share real circular economy projects in schools.",
-    "location": "UCI Student Center, 501 Aldrich Hall, Irvine, CA 92697",
-    "body": "Doors open at 6:00 PM. Free parking after 5 PM.",
-    "join_url": "https://www.eventbrite.com/e/campus-sustainability-talk-9988776655"
-  },
-  {
-    "id": "tote-bag-diy",
-    "date": "2026-09-25",
-    "title": "Weekend Tote Bag DIY",
-    "desc": "Upcycle fabric into a custom tote bag to cut single-use plastic.",
-    "location": "RecycleBin Creative Studio, 100 Main St, Irvine, CA 92618",
-    "body": "Bring an old shirt or fabric scrap. Sewing kits and stencils provided.",
-    "join_url": "https://www.eventbrite.com/e/weekend-tote-bag-diy-3344556677"
+    "id": "lb-72nd-place-cleanup",
+    "date": "2026-06-06",
+    "title": "LBC Beach Cleanup",
+    "desc": "Community cleanup at 72nd Place in Long Beach. Food and refreshments provided.",
+    "location": "72nd Place, Long Beach, CA 90803",
+    "body": "9:00 AM - 10:00 AM. Gloves and trash bags provided. Easy parking at the 72nd lot.",
+    "join_url": "https://www.eventbrite.com/e/lbc-beach-cleanup-tickets-1990519285767"
   }
 ]
