@@ -106,16 +106,27 @@
     RecycleBin.initI18n();
   }
 
-  async function load() {
-    var res = await fetch('/events.json', { cache: 'no-store' });
-    if (!res.ok) throw new Error('fetch failed');
-    var data = await res.json();
-    if (!Array.isArray(data)) throw new Error('bad data');
+  async function toJSON(url) {
+    try {
+      var res = await fetch(url, { cache: 'no-store' });
+      if (!res.ok) throw new Error('bad status: ' + res.status);
+      return await res.json();
+    } catch (err) {
+      window.__eventsLoadError = err;
+      return [];
+    }
+  }
 
+  async function load() {
+    var data = await toJSON('/events.json');
     window.__eventsData = data;
-    var states = data.map(function (e) { return e.state; });
-    renderStates(Array.from(new Set(states.filter(Boolean))).sort());
-    render(data);
+    if (data.length) {
+      var states = data.map(function (e) { return e.state; });
+      renderStates(Array.from(new Set(states.filter(Boolean))).sort());
+      render(data);
+    } else {
+      RecycleBin.setEventStatus('status_none');
+    }
   }
 
   if (stateSelect) {
