@@ -498,18 +498,15 @@
 </head>
 <body>
 
-<!-- Compact Menu Bar -->
+<!-- Compact Menu Bar (uses shared CSS in css/_site.css and auto highlight in js/menu.js) -->
 <div class="menu-bar">
-  <a class="menu-logo" href="./index.html">
-    <span class="logo-icon">♻️</span>
-    <span>RecycleBin</span>
-  </a>
+  <a href="./index.html"><span class="logo">♻️</span><span>RecycleBin</span></a>
   <nav class="menu-nav">
-    <a class="menu-link" href="./games.html">🎮 Games</a>
-    <a class="menu-link" href="./guides.html">📚 Guides</a>
-    <a class="menu-link" href="./centers.html">📍 Centers</a>
-    <a class="menu-link" href="./events.html">📅 Events</a>
-    <a class="menu-link" href="./howto.html">🛠️ How-To</a>
+    <a class="menu-link" href="./games.html" data-menu="games">🎮 Games</a>
+    <a class="menu-link" href="./guides.html" data-menu="guides">📚 Guides</a>
+    <a class="menu-link" href="./centers.html" data-menu="centers">📍 Centers</a>
+    <a class="menu-link" href="./events.html" data-menu="events">📅 Events</a>
+    <a class="menu-link" href="./howto.html" data-menu="howto">🛠️ How-To</a>
   </nav>
 </div>
 
