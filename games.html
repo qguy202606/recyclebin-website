@@ -1,0 +1,980 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>RecycleBin - Fun Recycling Games</title>
+<style>
+  * { box-sizing: border-box; margin: 0; padding: 0; }
+  body {
+    font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+    background: linear-gradient(135deg, #e0f7fa 0%, #fff3e0 100%);
+    min-height: 100vh;
+    padding: 20px;
+    color: #333;
+    overflow-x: hidden;
+  }
+  .container {
+    max-width: 900px;
+    margin: 0 auto;
+    background: rgba(255, 255, 255, 0.95);
+    border-radius: 20px;
+    box-shadow: 0 10px 40px rgba(0,0,0,0.1);
+    overflow: hidden;
+    animation: fadeIn 0.6s;
+  }
+  @keyframes fadeIn { from { opacity: 0; transform: translateY(20px); } to { opacity: 1; transform: translateY(0); } }
+
+  header {
+    background: linear-gradient(135deg, #2e7d32 0%, #66bb6a 100%);
+    color: white;
+    padding: 30px 20px;
+    text-align: center;
+    position: relative;
+    overflow: hidden;
+  }
+  header::before {
+    content: "♻️ 🍃 🌍 ♻️ 🍃 🌍";
+    position: absolute;
+    top: 10px;
+    left: 0;
+    right: 0;
+    font-size: 1.5em;
+    opacity: 0.3;
+    animation: float 8s linear infinite;
+    white-space: nowrap;
+  }
+  @keyframes float {
+    0% { transform: translateX(0); }
+    100% { transform: translateX(-50%); }
+  }
+  h1 { font-size: 2em; margin-bottom: 10px; position: relative; z-index: 1; }
+  .subtitle { opacity: 0.95; font-size: 1.1em; position: relative; z-index: 1; }
+
+  .tab-nav {
+    display: flex;
+    border-bottom: 2px solid #e0e0e0;
+    background: #f5f5f5;
+  }
+  .tab-btn {
+    flex: 1;
+    padding: 15px;
+    background: none;
+    border: none;
+    font-size: 1em;
+    cursor: pointer;
+    transition: all 0.3s;
+    font-weight: 600;
+    color: #666;
+    position: relative;
+  }
+  .tab-btn.active {
+    color: #2e7d32;
+    border-bottom: 3px solid #2e7d32;
+    background: #e8f5e9;
+  }
+  .tab-btn:hover:not(.active) {
+    background: #e0e0e0;
+    transform: translateY(-2px);
+  }
+  .game-section {
+    display: none;
+    padding: 30px;
+    animation: fadeIn 0.4s;
+  }
+  .game-section.active { display: block; }
+
+  /* Sorting Game */
+  .score-board {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    margin-bottom: 20px;
+    padding: 15px;
+    background: linear-gradient(135deg, #f5f5f5, #e8f5e9);
+    border-radius: 10px;
+    font-weight: bold;
+    border: 2px solid #c8e6c9;
+  }
+  .score { font-size: 1.2em; color: #2e7d32; }
+  .timer { font-size: 1.2em; color: #e65100; }
+  .streak { 
+    font-size: 1.1em; 
+    color: #f57c00; 
+    background: #fff3e0;
+    padding: 5px 10px;
+    border-radius: 15px;
+  }
+  .bins-container {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(140px, 1fr));
+    gap: 15px;
+    margin-bottom: 25px;
+  }
+  .bin {
+    background: #fafafa;
+    border: 3px dashed #ccc;
+    border-radius: 12px;
+    padding: 15px 10px;
+    text-align: center;
+    min-height: 100px;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    cursor: pointer;
+    transition: all 0.2s;
+    font-weight: bold;
+    font-size: 0.95em;
+  }
+  .bin:hover {
+    transform: scale(1.05);
+    box-shadow: 0 5px 15px rgba(0,0,0,0.2);
+  }
+  .bin.drag-over {
+    transform: scale(1.08);
+    border-color: #2e7d32;
+    background: #e8f5e9;
+    box-shadow: 0 0 20px rgba(46, 125, 50, 0.4);
+  }
+  .bin .bin-icon { font-size: 2.5em; margin-bottom: 5px; animation: bounce 2s infinite; }
+  @keyframes bounce {
+    0%, 100% { transform: translateY(0); }
+    50% { transform: translateY(-5px); }
+  }
+  .bin-recycling { border-color: #1976d2; }
+  .bin-compost { border-color: #388e3c; }
+  .bin-trash { border-color: #616161; }
+  .bin-hazardous { border-color: #f57c00; }
+  .bin-recycling .bin-icon::before { content: "♻️"; }
+  .bin-compost .bin-icon::before { content: "🍃"; }
+  .bin-trash .bin-icon::before { content: "🗑️"; }
+  .bin-hazardous .bin-icon::before { content: "⚠️"; }
+
+  .items-pool {
+    display: grid;
+    grid-template-columns: repeat(auto-fill, minmax(100px, 1fr));
+    gap: 12px;
+    margin-bottom: 20px;
+  }
+  .item {
+    background: white;
+    border: 2px solid #ddd;
+    border-radius: 10px;
+    padding: 12px 8px;
+    text-align: center;
+    cursor: grab;
+    transition: all 0.2s;
+    font-size: 0.9em;
+    user-select: none;
+    position: relative;
+  }
+  .item:hover {
+    border-color: #2e7d32;
+    transform: translateY(-3px) rotate(2deg);
+    box-shadow: 0 6px 16px rgba(0,0,0,0.15);
+  }
+  .item.dragging { opacity: 0.4; transform: scale(0.9); }
+  .item.correct {
+    background: linear-gradient(135deg, #c8e6c9, #a5d6a7);
+    border-color: #2e7d32;
+    animation: correctPulse 0.6s, confetti 0.6s;
+    color: #1b5e20;
+  }
+  .item.wrong {
+    background: linear-gradient(135deg, #ffcdd2, #ef9a9a);
+    border-color: #c62828;
+    animation: shake 0.6s;
+    color: #b71c1c;
+  }
+  @keyframes correctPulse {
+    0% { transform: scale(1); }
+    50% { transform: scale(1.15); }
+    100% { transform: scale(1); }
+  }
+  @keyframes shake {
+    0%, 100% { transform: translateX(0); }
+    25% { transform: translateX(-10px); }
+    75% { transform: translateX(10px); }
+  }
+  @keyframes confetti {
+    0% { box-shadow: 0 0 0 0 rgba(76, 175, 80, 0.7); }
+    70% { box-shadow: 0 0 0 20px rgba(76, 175, 80, 0); }
+    100% { box-shadow: 0 0 0 0 rgba(76, 175, 80, 0); }
+  }
+
+  .feedback-panel {
+    text-align: center;
+    padding: 20px;
+    background: linear-gradient(135deg, #fff8e1, #ffecb3);
+    border-radius: 10px;
+    min-height: 80px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-size: 1.05em;
+    line-height: 1.5;
+    border: 2px solid #ffcc02;
+    transition: all 0.3s;
+  }
+  .feedback-panel.correct-feedback { 
+    background: linear-gradient(135deg, #e8f5e9, #c8e6c9);
+    color: #1b5e20;
+    border-color: #2e7d32;
+    animation: glow 1s;
+  }
+  .feedback-panel.wrong-feedback { 
+    background: linear-gradient(135deg, #ffebee, #ffcdd2);
+    color: #b71c1c;
+    border-color: #c62828;
+  }
+  @keyframes glow {
+    0% { box-shadow: 0 0 0 rgba(76, 175, 80, 0); }
+    50% { box-shadow: 0 0 20px rgba(76, 175, 80, 0.6); }
+    100% { box-shadow: 0 0 0 rgba(76, 175, 80, 0); }
+  }
+
+  .controls { text-align: center; margin-top: 20px; }
+  .btn {
+    background: linear-gradient(135deg, #2e7d32, #66bb6a);
+    color: white;
+    border: none;
+    padding: 12px 30px;
+    border-radius: 25px;
+    font-size: 1em;
+    font-weight: 600;
+    cursor: pointer;
+    transition: all 0.3s;
+    margin: 0 5px;
+    box-shadow: 0 4px 12px rgba(0,0,0,0.15);
+  }
+  .btn:hover {
+    transform: translateY(-2px);
+    box-shadow: 0 6px 20px rgba(0,0,0,0.2);
+  }
+  .btn-secondary { 
+    background: linear-gradient(135deg, #757575, #9e9e9e);
+  }
+  .btn-secondary:hover {
+    background: linear-gradient(135deg, #616161, #757575);
+  }
+
+  /* Quiz Game */
+  .quiz-question {
+    font-size: 1.2em;
+    text-align: center;
+    margin-bottom: 20px;
+    font-weight: bold;
+    color: #2e7d32;
+  }
+  .quiz-options {
+    display: grid;
+    gap: 12px;
+    max-width: 600px;
+    margin: 0 auto 20px;
+  }
+  .quiz-option {
+    background: white;
+    border: 2px solid #ddd;
+    border-radius: 10px;
+    padding: 15px;
+    cursor: pointer;
+    transition: all 0.2s;
+    font-size: 1em;
+    text-align: left;
+  }
+  .quiz-option:hover {
+    border-color: #2e7d32;
+    background: #f1f8e9;
+    transform: translateX(5px);
+  }
+  .quiz-option.selected {
+    background: #e3f2fd;
+    border-color: #1976d2;
+  }
+  .quiz-option.correct {
+    background: linear-gradient(135deg, #c8e6c9, #a5d6a7);
+    border-color: #2e7d32;
+    animation: correctPulse 0.6s;
+  }
+  .quiz-option.wrong {
+    background: linear-gradient(135deg, #ffcdd2, #ef9a9a);
+    border-color: #c62828;
+    animation: shake 0.6s;
+  }
+  .quiz-progress {
+    text-align: center;
+    margin-bottom: 20px;
+    color: #666;
+    font-weight: 600;
+  }
+  .progress-bar {
+    height: 10px;
+    background: #e0e0e0;
+    border-radius: 5px;
+    margin-bottom: 20px;
+    overflow: hidden;
+    box-shadow: inset 0 2px 4px rgba(0,0,0,0.1);
+  }
+  .progress-fill {
+    height: 100%;
+    background: linear-gradient(90deg, #2e7d32, #66bb6a);
+    transition: width 0.4s ease;
+    width: 0%;
+    box-shadow: 0 0 10px rgba(46, 125, 50, 0.5);
+  }
+
+  /* Match Game */
+  .match-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(140px, 1fr));
+    gap: 15px;
+    max-width: 700px;
+    margin: 0 auto;
+  }
+  .match-card {
+    background: white;
+    border: 2px solid #ddd;
+    border-radius: 10px;
+    padding: 20px;
+    text-align: center;
+    cursor: pointer;
+    transition: all 0.3s;
+    min-height: 80px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-weight: 600;
+    font-size: 0.95em;
+    perspective: 1000px;
+  }
+  .match-card.flipped {
+    background: linear-gradient(135deg, #e8f5e9, #c8e6c9);
+    border-color: #2e7d32;
+    transform: rotateY(180deg);
+    animation: correctPulse 0.6s;
+  }
+  .match-card.matched {
+    background: linear-gradient(135deg, #c8e6c9, #a5d6a7);
+    border-color: #2e7d32;
+    pointer-events: none;
+    animation: correctPulse 0.6s, confetti 0.6s;
+  }
+  .match-card.wrong-match {
+    background: linear-gradient(135deg, #ffcdd2, #ef9a9a);
+    border-color: #c62828;
+    animation: shake 0.6s;
+  }
+
+  /* Achievements */
+  .achievements {
+    display: flex;
+    justify-content: center;
+    gap: 20px;
+    margin: 20px 0;
+    flex-wrap: wrap;
+  }
+  .achievement {
+    background: linear-gradient(135deg, #fff8e1, #ffecb3);
+    border: 2px solid #ffcc02;
+    border-radius: 15px;
+    padding: 10px 20px;
+    font-size: 0.9em;
+    font-weight: 600;
+    opacity: 0.5;
+    transition: all 0.3s;
+  }
+  .achievement.unlocked {
+    opacity: 1;
+    background: linear-gradient(135deg, #e8f5e9, #c8e6c9);
+    border-color: #2e7d32;
+    animation: glow 1s;
+    cursor: pointer;
+  }
+  .achievement-icon { font-size: 1.5em; margin-right: 5px; }
+
+  footer {
+    text-align: center;
+    padding: 20px;
+    color: #666;
+    border-top: 2px solid #e8f5e9;
+    font-size: 0.9em;
+  }
+
+  /* Emoji rain effect */
+  .emoji-rain {
+    position: fixed;
+    top: -50px;
+    font-size: 2em;
+    animation: fall 3s linear;
+    pointer-events: none;
+    z-index: 9999;
+  }
+  @keyframes fall {
+    to { transform: translateY(100vh) rotate(360deg); opacity: 0; }
+  }
+
+  @media (max-width: 600px) {
+    h1 { font-size: 1.5em; }
+    .tab-btn { font-size: 0.9em; padding: 12px 5px; }
+    .game-section { padding: 20px 15px; }
+    .bins-container { grid-template-columns: repeat(2, 1fr); }
+    .items-pool { grid-template-columns: repeat(2, 1fr); }
+    .achievements { gap: 10px; }
+    .achievement { font-size: 0.8em; padding: 8px 15px; }
+  }
+</style>
+</head>
+<body>
+<div class="container">
+  <header>
+    <h1>♻️ RecycleBin - Fun Games!</h1>
+    <div class="subtitle">Learn recycling while having a blast! 🎮</div>
+  </header>
+
+  <nav class="tab-nav">
+    <button class="tab-btn active" onclick="showTab('sorting')">🎯 Sort It</button>
+    <button class="tab-btn" onclick="showTab('quiz')">🧠 Quiz Time</button>
+    <button class="tab-btn" onclick="showTab('match')">🎴 Memory Match</button>
+  </nav>
+
+  <section id="sorting" class="game-section active">
+    <div class="score-board">
+      <div>🎮 Round: <span class="score" id="round">1</span>/10</div>
+      <div>⭐ Score: <span class="score" id="score">0</span></div>
+      <div>🔥 Streak: <span class="streak" id="streak">0</span></div>
+      <div class="timer">⏱️ <span id="timer">60</span>s</div>
+    </div>
+
+    <div class="bins-container">
+      <div class="bin bin-recycling" data-bin="recycling" onclick="clickBin(this)">
+        <div class="bin-icon"></div>
+        <div>Recycling</div>
+      </div>
+      <div class="bin bin-compost" data-bin="compost" onclick="clickBin(this)">
+        <div class="bin-icon"></div>
+        <div>Compost</div>
+      </div>
+      <div class="bin bin-trash" data-bin="trash" onclick="clickBin(this)">
+        <div class="bin-icon"></div>
+        <div>Trash</div>
+      </div>
+      <div class="bin bin-hazardous" data-bin="hazardous" onclick="clickBin(this)">
+        <div class="bin-icon"></div>
+        <div>Hazardous</div>
+      </div>
+    </div>
+
+    <div class="items-pool" id="itemsPool"></div>
+
+    <div class="feedback-panel" id="feedback">
+      🎯 Drag or tap an item, then tap the correct bin! Let's go!
+    </div>
+
+    <div class="controls">
+      <button class="btn" onclick="nextRound()">Next Item ➡️</button>
+      <button class="btn btn-secondary" onclick="resetGame()">🔄 Restart</button>
+    </div>
+
+    <div class="achievements" id="sortingAchievements">
+      <div class="achievement" id="ach-streak3">🔥 <span class="achievement-icon">👑</span>Streak 3+</div>
+      <div class="achievement" id="ach-perfect">⭐ <span class="achievement-icon">🎯</span>Perfect Round</div>
+      <div class="achievement" id="ach-speed">⚡ <span class="achievement-icon">⚡</span>Speed Sorter</div>
+    </div>
+  </section>
+
+  <section id="quiz" class="game-section">
+    <div class="score-board">
+      <div>📝 Question: <span class="score" id="quizNum">1</span>/8</div>
+      <div>⭐ Score: <span class="score" id="quizScore">0</span></div>
+      <div>💪 Combo: <span class="streak" id="quizStreak">0</span>x</div>
+    </div>
+
+    <div class="progress-bar"><div class="progress-fill" id="quizProgress"></div></div>
+
+    <div class="quiz-question" id="quizQuestion">Loading...</div>
+    <div class="quiz-options" id="quizOptions"></div>
+
+    <div class="feedback-panel" id="quizFeedback">🧠 Ready to test your recycling knowledge?</div>
+
+    <div class="controls">
+      <button class="btn" id="nextQuizBtn" onclick="nextQuestion()" style="display:none;">Next ➡️</button>
+      <button class="btn btn-secondary" onclick="resetQuiz()">🔄 Restart Quiz</button>
+    </div>
+  </section>
+
+  <section id="match" class="game-section">
+    <div class="score-board">
+      <div>✅ Matches: <span class="score" id="matchCount">0</span>/6</div>
+      <div>🎯 Attempts: <span class="score" id="matchAttempts">0</span></div>
+      <div>⚡ Best: <span class="streak" id="bestAttempts">-</span></div>
+    </div>
+
+    <div class="match-grid" id="matchGrid"></div>
+
+    <div class="feedback-panel" id="matchFeedback">🎴 Click two cards to find matching pairs! Find all 6!</div>
+
+    <div class="controls">
+      <button class="btn btn-secondary" onclick="resetMatch()">🔄 New Game</button>
+    </div>
+  </section>
+
+  <footer>
+    Made with 💚 for RecycleBin | Learn. Sort. Save the Planet. 🌍
+  </footer>
+</div>
+
+<script>
+// ===== GAME DATA =====
+const trashData = [
+  { name: "Plastic Bottle", bin: "recycling", fact: "A plastic bottle takes 450+ years to decompose! 💔", points: 10 },
+  { name: "Banana Peel", bin: "compost", fact: "Composting returns nutrients to soil naturally. 🌱", points: 10 },
+  { name: "Battery", bin: "hazardous", fact: "One battery can contaminate 600,000 liters of water! 😱", points: 15 },
+  { name: "Newspaper", bin: "recycling", fact: "Recycling paper saves trees and uses 70% less energy. 🌳", points: 10 },
+  { name: "Glass Jar", bin: "recycling", fact: "Glass can be recycled endlessly without quality loss! ♻️", points: 10 },
+  { name: "Apple Core", bin: "compost", fact: "Food waste produces methane—a powerful greenhouse gas. 🌍", points: 10 },
+  { name: "Styrofoam Cup", bin: "trash", fact: "Styrofoam is not biodegradable—avoid when possible! 🚫", points: 10 },
+  { name: "Aerosol Can", bin: "hazardous", fact: "Pressurized cans need special disposal! ⚠️", points: 15 },
+  { name: "Cardboard Box", bin: "recycling", fact: "Flattening boxes saves space in recycling bins! 📦", points: 10 },
+  { name: "Candy Wrapper", bin: "trash", fact: "Mixed-material wrappers are typically not recyclable. 🍬", points: 10 },
+  { name: "Coffee Grounds", bin: "compost", fact: "Coffee grounds enrich compost and deter pests! ☕", points: 10 },
+  { name: "Paint Can", bin: "hazardous", fact: "Old paint must go to hazardous waste sites! 🎨", points: 15 },
+  { name: "Aluminum Can", bin: "recycling", fact: "An aluminum can can be back on shelves in 60 days! ⚡", points: 10 },
+  { name: "Pizza Box (greasy)", bin: "trash", fact: "Oil-soaked cardboard ruins recycled paper batches! 🍕", points: 10 },
+  { name: "Tea Bag", bin: "compost", fact: "Most tea bags are compostable! 🍵", points: 10 },
+  { name: "Phone Charger", bin: "hazardous", fact: "E-waste contains toxic metals—recycle properly! 📱", points: 15 },
+  { name: "Plastic Bag", bin: "trash", fact: "Plastic bags jam recycling machinery! 🛍️", points: 10 },
+  { name: "Egg Shells", bin: "compost", fact: "Eggshells add calcium to compost! 🥚", points: 10 },
+];
+
+const quizQuestions = [
+  { q: "How long does a plastic bottle take to decompose?", options: ["50 years ⏳", "450+ years 🕰️", "5 years ⚡", "100 years 📅"], a: 1,
+    fact: "A plastic bottle can take 450+ years to decompose! That's longer than you'll be alive! 😱", points: 10 },
+  { q: "Which bin does a banana peel go in?", options: ["Trash 🗑️", "Hazardous ⚠️", "Compost 🍃", "Recycling ♻️"], a: 2,
+    fact: "Banana peels are compostable—great for soil! 🌱", points: 10 },
+  { q: "How many liters of water can one battery contaminate?", options: ["6,000 💧", "60,000 🌊", "600,000 🌊", "6 million 💦"], a: 2,
+    fact: "One single battery can pollute 600,000 liters of water! That's a lot! 😱", points: 15 },
+  { q: "Glass can be recycled...", options: ["Once only 🔄", "Twice 🔄", "5 times max 🔄", "Endlessly ♾️"], a: 3,
+    fact: "Glass can be recycled forever without losing quality! ♻️", points: 10 },
+  { q: "Styrofoam is...", options: ["Highly recyclable ✅", "Biodegradable 🍂", "Rarely recyclable ❌", "Made from glass 🪟"], a: 2,
+    fact: "Styrofoam is a major landfill problem—avoid when possible. 🚫", points: 10 },
+  { q: "What does recycling paper save?", options: ["Plastic 🧴", "Water only 💧", "Trees and energy 🌳⚡", "Nothing 🤷"], a: 2,
+    fact: "Recycling paper saves trees and uses 70% less energy! 🌳", points: 10 },
+  { q: "Where should old paint go?", options: ["Recycling ♻️", "Trash 🗑️", "Compost 🍃", "Hazardous waste ⚠️"], a: 3,
+    fact: "Old paint must go to hazardous waste facilities! 🎨", points: 15 },
+  { q: "Item in recycling that still has food on it...", options: ["Is fine ✅", "Can ruin the batch 💔", "Is composted 🍃", "Becomes hazardous ⚠️"], a: 1,
+    fact: "Rinse recyclables—food residue can ruin entire batches! 🧼", points: 10 },
+];
+
+const matchPairs = [
+  { word: "Plastic Bottle", definition: "450+ years to decompose 🕰️" },
+  { word: "Glass Jar", definition: "Recyclable endlessly ♾️" },
+  { word: "Battery", definition: "Hazardous e-waste ⚠️" },
+  { word: "Banana Peel", definition: "Goes to compost 🍃" },
+  { word: "Aluminum Can", definition: "Back on shelf in 60 days ⚡" },
+  { word: "Styrofoam", definition: "Rarely recyclable ❌" },
+];
+
+// ===== SORTING GAME =====
+let currentTrash;
+let sortingScore = 0;
+let sortingRound = 0;
+let sortingTotal = 10;
+let timeLeft = 60;
+let timerInterval;
+let selectedItems = [];
+let currentBin = null;
+let streak = 0;
+let maxStreak = 0;
+let gamesPlayed = 0;
+
+function initSorting() {
+  currentTrash = [...trashData].sort(() => Math.random() - 0.5).slice(0, sortingTotal);
+  sortingRound = 0;
+  sortingScore = 0;
+  timeLeft = 60;
+  streak = 0;
+  updateSortingUI();
+  showItem();
+  startTimer();
+}
+
+function showItem() {
+  if (sortingRound >= sortingTotal) {
+    endSorting();
+    return;
+  }
+  const pool = document.getElementById('itemsPool');
+  pool.innerHTML = `
+    <div class="item" draggable="true" data-name="${currentTrash[sortingRound].name}" data-bin="${currentTrash[sortingRound].bin}">
+      📦 ${currentTrash[sortingRound].name}
+    </div>`;
+  const item = pool.querySelector('.item');
+  item.addEventListener('dragstart', (e) => {
+    e.dataTransfer.setData('text/plain', JSON.stringify({ 
+      name: currentTrash[sortingRound].name, 
+      bin: currentTrash[sortingRound].bin,
+      points: currentTrash[sortingRound].points 
+    }));
+    item.classList.add('dragging');
+  });
+  item.addEventListener('dragend', () => item.classList.remove('dragging'));
+
+  item.addEventListener('click', () => {
+    selectedItems = [currentTrash[sortingRound]];
+    highlightItems(item);
+  });
+
+  updateSortingUI();
+  document.getElementById('feedback').className = 'feedback-panel';
+  document.getElementById('feedback').textContent = '🎯 Drag or tap an item, then tap the correct bin!';
+}
+
+function highlightItems(el) {
+  document.querySelectorAll('#itemsPool .item').forEach(i => i.style.borderColor = '#ddd');
+  el.style.borderColor = '#2e7d32';
+}
+
+document.querySelectorAll('.bin').forEach(bin => {
+  bin.addEventListener('dragover', (e) => { e.preventDefault(); bin.classList.add('drag-over'); });
+  bin.addEventListener('dragleave', () => bin.classList.remove('drag-over'));
+  bin.addEventListener('drop', (e) => {
+    e.preventDefault();
+    bin.classList.remove('drag-over');
+    const data = JSON.parse(e.dataTransfer.getData('text/plain'));
+    checkSorting(data.name, bin.dataset.bin, data.bin, data.points);
+  });
+});
+
+function clickBin(bin) {
+  if (selectedItems.length === 0) {
+    document.getElementById('feedback').textContent = '🤔 Please select an item first! (Click/tap the item above)';
+    return;
+  }
+  const item = selectedItems[0];
+  const correctBin = currentTrash[sortingRound].bin;
+  checkSorting(item.name, bin.dataset.bin, correctBin, item.points);
+}
+
+function checkSorting(name, chosen, correct, points) {
+  const itemEl = document.querySelector('#itemsPool .item');
+  const feedback = document.getElementById('feedback');
+  const data = currentTrash[sortingRound];
+
+  if (chosen === correct) {
+    if (itemEl) itemEl.classList.add('correct');
+    sortingScore += points;
+    streak++;
+    if (streak > maxStreak) maxStreak = streak;
+    feedback.className = 'feedback-panel correct-feedback';
+    feedback.innerHTML = `🎉 <strong>Correct!</strong> ${name} → ${correct}!<br><em>${data.fact}</em><br><strong>+${points} points!</strong> 🏆`;
+    createEmojiRain(['♻️', '⭐', '🎉', '✨', '💚']);
+    checkAchievements();
+  } else {
+    if (itemEl) itemEl.classList.add('wrong');
+    streak = 0;
+    feedback.className = 'feedback-panel wrong-feedback';
+    feedback.innerHTML = `❌ <strong>Oops!</strong> ${name} actually goes to <strong>${correct}</strong>.<br><em>${data.fact}</em><br>Keep trying! 💪`;
+  }
+  selectedItems = [];
+  updateSortingUI();
+  setTimeout(() => {
+    sortingRound++;
+    if (sortingRound < sortingTotal && timeLeft > 0) {
+      showItem();
+    } else {
+      endSorting();
+    }
+  }, 2500);
+}
+
+function updateSortingUI() {
+  document.getElementById('round').textContent = Math.min(sortingRound + 1, sortingTotal);
+  document.getElementById('score').textContent = sortingScore;
+  document.getElementById('timer').textContent = timeLeft;
+  document.getElementById('streak').textContent = streak;
+}
+
+function startTimer() {
+  clearInterval(timerInterval);
+  timerInterval = setInterval(() => {
+    timeLeft--;
+    updateSortingUI();
+    if (timeLeft <= 0) endSorting();
+  }, 1000);
+}
+
+function endSorting() {
+  clearInterval(timerInterval);
+  const total = sortingTotal;
+  const percent = Math.round((sortingScore / total) * 100);
+  let msg = '';
+  if (percent >= 90) msg = "🌟 <strong>Amazing!</strong> You're a Recycling Superstar! 🏆";
+  else if (percent >= 70) msg = "👍 <strong>Great job!</strong> Almost perfect! Keep it up! 💪";
+  else if (percent >= 50) msg = "🌱 <strong>Nice try!</strong> You're learning! 🌟";
+  else msg = "📚 <strong>Keep practicing!</strong> You'll get there! 💚";
+  
+  gamesPlayed++;
+  document.getElementById('feedback').className = 'feedback-panel';
+  document.getElementById('feedback').innerHTML = `<strong>🎮 Game Over!</strong><br>Score: ${sortingScore} points<br>Best Streak: ${maxStreak}<br>${msg}`;
+  document.getElementById('itemsPool').innerHTML = '';
+  
+  // Show achievement summary
+  const perfect = streak >= sortingTotal || (sortingScore >= sortingTotal * 10);
+  if (perfect) {
+    setTimeout(() => createEmojiRain(['🏆', '⭐', '🌟', '🎉', '👑']), 500);
+  }
+}
+
+function checkAchievements() {
+  if (streak >= 3) document.getElementById('ach-streak3').classList.add('unlocked');
+  if (streak >= sortingTotal) document.getElementById('ach-perfect').classList.add('unlocked');
+  if (timeLeft > 40 && sortingRound >= 3) document.getElementById('ach-speed').classList.add('unlocked');
+}
+
+function createEmojiRain(emojis) {
+  const container = document.body;
+  for (let i = 0; i < 8; i++) {
+    setTimeout(() => {
+      const span = document.createElement('span');
+      span.className = 'emoji-rain';
+      span.textContent = emojis[Math.floor(Math.random() * emojis.length)];
+      span.style.left = Math.random() * 100 + 'vw';
+      span.style.animationDuration = (2 + Math.random() * 2) + 's';
+      container.appendChild(span);
+      setTimeout(() => span.remove(), 4000);
+    }, i * 200);
+  }
+}
+
+function nextRound() {
+  if (sortingRound < sortingTotal) showItem();
+  else endSorting();
+}
+
+function resetGame() { initSorting(); }
+
+// ===== QUIZ GAME =====
+let quizIndex = 0;
+let quizScoreVal = 0;
+let shuffledQuiz;
+let answered = false;
+let quizStreak = 0;
+let maxQuizStreak = 0;
+
+function initQuiz() {
+  shuffledQuiz = [...quizQuestions].sort(() => Math.random() - 0.5);
+  quizIndex = 0;
+  quizScoreVal = 0;
+  answered = false;
+  quizStreak = 0;
+  maxQuizStreak = 0;
+  showQuestion();
+}
+
+function showQuestion() {
+  answered = false;
+  const q = shuffledQuiz[quizIndex];
+  document.getElementById('quizQuestion').textContent = `🧠 ${quizIndex + 1}. ${q.q}`;
+  document.getElementById('quizScore').textContent = quizScoreVal;
+  document.getElementById('quizNum').textContent = quizIndex + 1;
+  document.getElementById('quizStreak').textContent = quizStreak;
+  document.getElementById('quizProgress').style.width = `${(quizIndex / shuffledQuiz.length) * 100}%`;
+  document.getElementById('nextQuizBtn').style.display = 'none';
+  document.getElementById('quizFeedback').className = 'feedback-panel';
+  document.getElementById('quizFeedback').textContent = '🤔 Select your answer...';
+
+  const optContainer = document.getElementById('quizOptions');
+  optContainer.innerHTML = '';
+  q.options.forEach((opt, i) => {
+    const btn = document.createElement('div');
+    btn.className = 'quiz-option';
+    btn.textContent = opt;
+    btn.onclick = () => selectQuizOption(btn, i, q.a, q.points);
+    optContainer.appendChild(btn);
+  });
+}
+
+function selectQuizOption(el, idx, correct, points) {
+  if (answered) return;
+  answered = true;
+  document.querySelectorAll('.quiz-option').forEach(o => o.classList.remove('selected'));
+  el.classList.add('selected');
+
+  if (idx === correct) {
+    quizScoreVal += points;
+    quizStreak++;
+    if (quizStreak > maxQuizStreak) maxQuizStreak = quizStreak;
+    el.classList.add('correct');
+    const q = shuffledQuiz[quizIndex];
+    document.getElementById('quizFeedback').className = 'feedback-panel correct-feedback';
+    document.getElementById('quizFeedback').innerHTML = `🎉 <strong>Correct!</strong><br><em>${q.fact}</em><br><strong>+${points} points!</strong> 🔥`;
+    createEmojiRain(['🧠', '⭐', '🎉', '✨', '💚']);
+  } else {
+    quizStreak = 0;
+    el.classList.add('wrong');
+    const q = shuffledQuiz[quizIndex];
+    document.querySelectorAll('.quiz-option')[correct].classList.add('correct');
+    document.getElementById('quizFeedback').className = 'feedback-panel wrong-feedback';
+    document.getElementById('quizFeedback').innerHTML = `📚 <strong>Good try!</strong> Answer: ${q.options[correct]}<br><em>${q.fact}</em><br>Keep learning! 💪`;
+  }
+  document.getElementById('quizScore').textContent = quizScoreVal;
+  document.getElementById('quizStreak').textContent = quizStreak;
+  document.getElementById('nextQuizBtn').style.display = 'inline-block';
+}
+
+function nextQuestion() {
+  quizIndex++;
+  if (quizIndex < shuffledQuiz.length) showQuestion();
+  else endQuiz();
+}
+
+function endQuiz() {
+  const total = shuffledQuiz.length;
+  const percent = Math.round((quizScoreVal / total) * 100);
+  let msg = '';
+  if (percent >= 90) msg = "🌟 <strong>Quiz Master!</strong> You know your recycling! 🏆";
+  else if (percent >= 70) msg = "👍 <strong>Great work!</strong> You're becoming an expert! 💪";
+  else if (percent >= 50) msg = "🌱 <strong>Good effort!</strong> Keep learning! 📚";
+  else msg = "💪 <strong>Keep practicing!</strong> Every expert was once a beginner! 🌟";
+  
+  document.getElementById('quizProgress').style.width = '100%';
+  document.getElementById('quizQuestion').textContent = `🎉 Quiz Complete! ${quizScoreVal}/${total} (${percent}%)`;
+  document.getElementById('quizOptions').innerHTML = '';
+  document.getElementById('quizFeedback').className = 'feedback-panel';
+  document.getElementById('quizFeedback').innerHTML = `<strong>🎊 Final Score: ${quizScoreVal} points!</strong><br>Best Combo: x${maxQuizStreak}<br>${msg}`;
+  document.getElementById('nextQuizBtn').style.display = 'none';
+  
+  if (percent >= 80) {
+    setTimeout(() => createEmojiRain(['🏆', '🌟', '⭐', '🎉', '👑']), 500);
+  }
+}
+
+function resetQuiz() { initQuiz(); }
+
+// ===== MATCH GAME =====
+let matchState = [];
+let matchFlipped = [];
+let matchMatched = 0;
+let matchAttempts = 0;
+let matchLocked = false;
+let matchStarted = false;
+let bestMatch = localStorage.getItem('bestMatch') || null;
+
+function initMatch() {
+  const cards = [];
+  matchPairs.forEach((pair, i) => {
+    cards.push({ id: i, text: pair.word, emoji: '💡', type: 'word', matchId: i });
+    cards.push({ id: i + matchPairs.length, text: pair.definition, emoji: '📖', type: 'def', matchId: i });
+  });
+  matchState = cards.sort(() => Math.random() - 0.5);
+  matchFlipped = [];
+  matchMatched = 0;
+  matchAttempts = 0;
+  matchLocked = false;
+  matchStarted = true;
+  renderMatch();
+  updateMatchUI();
+}
+
+function renderMatch() {
+  const grid = document.getElementById('matchGrid');
+  grid.innerHTML = '';
+  matchState.forEach((card, idx) => {
+    const el = document.createElement('div');
+    el.className = 'match-card';
+    const isFlipped = matchFlipped.includes(idx);
+    el.textContent = isFlipped ? card.text : card.emoji;
+    if (card.matched) el.classList.add('matched');
+    if (isFlipped) el.classList.add('flipped');
+    el.addEventListener('click', () => flipMatchCard(idx));
+    grid.appendChild(el);
+  });
+  document.getElementById('matchFeedback').className = 'feedback-panel';
+  document.getElementById('matchFeedback').textContent = matchStarted ? '👆 Click two cards to find matching pairs!' : '🎴 Ready to play?';
+}
+
+function flipMatchCard(idx) {
+  if (matchLocked) return;
+  if (matchFlipped.includes(idx)) return;
+  if (matchState[idx].matched) return;
+  if (matchFlipped.length >= 2) return;
+
+  matchFlipped.push(idx);
+  renderMatch();
+
+  if (matchFlipped.length === 2) {
+    matchAttempts++;
+    matchLocked = true;
+    const [a, b] = matchFlipped;
+    if (matchState[a].matchId === matchState[b].matchId) {
+      matchState[a].matched = true;
+      matchState[b].matched = true;
+      matchMatched++;
+      document.getElementById('matchFeedback').className = 'feedback-panel correct-feedback';
+      document.getElementById('matchFeedback').innerHTML = `🎉 <strong>Match found!</strong> Great memory! ⭐`;
+      matchFlipped = [];
+      matchLocked = false;
+      createEmojiRain(['🎴', '✨', '💚', '🌟']);
+      updateMatchUI();
+      if (matchMatched === matchPairs.length) endMatch();
+    } else {
+      document.getElementById('matchFeedback').className = 'feedback-panel wrong-feedback';
+      document.getElementById('matchFeedback').innerHTML = `🤔 Not a match—but you'll get it! 💪`;
+      setTimeout(() => {
+        matchFlipped = [];
+        matchLocked = false;
+        renderMatch();
+      }, 1200);
+    }
+    updateMatchUI();
+  }
+}
+
+function updateMatchUI() {
+  document.getElementById('matchCount').textContent = matchMatched;
+  document.getElementById('matchAttempts').textContent = matchAttempts;
+  if (bestMatch && matchMatched === matchPairs.length) {
+    const efficiency = matchPairs.length / matchAttempts;
+    if (!bestMatch || efficiency > parseFloat(bestMatch)) {
+      bestMatch = efficiency;
+      localStorage.setItem('bestMatch', bestMatch);
+      document.getElementById('bestAttempts').textContent = matchAttempts + ' tries! 🏆';
+    }
+  }
+  document.getElementById('bestAttempts').textContent = bestMatch ? 
+    (parseFloat(bestMatch) >= (matchPairs.length / matchAttempts) ? matchAttempts + ' 🏆' : bestMatch) : 
+    '-';
+}
+
+function endMatch() {
+  const efficiency = matchPairs.length / matchAttempts;
+  let msg = '';
+  if (efficiency >= 0.6) msg = "🌟 <strong>Amazing memory!</strong> Eco-superstar! 🏆";
+  else if (efficiency >= 0.4) msg = "👍 <strong>Great job!</strong> You're getting better! 💪";
+  else msg = "🌱 <strong>Nice try!</strong> Practice makes perfect! 🌟";
+  
+  document.getElementById('matchFeedback').className = 'feedback-panel';
+  document.getElementById('matchFeedback').innerHTML = `<strong>🎊 All matched!</strong><br>Attempts: ${matchAttempts}<br>${msg}`;
+  createEmojiRain(['🎴', '🏆', '🌟', '✨', '💚']);
+}
+
+function resetMatch() { initMatch(); }
+
+// ===== TAB NAVIGATION =====
+function showTab(name) {
+  document.querySelectorAll('.game-section').forEach(s => s.classList.remove('active'));
+  document.querySelectorAll('.tab-btn').forEach(b => b.classList.remove('active'));
+  document.getElementById(name).classList.add('active');
+  event.target.classList.add('active');
+}
+
+// ===== INIT =====
+window.addEventListener('DOMContentLoaded', () => {
+  initSorting();
+  initQuiz();
+  initMatch();
+});
+</script>
+</body>
+</html>
