@@ -77,11 +77,12 @@
           <div class="dot"></div>
           <div>
             <div data-i18n="detecting" class="hidden">Detecting location...</div>
-            <div id="location-text"><strong data-i18n="loc_unknown">Location unknown</strong> <span data-i18n="loc_hint">— tap Detect to find nearby centers</span></div>
+            <div id="location-text"><strong data-i18n="loc_unknown">Location unknown</strong> <span data-i18n="loc_hint">— searching nearby centers</span></div>
           </div>
         </div>
         <div style="display:flex; gap:10px;">
-          <button class="btn btn-primary" onclick="detectLocation()" id="btn-detect" data-i18n="detect_btn">Detect My Location</button>
+          <input type="text" id="city-input" placeholder="Enter city" />
+          <button class="btn btn-primary" onclick="searchCity()" id="btn-search" data-i18n="search_btn">Search</button>
           <button class="btn btn-secondary" onclick="resetLocation()" data-i18n="reset_btn">Show All</button>
         </div>
       </div>
@@ -167,6 +168,31 @@
     );
   }
 
+  function searchCity(){
+    const input = document.getElementById('city-input');
+    const term = (input && input.value || '').trim();
+    if (!term) return;
+    fetch(`https://geocoding-api.open-meteo.com/v1/search?name=${encodeURIComponent(term)}&count=1&language=en&format=json`)
+      .then(r => r.json())
+      .then(d => {
+        const item = (d && d.results && d.results[0]) || null;
+        if (!item) {
+          const errBox = document.getElementById('location-error');
+          if (errBox) { errBox.textContent='City not found. Showing all centers.'; errBox.classList.remove('hidden'); }
+          renderCenters('all', null, null);
+          return;
+        }
+        const lat = item.latitude, lng = item.longitude, city = item.name || term, region = item.admin1 || '';
+        applyLocation(lat, lng, city, region);
+        renderCenters('nearby', lat, lng);
+      })
+      .catch(() => {
+        const errBox = document.getElementById('location-error');
+        if (errBox) { errBox.textContent='City lookup failed. Showing all centers.'; errBox.classList.remove('hidden'); }
+        renderCenters('all', null, null);
+      });
+  }
+
   function renderAfterIP(){
     fetch('https://ipapi.co/json/')
       .then(r => r.json())
@@ -202,7 +228,7 @@
     currentCenters = allCenters.slice();
     renderCenters('all', null, null);
     const locText = document.getElementById('location-text');
-    if (locText) locText.innerHTML = `<strong>Location unknown</strong> <span>— tap Detect to find nearby centers</span>`;
+    if (locText) locText.innerHTML = `<strong>Location unknown</strong> <span>— enter a city to find centers</span>`;
   }
 
   (async function(){
