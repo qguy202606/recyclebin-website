@@ -1,0 +1,137 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<link rel="icon" href="/favicon.svg">
+<title>RecycleBin.com - What Goes Where?</title>
+<style>
+  * { margin: 0; padding: 0; box-sizing: border-box; }
+  body { font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', 'Helvetica Neue', Arial, sans-serif; line-height: 1.6; color: #fff; background: #0b0b0b; }
+  .container { max-width: 1100px; margin: 0 auto; padding: 0 20px; }
+
+  header { background: #0b0b0b; border-bottom: 1px solid #222; position: sticky; top: 0; z-index: 100; }
+  nav { display: flex; justify-content: space-between; align-items: center; padding: 20px 0; }
+  .logo { font-size: 24px; font-weight: 700; color: #fff; text-decoration: none; display: flex; align-items: center; gap: 8px; }
+  .logo span { background: #0f9d58; color: #fff; padding: 4px 10px; border-radius: 8px; font-size: 20px; }
+  .nav-right { display: flex; align-items: center; gap: 20px; }
+  .nav-links { display: flex; gap: 28px; list-style: none; }
+  .nav-links a { text-decoration: none; color: #c9c9c9; font-weight: 500; transition: color 0.2s; }
+  .nav-links a:hover { color: #0f9d58; }
+  .lang-toggle { background: #1a1a1a; border: 1px solid #333; color: #fff; padding: 6px 12px; border-radius: 8px; cursor: pointer; font-size: 13px; font-weight: 600; }
+
+  .page-header { padding: 80px 0 40px; text-align: center; }
+  .page-header h1 { font-size: clamp(30px, 4vw, 42px); font-weight: 800; letter-spacing: -0.5px; margin-bottom: 12px; }
+  .page-header p { color: #9a9a9a; font-size: 17px; max-width: 720px; margin: 0 auto 30px; }
+
+  .search-box { max-width: 560px; margin: 0 auto 40px; }
+  .search-box input { width: 100%; padding: 14px 18px; background: #141414; border: 1px solid #2e2e2e; border-radius: 12px; color: #f3f3f3; font-size: 16px; outline: none; border: 1px solid #333; }
+  .search-box input:focus { border-color: #0f9d58; }
+
+  .lookup-list { display: grid; grid-template-columns: repeat(auto-fit, minmax(260px, 1fr)); gap: 18px; padding-bottom: 120px; }
+  .lookup-card { background: #111; border: 1px solid #1f1f1f; border-radius: 18px; padding: 24px; transition: transform 0.2s, box-shadow 0.2s; }
+  .lookup-card:hover { transform: translateY(-4px); box-shadow: 0 18px 40px rgba(0,0,0,0.4); border-color: #1f3a2a; }
+  .lookup-card .item { font-size: 19px; font-weight: 700; color: #f4f4f4; margin-bottom: 6px; }
+  .lookup-card .material { display: inline-block; padding: 4px 10px; background: #11211a; color: #0f9d58; border: 1px solid #1e352a; border-radius: 999px; font-size: 12px; font-weight: 600; margin-bottom: 14px; }
+  .lookup-card .row { margin-top: 10px; }
+  .lookup-card .row .label { font-size: 12px; font-weight: 700; text-transform: uppercase; letter-spacing: 1px; color: #8a8a8a; margin-bottom: 4px; }
+  .lookup-card .row.do .label { color: #6dd49a; }
+  .lookup-card .row.dont .label { color: #d49a6d; }
+  .lookup-card .row p { font-size: 14px; color: #c8c8c8; }
+  .lookup-card .local { margin-top: 12px; font-size: 13px; color: #a3a3a3; border-top: 1px solid #1c1c1c; padding-top: 10px; }
+
+  .empty { grid-column: 1 / -1; background: #111; border: 1px solid #2e2e2e; color: #b0b0b0; padding: 22px 18px; border-radius: 16px; text-align: center; font-size: 16px; }
+
+  footer { background: #050505; padding: 40px 0; border-top: 1px solid #141414; text-align: center; color: #555; font-size: 13px; margin-top: 80px; }
+</style>
+</head>
+<body>
+<header>
+  <div class="container">
+    <nav>
+      <a href="index.html" class="logo"><span>Recycle</span> Bin.com</a>
+      <div class="nav-right">
+        <ul class="nav-links">
+          <li><a href="index.html" data-i18n="nav_home">Home</a></li>
+          <li><a href="guides.html" data-i18n="nav_guides">Guides</a></li>
+          <li><a href="centers.html" data-i18n="nav_centers">Centers</a></li>
+          <li><a href="events.html" data-i18n="nav_events">Events</a></li>
+          <li><a href="howto.html" data-i18n="nav_howto">How-To</a></li>
+        </ul>
+        <button id="langToggle" class="lang-toggle" type="button">EN</button>
+      </div>
+    </nav>
+  </div>
+</header>
+<main>
+  <section class="page-header">
+    <div class="container">
+      <h1 data-i18n="lookup_title">What goes where?</h1>
+      <p data-i18n="lookup_subtitle">Search common items to learn what to recycle, compost, or trash.</p>
+      <div class="search-box">
+        <input id="lookup-input" type="text" placeholder="Type an item… (e.g. pizza box, battery, plastic bag)" autocomplete="off">
+      </div>
+    </div>
+  </section>
+
+  <section>
+    <div class="container">
+      <div id="lookup-list" class="lookup-list"></div>
+    </div>
+  </section>
+</main>
+<footer>
+  <div class="container" id="site-footer"></div>
+</footer>
+<script src="/js/site.js"></script>
+<script>
+  (function(){
+    RecycleBin.initLayout({active: '/guides.html'});
+    RecycleBin.initI18n();
+
+    var input = document.getElementById('lookup-input');
+    var list = document.getElementById('lookup-list');
+    var data = [];
+
+    function card(it){
+      return '<div class="lookup-card">' +
+        '<div class="item">' + it.item + '</div>' +
+        '<div class="material">' + it.material + '</div>' +
+        '<div class="row do"><div class="label">DO</div><p>' + (it.do || '') + '</p></div>' +
+        '<div class="row dont"><div class="label">DON’T</div><p>' + (it.dont || '') + '</p></div>' +
+        (it.local_note ? '<div class="local">' + it.local_note + '</div>' : '') +
+      '</div>';
+    }
+
+    function renderAll(){
+      list.innerHTML = data.map(card).join('');
+    }
+
+    function renderFiltered(q){
+      var term = (q || '').trim().toLowerCase();
+      if(!term){ renderAll(); return; }
+      var matches = data.filter(function(it){
+        return (it.item || '').toLowerCase().indexOf(term) !== -1 ||
+               (it.material || '').toLowerCase().indexOf(term) !== -1 ||
+               (it.do || '').toLowerCase().indexOf(term) !== -1 ||
+               (it.dont || '').toLowerCase().indexOf(term) !== -1;
+      });
+      if(!matches.length){
+        list.innerHTML = '<div class="empty">No matches. Try “pizza box”, “battery”, or “plastic bag”.</div>';
+        return;
+      }
+      list.innerHTML = matches.map(card).join('');
+    }
+
+    fetch('/js/reference.json')
+      .then(function(r){ if(!r.ok) throw new Error('fail'); return r.json(); })
+      .then(function(json){ data = json; renderAll(); })
+      .catch(function(){ list.innerHTML = '<div class="empty">Unable to load lookup data.</div>'; });
+
+    if(input){
+      input.addEventListener('input', function(){ renderFiltered(input.value); });
+    }
+  })();
+</script>
+</body>
+</html>
