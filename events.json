@@ -4,9 +4,9 @@
     "date": "2026-07-04",
     "title": "Beach Cleanup Rally",
     "desc": "Join us to remove coastal litter and restore the shoreline and ocean.",
-    "location": "Main Beach Entrance, Irvine, CA",
+    "location": "Main Beach Entrance, Laguna Beach, CA",
     "body": "We meet at the main entrance at 8:00 AM. Gloves, bags, and a quick safety briefing provided. All ages welcome.",
-    "href": "event-detail.html?id=beach-cleanup"
+    "join_url": "https://www.eventbrite.com/e/beach-cleanup-rally-1234567890"
   },
   {
     "id": "recycling-challenge",
@@ -15,7 +15,7 @@
     "desc": "28-day recycling challenge with points, prizes, and impact badges.",
     "location": "Virtual / Community-wide",
     "body": "Sign up individually or household-based. Track recycling activity through the challenge portal.",
-    "href": "event-detail.html?id=recycling-challenge"
+    "join_url": "https://www.eventbrite.com/e/community-recycling-challenge-0987654321"
   },
   {
     "id": "composting-workshop",
@@ -24,7 +24,7 @@
     "desc": "Learn to compost at home, reduce food scraps, and enrich your garden.",
     "location": "Irvine Community Center, 1 Community Dr, Irvine, CA 92612",
     "body": "Hands-on workshop with bin setup, compost layering, and troubleshooting. Starter kit included.",
-    "href": "event-detail.html?id=composting-workshop"
+    "join_url": "https://www.eventbrite.com/e/home-composting-workshop-1122334455"
   },
   {
     "id": "e-waste-day",
@@ -33,7 +33,7 @@
     "desc": "Free drop-off for devices and batteries, plus secure data wipe guidance.",
     "location": "City Hall Parking Lot, 4445 Civic Center Dr, Irvine, CA 92602",
     "body": "Bring old computers, phones, batteries, and cables. On-site data wipe guidance available.",
-    "href": "event-detail.html?id=e-waste-day"
+    "join_url": "https://www.eventbrite.com/e/e-waste-recycling-day-5566778899"
   },
   {
     "id": "campus-talk",
@@ -42,7 +42,7 @@
     "desc": "Environmental educators share real circular economy projects in schools.",
     "location": "UCI Student Center, 501 Aldrich Hall, Irvine, CA 92697",
     "body": "Doors open at 6:00 PM. Free parking after 5 PM.",
-    "href": "event-detail.html?id=campus-talk"
+    "join_url": "https://www.eventbrite.com/e/campus-sustainability-talk-9988776655"
   },
   {
     "id": "tote-bag-diy",
@@ -51,6 +51,6 @@
     "desc": "Upcycle fabric into a custom tote bag to cut single-use plastic.",
     "location": "RecycleBin Creative Studio, 100 Main St, Irvine, CA 92618",
     "body": "Bring an old shirt or fabric scrap. Sewing kits and stencils provided.",
-    "href": "event-detail.html?id=tote-bag-diy"
+    "join_url": "https://www.eventbrite.com/e/weekend-tote-bag-diy-3344556677"
   }
 ]

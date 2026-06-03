@@ -41,9 +41,9 @@
       <a href="index.html" class="logo"><span>Recycle</span> Bin.com</a>
       <div class="nav-right">
         <ul class="nav-links">
-          <li><a href="../index.html">Home</a></li>
-          <li><a href="../centers.html">Centers</a></li>
-          <li><a href="../events.html" class="active">Events</a></li>
+          <li><a href="index.html">Home</a></li>
+          <li><a href="centers.html">Centers</a></li>
+          <li><a href="events.html" class="active">Events</a></li>
         </ul>
       </div>
     </nav>
@@ -60,58 +60,85 @@
   </section>
   <section>
     <div class="container">
-      <div id="error-box" class="error-msg hidden"></div>
+      <div id="error-box" class="error-msg" style="display:none;"></div>
       <div class="detail-card">
         <h2>Event Details</h2>
         <p id="event-body"></p>
       </div>
       <div class="actions">
         <a id="btn-external" class="btn btn-primary" href="#" target="_blank" rel="noopener">Join Now</a>
-        <a href="../events.html" class="btn btn-secondary">Back to Events</a>
+        <a href="events.html" class="btn btn-secondary">Back to Events</a>
       </div>
     </div>
   </section>
 </main>
 <footer>
   <div class="container">
-    <p>&copy; 2025 RecycleBin.com. All rights reserved.</p>
+    <p>RecycleBin.com</p>
   </div>
 </footer>
 <script>
-  async function loadEvent(){
+  document.addEventListener('DOMContentLoaded', function() {
     const params = new URLSearchParams(window.location.search);
     const id = params.get('id');
-    if (!id) { showError('Missing event id.'); return; }
-    try {
-      const res = await fetch('events.json', {cache: 'no-store'});
-      if (!res.ok) throw new Error('fetch failed');
-      const data = await res.json();
-      const ev = (data || []).find(item => item.id === id);
-      if (!ev) { showError('Event not found.'); return; }
-      const dateEl = document.getElementById('event-date');
-      const titleEl = document.getElementById('event-title');
-      const descEl = document.getElementById('event-desc');
-      const bodyEl = document.getElementById('event-body');
-      const metaEl = document.getElementById('event-meta');
-      const btnExt = document.getElementById('btn-external');
-      if (dateEl) dateEl.textContent = ev.date || '';
-      if (titleEl) titleEl.textContent = ev.title || '';
-      if (descEl) descEl.textContent = ev.desc || '';
-      if (bodyEl) bodyEl.textContent = ev.body || ev.desc || '';
-      const metaItems = [];
-      if (ev.location) metaItems.push(`<span>📍 ${ev.location}</span>`);
-      if (ev.date) metaItems.push(`<span>🗓 ${ev.date}</span>`);
-      const btnExt = document.getElementById('btn-external');
-      if (btnExt) { btnExt.href = '#'; btnExt.textContent = 'Details only'; btnExt.classList.remove('btn-primary'); btnExt.classList.add('btn-secondary'); }
-    } catch (e) {
-      showError('Unable to load event details.');
+    const errorBox = document.getElementById('error-box');
+
+    if (!id) {
+      if (errorBox) { errorBox.textContent = 'Missing event id.'; errorBox.style.display = 'block'; }
+      return;
     }
-  }
-  function showError(msg){
-    const box = document.getElementById('error-box');
-    if (box) { box.textContent = msg; box.classList.remove('hidden'); }
-  }
-  loadEvent();
+
+    fetch('events.json', {cache: 'no-store'})
+      .then(function(res) {
+        if (!res.ok) throw new Error('fetch failed');
+        return res.json();
+      })
+      .then(function(data) {
+        var ev = null;
+        if (Array.isArray(data)) {
+          for (var i = 0; i < data.length; i++) {
+            if (data[i].id === id) { ev = data[i]; break; }
+          }
+        }
+        if (!ev) {
+          if (errorBox) { errorBox.textContent = 'Event not found.'; errorBox.style.display = 'block'; }
+          return;
+        }
+        var dateEl = document.getElementById('event-date');
+        var titleEl = document.getElementById('event-title');
+        var descEl = document.getElementById('event-desc');
+        var bodyEl = document.getElementById('event-body');
+        var metaEl = document.getElementById('event-meta');
+        var btnExt = document.getElementById('btn-external');
+
+        if (dateEl) dateEl.textContent = ev.date || '';
+        if (titleEl) titleEl.textContent = ev.title || '';
+        if (descEl) descEl.textContent = ev.desc || '';
+        if (bodyEl) bodyEl.textContent = ev.body || ev.desc || '';
+
+        var metaItems = [];
+        if (ev.location) metaItems.push('<span>📍 ' + ev.location + '</span>');
+        if (ev.date) metaItems.push('<span>🗓 ' + ev.date + '</span>');
+        if (metaEl) metaEl.innerHTML = metaItems.join(' | ');
+
+        if (btnExt) {
+          if (ev.join_url && ev.join_url !== '#' ) {
+            btnExt.href = ev.join_url;
+            btnExt.textContent = 'Join Now';
+            btnExt.classList.add('btn-primary');
+            btnExt.classList.remove('btn-secondary');
+          } else {
+            btnExt.href = 'events.html';
+            btnExt.textContent = 'Back to events';
+            btnExt.classList.remove('btn-primary');
+            btnExt.classList.add('btn-secondary');
+          }
+        }
+      })
+      .catch(function() {
+        if (errorBox) { errorBox.textContent = 'Unable to load event details.'; errorBox.style.display = 'block'; }
+      });
+  });
 </script>
 </body>
 </html>
