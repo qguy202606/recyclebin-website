@@ -23,8 +23,20 @@
     .page-header h1 { color: #1b5e20; font-size: 2em; margin-bottom: 6px; }
     .page-header p { color: #5a6f5e; }
     .event-section { padding: 24px; flex: 1; }
+    .event-controls { display: flex; gap: 12px; flex-wrap: wrap; margin-bottom: 16px; align-items: center; }
+    .event-controls input[type="search"] { flex: 1 1 220px; padding: 10px 12px; border: 1px solid #cfe3d3; border-radius: 8px; }
+    .event-controls button { padding: 10px 12px; border: 1px solid #cfe3d3; background: #f1f8f4; color: #1b5e20; border-radius: 8px; cursor: pointer; }
+    .event-controls button.active { background: #e7f5ea; border-color: #8cc299; }
+    .event-card { background: #fff; border: 1px solid #e6f2ea; border-radius: 12px; padding: 16px 18px; transition: box-shadow .2s; }
+    .event-card:hover { box-shadow: 0 6px 20px rgba(0,0,0,.06); }
+    .event-card h3 { margin: 0 0 4px; color: #1b5e20; }
+    .event-meta { color: #5a6f5e; font-size: .98em; margin: 4px 0; }
+    .event-link { display: inline-block; margin-top: 6px; color: #2e7d57; text-decoration: none; }
+    .event-count { color: #5a6f5e; margin: 0 0 12px; }
+    .empty { color: #6a7a6e; text-align: center; padding: 18px 0; }
     @media (max-width: 640px) {
       .event-section { padding: 16px; }
+      .page-header { padding: 28px 16px 16px; }
     }
   </style>
 </head>
@@ -36,11 +48,76 @@
     <p>Local cleanups, talks, and workshops — Irvine first.</p>
   </header>
   <section class="event-section">
-    <p style="text-align:center; color:#5a6f5e;">Full event calendar is being finalized. Check back soon.</p>
+    <div class="event-controls">
+      <input id="event-search" type="search" placeholder="Search events..." />
+      <button id="event-all" class="active">Show All</button>
+      <button id="event-upcoming">Upcoming</button>
+    </div>
+    <p id="event-count" class="event-count"></p>
+    <div id="event-grid" class="centers-grid"></div>
   </section>
   <div id="site-footer"></div>
 </main>
 <script src="./js/menu.js"></script>
 <script src="./js/footer.js"></script>
+<script>
+const EVENTS_PATH = './events/events.json';
+const grid = document.getElementById('event-grid');
+const countEl = document.getElementById('event-count');
+const searchInput = document.getElementById('event-search');
+const btnAll = document.getElementById('event-all');
+const btnUpcoming = document.getElementById('event-upcoming');
+let events = [];
+let mode = 'all';
+
+function formatDateRange(start, end) {
+  const s = new Date(start);
+  const e = new Date(end);
+  const opts = { month: 'short', day: 'numeric' };
+  if (s.toDateString() === e.toDateString()) return s.toLocaleDateString('en-US', opts);
+  return `${s.toLocaleDateString('en-US', opts)} – ${e.toLocaleDateString('en-US', opts)}`;
+}
+
+function render() {
+  const q = searchInput.value.trim().toLowerCase();
+  const now = new Date();
+  let list = events.filter(ev => {
+    const start = new Date(ev.start);
+    const inFuture = isNaN(start) ? true : start >= now;
+    const textMatch = [ev.title, ev.description, ev.location, ev.type].some(v => String(v || '').toLowerCase().includes(q));
+    if (mode === 'upcoming') return textMatch && inFuture;
+    return textMatch;
+  });
+  list.sort((a, b) => new Date(a.start) - new Date(b.start));
+  countEl.textContent = `${list.length} event${list.length === 1 ? '' : 's'}`;
+  grid.innerHTML = list.length
+    ? list.map(ev => `
+      <article class="event-card">
+        <h3>${escapeHtml(ev.title)}</h3>
+        <p class="event-meta">📅 ${formatDateRange(ev.start, ev.end)} · ${escapeHtml(ev.location || 'TBD')}</p>
+        <p>${escapeHtml(ev.description || '')}</p>
+        ${ev.url ? `<a class="event-link" href="${escapeHtml(ev.url)}" target="_blank" rel="noopener noreferrer">View details</a>` : ''}
+      </article>
+    `).join('')
+    : `<p class="empty">No events match.</p>`;
+}
+
+function escapeHtml(str) {
+  return String(str || '').replace(/[&<>"']/g, m => ({ '&':'&amp;', '<':'&lt;', '>':'&gt;', '"':'&quot;', "'":'&#39;' }[m]));
+}
+
+btnAll.addEventListener('click', () => { mode = 'all'; btnAll.classList.add('active'); btnUpcoming.classList.remove('active'); render(); });
+btnUpcoming.addEventListener('click', () => { mode = 'upcoming'; btnUpcoming.classList.add('active'); btnAll.classList.remove('active'); render(); });
+searchInput.addEventListener('input', render);
+
+fetch(EVENTS_PATH)
+  .then(r => r.text())
+  .then(t => {
+    try { events = JSON.parse(t).events || JSON.parse(t) || []; }
+    catch (err) { events = []; console.error('events.json parse failed', err); }
+    render();
+  })
+  .catch(err => { console.error(err); grid.innerHTML = '<p class="empty">Could not load events.</p>'; });
+</script>
 </body>
 </html>
