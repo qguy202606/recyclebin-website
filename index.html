@@ -98,9 +98,40 @@
       .card-grid { grid-template-columns: 1fr; }
       .hero h1 { font-size: 26px; }
     }
+    .leaves {
+      position: fixed;
+      top: 0; left: 0; right: 0; bottom: 0;
+      pointer-events: none;
+      z-index: 0;
+      overflow: hidden;
+    }
+    .leaf {
+      position: absolute;
+      font-size: 2em;
+      opacity: 0.4;
+      animation: floatLeaf 15s linear infinite;
+    }
+    .leaf:nth-child(1) { left: 10%; animation-duration: 12s; }
+    .leaf:nth-child(2) { left: 30%; animation-duration: 18s; animation-delay: 2s; }
+    .leaf:nth-child(3) { left: 50%; animation-duration: 14s; animation-delay: 4s; }
+    .leaf:nth-child(4) { left: 70%; animation-duration: 16s; animation-delay: 1s; }
+    .leaf:nth-child(5) { left: 90%; animation-duration: 20s; animation-delay: 3s; }
+    @keyframes floatLeaf {
+      0% { transform: translateY(-100px) rotate(0deg); opacity: 0; }
+      10% { opacity: 0.5; }
+      90% { opacity: 0.5; }
+      100% { transform: translateY(100vh) rotate(360deg); opacity: 0; }
+    }
   </style>
 </head>
 <body>
+  <div class="leaves">
+    <div class="leaf">🍃</div>
+    <div class="leaf">🌿</div>
+    <div class="leaf">🍂</div>
+    <div class="leaf">🌱</div>
+    <div class="leaf">☘️</div>
+  </div>
   <section class="hero" id="top">
     <h1>Recycle smarter. Waste less.</h1>
     <p>Explore guides, find centers, and discover local events to make recycling easier and more effective.</p>
