@@ -103,20 +103,25 @@
       transform: translateY(-1px);
     }
     .big-bar {
-      display: block;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      gap: 10px;
       width: 100%;
       text-align: center;
-      background: #0b3d2b;
-      color: #ffffff;
+      background: #d1e7dd;
+      color: #1b5e20;
       text-decoration: none;
       font-size: 18px;
-      font-weight: 600;
+      font-weight: 700;
       padding: 18px 20px;
       border-radius: 12px;
-      transition: transform .15s ease, background .2s ease;
+      border: 1px solid #b7dfc5;
+      transition: transform .15s ease, background .2s ease, border-color .2s ease;
     }
     .big-bar:hover {
-      background: #145840;
+      background: #b7dfc5;
+      border-color: #a5cdb3;
       transform: translateY(-1px);
     }
     .footer {
@@ -149,12 +154,12 @@
       <p class="tagline">We're building something <strong>awesome</strong> for a cleaner planet. The site will be back online shortly!</p>
 
       <nav class="menu">
-        <a class="big-bar" href="./games.html">Games</a>
-        <a class="big-bar" href="./guides.html">Guides</a>
-        <a class="big-bar" href="./centers.html">Centers</a>
-        <a class="big-bar" href="./events.html">Events</a>
-        <a class="big-bar" href="./howto.html">How-To</a>
-        <a class="big-bar" href="./lookup.html">Lookup</a>
+        <a class="big-bar" href="./games.html">🎮 Games</a>
+        <a class="big-bar" href="./guides.html">📖 Guides</a>
+        <a class="big-bar" href="./centers.html">📍 Centers</a>
+        <a class="big-bar" href="./events.html">📅 Events</a>
+        <a class="big-bar" href="./howto.html">🛠 How-To</a>
+        <a class="big-bar" href="./lookup.html">🔍 Lookup</a>
       </nav>
 
       <p class="footer">Made with <span class="heart">❤️</span> for Earth 🌍</p>
