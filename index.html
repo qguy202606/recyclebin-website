@@ -23,7 +23,22 @@
       font-size: 17px;
       line-height: 1.6;
       max-width: 720px;
-      margin: 0 auto;
+      margin: 0 auto 18px;
+    }
+    .hero-cta {
+      display: inline-block;
+      background: #e6fff0;
+      color: #0b3d2b;
+      text-decoration: none;
+      font-weight: 700;
+      padding: 12px 18px;
+      border-radius: 999px;
+      border: 1px solid #bbdfc7;
+      transition: background .2s ease, transform .15s ease;
+    }
+    .hero-cta:hover {
+      background: #ffffff;
+      transform: translateY(-1px);
     }
     .section {
       max-width: 1100px;
@@ -96,12 +111,13 @@
     </div>
   </div>
 
-  <section class="hero">
+  <section class="hero" id="top">
     <h1>Recycle smarter. Waste less.</h1>
     <p>Explore guides, find centers, and discover local events to make recycling easier and more effective.</p>
+    <a class="hero-cta" href="#start">Get started</a>
   </section>
 
-  <section class="section">
+  <section class="section" id="start">
     <h2 class="section-title">Start here</h2>
     <div class="card-grid">
       <a class="nav-card" href="./games.html">
@@ -134,13 +150,6 @@
 
   <footer class="site-footer">
     <div class="footer-inner">
-      <div class="footer-links">
-        <a href="./games.html">Games</a>
-        <a href="./guides.html">Guides</a>
-        <a href="./centers.html">Centers</a>
-        <a href="./events.html">Events</a>
-        <a href="./howto.html">How-To</a>
-      </div>
       <p>Made with 💚 for Earth 🌍</p>
       <p>&copy; <span id="footerYear">2026</span> RecycleBin.com. All rights reserved.</p>
     </div>
