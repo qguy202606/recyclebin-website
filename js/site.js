@@ -26,11 +26,8 @@
           var link = el.querySelector('[data-nav="' + key + '"]');
           if (link) link.classList.add('active');
         }
-        if (active === 'events') {
-          var home = el.querySelector('[data-nav="home"]');
-          if (home && home.parentNode) home.parentNode.style.display = 'none';
-        }
         initMobileNav(el);
+        initLangToggle(el);
       });
   }
 
@@ -60,9 +57,20 @@
     });
   }
 
+  function initLangToggle(root) {
+    var btn = root.querySelector('[data-i18n-toggle]');
+    if (!btn) return;
+    btn.addEventListener('click', function () {
+      if (window.__recyclebinI18n && typeof window.__recyclebinI18n.toggle === 'function') {
+        window.__recyclebinI18n.toggle();
+      }
+    });
+  }
+
   window.RecycleBin = {
     loadHeader: loadHeader,
     loadFooter: loadFooter,
-    initMobileNav: initMobileNav
+    initMobileNav: initMobileNav,
+    initLangToggle: initLangToggle
   };
 })();

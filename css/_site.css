@@ -61,6 +61,25 @@
   color: white;
 }
 
+.lang-toggle {
+  appearance: none;
+  border: 1px solid rgba(255, 255, 255, 0.5);
+  background: rgba(255, 255, 255, 0.15);
+  color: inherit;
+  padding: 6px 10px;
+  border-radius: 999px;
+  font-size: 13px;
+  font-weight: 600;
+  cursor: pointer;
+  transition: background 0.2s, border-color 0.2s;
+}
+.lang-toggle:hover,
+.lang-toggle:focus {
+  background: rgba(255, 255, 255, 0.3);
+  border-color: rgba(255, 255, 255, 0.9);
+  outline: none;
+}
+
 .site-footer .footer-tagline,
 .site-footer .footer-copy {
   text-align: center;

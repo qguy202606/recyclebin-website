@@ -5,21 +5,34 @@
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 <title>RecycleBin.com - How-To</title>
 <link rel="stylesheet" href="./css/_site.css">
+<style>
+  .container {
+    max-width: 900px;
+    margin: 20px auto;
+    background: rgba(255, 255, 255, 0.95);
+    min-height: calc(100vh - 120px);
+    box-shadow: 0 10px 40px rgba(0,0,0,0.1);
+    border-radius: 10px;
+    padding: 30px 20px;
+  }
+
+  .page-header {
+    text-align: center;
+    margin-bottom: 30px;
+  }
+  .page-header h1 {
+    color: #2e7d32;
+    font-size: 2em;
+    margin-bottom: 10px;
+  }
+  .page-header p {
+    color: #666;
+    font-size: 1.1em;
+  }
+</style>
 </head>
 <body>
   <div id="site-header"></div>
-
-<!-- Compact Menu Bar -->
-<div class="menu-bar">
-  <a href="./index.html"><span class="logo">♻️</span><span>RecycleBin</span></a>
-  <nav class="menu-nav">
-    <a class="menu-link" href="./games.html" data-menu="games">🎮 Games</a>
-    <a class="menu-link" href="./guides.html" data-menu="guides">📚 Guides</a>
-    <a class="menu-link" href="./centers.html" data-menu="centers">📍 Centers</a>
-    <a class="menu-link" href="./events.html" data-menu="events">📅 Events</a>
-    <a class="menu-link" href="./howto.html" data-menu="howto">🛠️ How-To</a>
-  </nav>
-</div>
 
   <main>
     <section class="page-header">
@@ -35,7 +48,7 @@
   </main>
   <div id="site-footer"></div>
 
-  <script src="./js/menu.js"></script>
-  <script src="./js/footer.js"></script>
+  <script src="./js/site.js"></script>
+  <script src="./js/i18n.js"></script>
 </body>
 </html>
