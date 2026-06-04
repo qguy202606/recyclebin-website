@@ -3,22 +3,20 @@
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>RecycleBin - Events</title>
+<title>RecycleBin – Events</title>
 <link rel="stylesheet" href="./css/_site.css">
 <style>
+  /* RecycleBin shared shell + events page styles */
   * { box-sizing: border-box; margin: 0; padding: 0; }
   body {
-    font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+    font-family: "Segoe UI", Tahoma, Geneva, Verdana, sans-serif;
     background: linear-gradient(135deg, #e0f7fa 0%, #fff3e0 100%);
     min-height: 100vh;
-    padding: 0;
     color: #333;
-    overflow-x: hidden;
   }
 
-  /* Compact Menu Bar */
   .menu-bar {
-    background: white;
+    background: #fff;
     border-bottom: 2px solid #e0e0e0;
     padding: 10px 20px;
     display: flex;
@@ -35,123 +33,70 @@
     font-weight: 800;
     color: #2e7d32;
     text-decoration: none;
-    display: flex;
+    display: inline-flex;
     align-items: center;
     gap: 8px;
   }
-  .menu-logo:hover { opacity: 0.8; }
   .menu-logo .logo {
-    background: #2e7d32;
-    color: white;
-    width: 32px;
-    height: 32px;
+    display: inline-grid;
+    place-items: center;
+    width: 32px; height: 32px;
+    background: #2e7d32; color: #fff;
     border-radius: 8px;
-    display: flex;
-    align-items: center;
-    justify-content: center;
     font-size: 1.1em;
   }
   .menu-nav {
     display: flex;
-    gap: 6px;
     flex-wrap: wrap;
+    gap: 6px;
     justify-content: center;
   }
   .menu-link {
     padding: 6px 10px;
-    background: #f5f5f5;
     border-radius: 18px;
-    text-decoration: none;
+    background: #f5f5f5;
     color: #555;
-    font-size: 0.8em;
+    font-size: .85em;
     font-weight: 600;
-    transition: all 0.2s;
+    text-decoration: none;
+    transition: all .2s;
     white-space: nowrap;
   }
-  .menu-link:hover {
-    background: #e8f5e9;
-    color: #2e7d32;
-    transform: translateY(-1px);
-  }
-  .menu-link.active {
-    background: #2e7d32;
-    color: white;
-  }
+  .menu-link:hover { background: #e8f5e9; color: #2e7d32; transform: translateY(-1px); }
+  .menu-link.active { background: #2e7d32; color: #fff; }
 
-  .container {
-    max-width: 980px;
+  .page-content {
+    max-width: 960px;
     margin: 0 auto;
-    background: rgba(255, 255, 255, 0.95);
-    min-height: calc(100vh - 60px);
-    box-shadow: 0 10px 40px rgba(0,0,0,0.1);
-    animation: fadeIn 0.6s;
-    display: flex;
-    flex-direction: column;
+    padding: 24px 16px 40px;
   }
-  @keyframes fadeIn { from { opacity: 0; transform: translateY(20px); } to { opacity: 1; transform: translateY(0); } }
-
-  header {
-    background: linear-gradient(135deg, #2e7d32 0%, #66bb6a 100%);
-    color: #e6fff0;
-    padding: 64px 20px 56px;
-    text-align: center;
-    position: relative;
-    overflow: hidden;
-  }
-  header h1 { font-size: 38px; font-weight: 800; letter-spacing: 0.2px; margin-bottom: 12px; position: relative; z-index: 1; }
-  .subtitle { opacity: 0.95; font-size: 17px; line-height: 1.6; color: #c8e6c9; position: relative; z-index: 1; }
 
   .event-controls {
     display: flex;
     gap: 12px;
     flex-wrap: wrap;
-    margin-bottom: 16px;
     align-items: center;
+    margin: 10px 0 14px;
   }
-  .event-controls input[type="search"] {
-    flex: 1 1 220px;
-    padding: 10px 12px;
-    border: 1px solid #cfe3d3;
-    border-radius: 8px;
-  }
-  .event-controls button {
-    padding: 10px 12px;
-    border: 1px solid #cfe3d3;
-    background: #f1f8f4;
-    color: #1b5e20;
-    border-radius: 8px;
-    cursor: pointer;
-  }
+  .event-controls input[type="search"] { flex: 1 1 220px; padding: 10px 12px; border: 1px solid #cfe3d3; border-radius: 8px; }
+  .event-controls select { padding: 10px 12px; border: 1px solid #cfe3d3; background: #f1f8f4; color: #1b5e20; border-radius: 8px; }
+  .event-controls button { padding: 10px 12px; border: 1px solid #cfe3d3; background: #f1f8f4; color: #1b5e20; border-radius: 8px; cursor: pointer; font-weight: 600; }
   .event-controls button.active { background: #e7f5ea; border-color: #8cc299; }
-  .event-controls select {
-    padding: 10px 12px;
-    border: 1px solid #cfe3d3;
-    background: #f1f8f4;
-    color: #1b5e20;
-    border-radius: 8px;
-    cursor: pointer;
-  }
 
   .event-card {
-    background: #fff;
     border: 1px solid #e6f2ea;
     border-radius: 12px;
     padding: 18px;
-    margin-bottom: 14px;
+    margin: 0 0 14px;
+    background: #fff;
     box-shadow: 0 4px 14px rgba(0,0,0,0.04);
   }
   .event-card h3 { color: #1b5e20; margin-bottom: 6px; }
-  .event-meta { color: #5a6f5e; font-size: 0.97em; }
+  .event-meta { color: #5a6f5e; font-size: .97em; }
   .event-link { color: #2e7d57; text-decoration: none; font-weight: 600; }
   .event-link:hover { text-decoration: underline; }
   .event-count { color: #5a6f5e; margin: 0 0 12px; }
   .empty { color: #6a7a6e; text-align: center; padding: 18px 0; }
-
-  @media (max-width: 640px) {
-    header { padding: 36px 16px 40px; }
-    .event-controls { padding: 0 16px; }
-    .container { padding: 0 4px; }
-  }
 </style>
 </head>
 <body>
@@ -159,26 +104,24 @@
 <div class="menu-bar">
   <a href="./index.html" class="menu-logo"><span class="logo">♻️</span><span>RecycleBin</span></a>
   <nav class="menu-nav">
-    <a class="menu-link" href="./games.html" data-menu="games">🎮 Games</a>
-    <a class="menu-link" href="./guides.html" data-menu="guides">📚 Guides</a>
-    <a class="menu-link" href="./centers.html" data-menu="centers">📍 Centers</a>
-    <a class="menu-link active" href="./events.html" data-menu="events">📅 Events</a>
-    <a class="menu-link" href="./howto.html" data-menu="howto">🛠️ How-To</a>
+    <a class="menu-link" href="./games.html">🎮 Games</a>
+    <a class="menu-link" href="./guides.html">📚 Guides</a>
+    <a class="menu-link" href="./centers.html">📍 Centers</a>
+    <a class="menu-link active" href="./events.html">📅 Events</a>
+    <a class="menu-link" href="./howto.html">🛠️ How-To</a>
   </nav>
 </div>
 
-<div class="container">
+<div class="page-content">
   <header>
     <h1>📅 Events</h1>
-    <div class="subtitle">Cleanups, talks, and workshops near you.</div>
+    <p class="subtitle">Cleanups, talks, and workshops near you.</p>
   </header>
 
-  <section class="event-section" style="padding:24px; flex:1;">
+  <section class="event-section">
     <div class="event-controls">
       <input id="event-search" type="search" placeholder="Search events..." />
-      <select id="event-state">
-        <option value="">All states</option>
-      </select>
+      <select id="event-state"><option value="">All states</option></select>
       <button id="event-all" class="active">Show All</button>
       <button id="event-upcoming">Upcoming</button>
     </div>
@@ -186,20 +129,11 @@
     <div id="event-grid"></div>
   </section>
 
-  <footer class="site-footer">
-    <div class="footer-links">
-      <a class="footer-link" href="./games.html">Games</a>
-      <a class="footer-link" href="./guides.html">Guides</a>
-      <a class="footer-link" href="./centers.html">Centers</a>
-      <a class="footer-link" href="./events.html">Events</a>
-      <a class="footer-link" href="./howto.html">How-To</a>
-    </div>
-    <div>Made with 💚 for Earth 🌍</div>
-    <div>© 2026 RecycleBin.com. All rights reserved.</div>
-  </footer>
+  <div id="site-footer"></div>
 </div>
 
 <script src="./js/menu.js"></script>
+<script src="./js/footer.js"></script>
 <script>
 const EVENTS_PATH = './events/events.json';
 const grid = document.getElementById('event-grid');
@@ -246,7 +180,9 @@ function formatDateRange(start, end) {
   return `${s.toLocaleDateString('en-US', opts)} – ${e.toLocaleDateString('en-US', opts)}`;
 }
 function escapeHtml(str) {
-  return String(str || '').replace(/[&<>"']/g, m => ({ '&':'&amp;', '<':'&lt;', '>':'&gt;', '"':'&quot;', "'":'&#39;' }[m]));
+  return String(str || '').replace(/[&<>"']/g, m => ({
+    '&':'&amp;', '<':'&lt;', '>':'&gt;', '"':'&quot;', "'":'&#39;'
+  }[m]));
 }
 
 function render() {
@@ -256,12 +192,16 @@ function render() {
   let list = events.filter(ev => {
     const start = ev.start ? new Date(ev.start) : (ev.date ? new Date(ev.date) : null);
     const inFuture = !start || isNaN(start) || start >= now;
-    const textMatch = [ev.title, ev.desc, ev.location, ev.body].some(v => String(v || '').toLowerCase().includes(q));
+    const textMatch = [ev.title, ev.desc, ev.location, ev.body]
+      .some(v => String(v || '').toLowerCase().includes(q));
     const stateMatch = !state || stateCode(ev) === state;
     if (mode === 'upcoming') return textMatch && stateMatch && inFuture;
     return textMatch && stateMatch;
   });
-  list.sort((a, b) => (localPriority(a) - localPriority(b)) || new Date(a.start || a.date || '9999') - new Date(b.start || b.date || '9999'));
+  list.sort((a, b) =>
+    (localPriority(a) - localPriority(b)) ||
+    new Date(a.start || a.date || '9999') - new Date(b.start || b.date || '9999')
+  );
   countEl.textContent = `${list.length} event${list.length === 1 ? '' : 's'}`;
   grid.innerHTML = list.length
     ? list.map(ev => {

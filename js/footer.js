@@ -13,6 +13,6 @@
   };
 
   document.addEventListener('DOMContentLoaded', () => {
-    mount('site-footer', '/recyclebin-website/_footer.html');
+    mount('site-footer', './_footer.html');
   });
 })();
