@@ -6,28 +6,6 @@
   <title>RecycleBin.com - Guides</title>
   <link rel="stylesheet" href="./css/_site.css" />
   <style>
-    .container {
-      max-width: 900px;
-      margin: 0 auto;
-      background: rgba(255, 255, 255, 0.95);
-      min-height: calc(100vh - 60px);
-      box-shadow: 0 10px 40px rgba(0,0,0,0.1);
-      animation: fadeIn 0.6s;
-      display: flex;
-      flex-direction: column;
-    }
-    @keyframes fadeIn { from { opacity: 0; transform: translateY(20px); } to { opacity: 1; transform: translateY(0); } }
-    header {
-      background: linear-gradient(135deg, #2e7d32 0%, #66bb6a 100%);
-      color: #e6fff0;
-      padding: 64px 20px 56px;
-      text-align: center;
-      position: relative;
-      overflow: hidden;
-    }
-    header h1 { font-size: 38px; font-weight: 800; letter-spacing: 0.2px; margin-bottom: 12px; position: relative; z-index: 1; }
-    header .subtitle { opacity: 0.95; font-size: 17px; line-height: 1.6; color: #c8e6c9; position: relative; z-index: 1; }
-
     .section {
       max-width: 100%;
       padding: 32px 30px 48px;
@@ -110,7 +88,6 @@
   </style>
 </head>
 <body>
-<!-- Compact Menu Bar -->
 <div class="menu-bar">
   <a href="./index.html"><span class="logo">♻️</span><span>RecycleBin</span></a>
   <nav class="menu-nav">
@@ -129,7 +106,6 @@
   </header>
 
   <section class="section">
-    <h2 class="section-title">Browse guides</h2>
     <div class="guides-accordion">
       <details class="guide-card">
         <summary>
@@ -196,14 +172,12 @@
           <strong>Textiles.</strong> Donate wearable clothing; use textile recycling bins for worn items — they become new fiber.
           <strong>Appliances.</strong> Refrigerators and other large devices may require a special pick-up or eco-fee return program.
         </div>
-      </details>
-    </div>
-  </section>
+      </section>
 
-  <div id="site-footer"></div>
-</div>
+        <div id="site-footer"></div>
+      </div>
 
-<script src="./js/menu.js"></script>
-<script src="./js/footer.js"></script>
+      <script src="./js/menu.js"></script>
+      <script src="./js/footer.js"></script>
 </body>
 </html>

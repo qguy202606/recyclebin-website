@@ -102,23 +102,23 @@
 <body>
 
 <div class="menu-bar">
-  <a href="./index.html" class="menu-logo"><span class="logo">♻️</span><span>RecycleBin</span></a>
+  <a href="./index.html"><span class="logo">♻️</span><span>RecycleBin</span></a>
   <nav class="menu-nav">
-    <a class="menu-link" href="./games.html">🎮 Games</a>
-    <a class="menu-link" href="./guides.html">📚 Guides</a>
-    <a class="menu-link" href="./centers.html">📍 Centers</a>
-    <a class="menu-link active" href="./events.html">📅 Events</a>
-    <a class="menu-link" href="./howto.html">🛠️ How-To</a>
+    <a class="menu-link" href="./games.html" data-menu="games">🎮 Games</a>
+    <a class="menu-link" href="./guides.html" data-menu="guides">📚 Guides</a>
+    <a class="menu-link" href="./centers.html" data-menu="centers">📍 Centers</a>
+    <a class="menu-link active" href="./events.html" data-menu="events">📅 Events</a>
+    <a class="menu-link" href="./howto.html" data-menu="howto">🛠️ How-To</a>
   </nav>
 </div>
 
-<div class="page-content">
+<div class="container">
   <header>
     <h1>📅 Events</h1>
-    <p class="subtitle">Cleanups, talks, and workshops near you.</p>
+    <div class="subtitle">Cleanups, talks, and workshops near you.</div>
   </header>
 
-  <section class="event-section">
+  <section class="event-section" style="padding-top:24px;">
     <div class="event-controls">
       <input id="event-search" type="search" placeholder="Search events..." />
       <select id="event-state"><option value="">All states</option></select>
