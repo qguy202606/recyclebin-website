@@ -107,16 +107,18 @@
     outline: none;
   }
   .filter-bar input:focus { border-color: #2e7d32; }
+  .filter-bar select,
   .filter-bar button {
-    padding: 8px 11px;
+    padding: 9px 11px;
     border-radius: 999px;
     border: 1px solid #e6f0ea;
     background: #fff;
     color: #2e7d32;
-    cursor: pointer;
     font-weight: 700;
     font-size: 13px;
+    cursor: pointer;
   }
+  .filter-bar select:hover,
   .filter-bar button:hover { background: #e8f5e9; }
   .filter-bar button.active {
     background: #2e7d32;
@@ -147,8 +149,11 @@
     <div class="filter-bar">
       <input id="searchInput" type="text" placeholder="Search by title or location">
       <button id="allBtn" class="active">All</button>
-      <button id="caBtn">CA</button>
-      <button id="upcomingBtn">Upcoming</button>
+      <select id="stateSelect" title="Filter by state">
+        <option value="">All states</option>
+        <option value="CA">CA</option>
+      </select>
+      <button id="upcomingBtn" title="Show events from today onward">Upcoming</button>
     </div>
     <div id="results" class="event-grid"></div>
   </section>
@@ -161,29 +166,70 @@
 <script>
 (function() {
   var allEvents = [];
-  var filter = 'all';
+  var filterMode = 'all';
   var keyword = '';
+  var stateValue = '';
 
-  function parseDate(s) {
-    var parts = s.split('-');
-    return new Date(parts[0], parts[1] - 1, parts[2]);
+  function parseDate(value) {
+    if (!value || String(value).indexOf('-') < 0) return new Date(NaN);
+    var p = String(value).split('-');
+    return new Date(Number(p[0]), Number(p[1]) - 1, Number(p[2]));
   }
-  function formatDateLabel(s) {
-    var d = parseDate(s);
-    return d.toLocaleDateString('en-US', {year: 'numeric', month: 'short', day: 'numeric'});
+  function formatDateLabel(value) {
+    var d = parseDate(value);
+    if (isNaN(d)) return String(value);
+    return d.toLocaleDateString('en-US', {year:'numeric', month:'short', day:'numeric'});
   }
   function todayStart() {
     var d = new Date();
     return new Date(d.getFullYear(), d.getMonth(), d.getDate());
   }
 
+  function populateStates() {
+    var seen = [];
+    var list = [];
+    allEvents.forEach(function(e) {
+      var s = String(e.state || '').trim();
+      if (s && list.indexOf(s) < 0) {
+        list.push(s);
+        seen.push({code: s, label: s});
+      }
+    });
+    seen.sort(function(a, b) { return a.label < b.label ? -1 : 1; });
+    var box = document.getElementById('stateSelect');
+    if (!box) return;
+    var current = box.value;
+    var frag = document.createDocumentFragment();
+    var blank = document.createElement('option');
+    blank.value = '';
+    blank.textContent = 'All states';
+    frag.appendChild(blank);
+    seen.forEach(function(item) {
+      var opt = document.createElement('option');
+      opt.value = item.code;
+      opt.textContent = item.label;
+      frag.appendChild(opt);
+    });
+    box.innerHTML = '';
+    box.appendChild(frag);
+    box.value = current;
+  }
+
   function filtered() {
+    var q = keyword.trim().toLowerCase();
+    var upcomingOnly = filterMode === 'upcoming';
+    var start = todayStart();
     return allEvents.filter(function(e) {
-      var matchKeyword = !keyword || (e.title + ' ' + e.location).toLowerCase().indexOf(keyword) !== -1;
-      if (!matchKeyword) return false;
-      if (filter === 'ca') return e.state === 'CA';
-      if (filter === 'upcoming') return parseDate(e.date) >= todayStart();
-      return true;
+      var title = String(e.title || '');
+      var location = String(e.location || '');
+      var state = String(e.state || '').trim();
+      var dateOk = true;
+      if (upcomingOnly) {
+        dateOk = parseDate(e.date) >= start;
+      }
+      var kwOk = !q || (title + ' ' + location).toLowerCase().indexOf(q) !== -1;
+      var stateOk = !stateValue || state === stateValue;
+      return kwOk && stateOk && dateOk;
     }).sort(function(a, b) {
       return parseDate(a.date) - parseDate(b.date);
     });
@@ -198,51 +244,54 @@
     }
     box.innerHTML = list.map(function(e) {
       return '<div class="event-card">' +
-        '<h3>' + e.title + '</h3>' +
+        '<h3>' + (e.title || '') + '</h3>' +
         '<div class="meta">' +
           '<span>📅 ' + formatDateLabel(e.date) + '</span>' +
-          '<span>📍 ' + e.location + '</span>' +
+          '<span>📍 ' + (e.location || '') + '</span>' +
         '</div>' +
-        '<p>' + e.desc + '</p>' +
-        (e.join_url ? '<div class="actions"><a href="' + e.join_url + '" target="_blank" rel="noopener">View Event</a><span class="pill">' + e.state + '</span></div>' : '') +
+        '<p>' + (e.desc || '') + '</p>' +
+        (e.join_url ? '<div class="actions"><a href="' + e.join_url + '" target="_blank" rel="noopener">View Event</a><span class="pill">' + (e.state || '') + '</span></div>' : '') +
       '</div>';
     }).join('');
   }
 
-  fetch("./events/events.json", {cache: "no-store"}).then(function(r) {
+  fetch('./events/events.json', {cache:'no-store'}).then(function(r) {
     return r.ok ? r.json() : [];
   }).then(function(data) {
-    allEvents = data || [];
+    allEvents = Array.isArray(data) ? data.slice() : [];
+    populateStates();
     render();
   }).catch(function() {
-    document.getElementById("results").innerHTML = '<p class="no-results">Events are currently unavailable.</p>';
+    document.getElementById('results').innerHTML = '<p class="no-results">Events are currently unavailable.</p>';
   });
 
   document.getElementById('searchInput').addEventListener('input', function(e) {
-    keyword = e.target.value.trim().toLowerCase();
+    keyword = e.target.value;
     render();
   });
   document.getElementById('allBtn').addEventListener('click', function() {
-    filter = 'all';
-    setActive(this);
-    render();
-  });
-  document.getElementById('caBtn').addEventListener('click', function() {
-    filter = 'ca';
-    setActive(this);
+    filterMode = 'all';
+    setActiveBtn(this);
     render();
   });
   document.getElementById('upcomingBtn').addEventListener('click', function() {
-    filter = 'upcoming';
-    setActive(this);
+    filterMode = 'upcoming';
+    setActiveBtn(this);
     render();
   });
-  function setActive(btn) {
-    ['allBtn', 'caBtn', 'upcomingBtn'].forEach(function(id) {
-      document.getElementById(id).classList.toggle('active', id === btn.id);
+  document.getElementById('stateSelect').addEventListener('change', function(e) {
+    stateValue = String(e.target.value || '').trim();
+    render();
+  });
+  function setActiveBtn(btn) {
+    ['allBtn','upcomingBtn'].forEach(function(id) {
+      var el = document.getElementById(id);
+      if (!el) return;
+      el.classList.toggle('active', el === btn);
     });
   }
 })();
 </script>
+
 </body>
 </html>
