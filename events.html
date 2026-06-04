@@ -98,7 +98,8 @@
   <div id="site-footer"></div>
 </div>
 
-
+<script src="./js/menu.js"></script>
+<script>
 const EVENTS_PATH = './events/events.json';
 const grid = document.getElementById('event-grid');
 const countEl = document.getElementById('event-count');
@@ -197,7 +198,6 @@ fetch(EVENTS_PATH)
     render();
   })
   .catch(err => { console.error(err); grid.innerHTML = '<p class="empty">Could not load events.</p>'; });
-<script src="./js/menu.js"></script>
-<script>
+</script>
 </body>
 </html>
