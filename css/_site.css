@@ -93,7 +93,8 @@
   flex-direction: column;
 }
 @keyframes fadeIn { from { opacity: 0; transform: translateY(20px); } to { opacity: 1; transform: translateY(0); } }
-header.menu-header {
+header.menu-header,
+header.page-hero {
   background: linear-gradient(135deg, #2e7d32 0%, #66bb6a 100%);
   color: #e6fff0;
   padding: 64px 20px 56px;
@@ -101,8 +102,24 @@ header.menu-header {
   position: relative;
   overflow: hidden;
 }
-header h1 { font-size: 38px; font-weight: 800; letter-spacing: 0.2px; margin-bottom: 12px; position: relative; z-index: 1; }
-header .subtitle { opacity: 0.95; font-size: 17px; line-height: 1.6; color: #c8e6c9; position: relative; z-index: 1; }
+header.menu-header h1,
+header.page-hero h1 {
+  font-size: 38px;
+  font-weight: 800;
+  letter-spacing: 0.2px;
+  margin-bottom: 12px;
+  position: relative;
+  z-index: 1;
+}
+header.menu-header .subtitle,
+header.page-hero .subtitle {
+  opacity: 0.95;
+  font-size: 17px;
+  line-height: 1.6;
+  color: #c8e6c9;
+  position: relative;
+  z-index: 1;
+}
 
 .site-footer .footer-tagline,
 .site-footer .footer-copy {

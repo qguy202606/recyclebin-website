@@ -1,10 +1,76 @@
 <!DOCTYPE html>
-<html lang="zh">
+<html lang="en">
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>RecycleBin.com - Event Detail</title>
+<title>RecycleBin – Event Detail</title>
 <link rel="stylesheet" href="./css/_site.css">
+<style>
+  .event-detail {
+    background: #ffffff;
+    border: 1px solid #e6f2ea;
+    border-radius: 12px;
+    padding: 22px;
+    margin: 16px 0 14px;
+    box-shadow: 0 4px 14px rgba(0,0,0,0.04);
+  }
+  .event-detail h2 {
+    margin: 0 0 10px;
+    color: #1b5e20;
+  }
+  .event-meta-row {
+    color: #5a6f5e;
+    font-size: .97em;
+    margin: 0 0 12px;
+  }
+  .event-body {
+    color: #263238;
+    line-height: 1.65;
+  }
+  .event-link {
+    display: inline-block;
+    margin-top: 14px;
+    padding: 10px 14px;
+    border: 1px solid #cfe3d3;
+    background: #f1f8f4;
+    color: #1b5e20;
+    border-radius: 8px;
+    font-weight: 600;
+    text-decoration: none;
+  }
+  .event-link:hover {
+    background: #e7f5ea;
+    border-color: #8cc299;
+  }
+  .state-tag {
+    display: inline-block;
+    margin-left: 8px;
+    padding: 2px 8px;
+    border-radius: 999px;
+    border: 1px solid #cfe3d3;
+    background: #f1f8f4;
+    color: #2e7d57;
+    font-size: .85em;
+    font-weight: 600;
+  }
+  .empty {
+    color: #6a7a6e;
+    text-align: center;
+    padding: 18px 0;
+  }
+  .back-link {
+    display: inline-flex;
+    gap: 6px;
+    align-items: center;
+    margin-bottom: 10px;
+    color: #2e7d57;
+    text-decoration: none;
+    font-weight: 600;
+  }
+  .back-link:hover {
+    text-decoration: underline;
+  }
+</style>
 </head>
 <body>
 
@@ -14,21 +80,130 @@
     <a class="menu-link" href="./games.html" data-menu="games">🎮 Games</a>
     <a class="menu-link" href="./guides.html" data-menu="guides">📚 Guides</a>
     <a class="menu-link" href="./centers.html" data-menu="centers">📍 Centers</a>
-    <a class="menu-link" href="./events.html" data-menu="events">📅 Events</a>
+    <a class="menu-link active" href="./events.html" data-menu="events">📅 Events</a>
     <a class="menu-link" href="./howto.html" data-menu="howto">🛠️ How-To</a>
   </nav>
 </div>
 
 <div class="container">
   <header class="menu-header">
-    <h1>Event Detail</h1>
-    <div class="subtitle">This event detail page is under construction. Please check back later.</div>
+    <h1>📅 Event Detail</h1>
+    <div class="subtitle">View event details and join links.</div>
   </header>
+
+  <section class="section">
+    <a class="back-link" href="./events.html">← Back to Events</a>
+    <div id="event-detail" class="empty">Loading event…</div>
+  </section>
 
   <div id="site-footer"></div>
 </div>
 
 <script src="./js/menu.js"></script>
 <script src="./js/footer.js"></script>
+<script>
+const EVENTS_PATH = './events/events.json';
+
+function stateCode(ev) {
+  const direct = String(ev.state || '').trim().toUpperCase();
+  if (direct) return direct;
+  const m = String(ev.location || '').match(/([A-Z]{2})$/);
+  return m ? m[1] : '';
+}
+
+function formatDateRange(start, end) {
+  const s = new Date(start);
+  const e = new Date(end);
+  const opts = { month: 'short', day: 'numeric', year: 'numeric' };
+  if (isNaN(s) || isNaN(e)) return 'Date TBD';
+  if (s.toDateString() === e.toDateString()) return s.toLocaleDateString('en-US', opts);
+  return `${s.toLocaleDateString('en-US', opts)} – ${e.toLocaleDateString('en-US', opts)}`;
+}
+
+function escapeHtml(str) {
+  return String(str || '').replace(/[&<>"']/g, m => ({
+    '&':'&amp;', '<':'&lt;', '>':'&gt;', '"':'&quot;', "'":'&#39;'
+  }[m]));
+}
+
+function renderDetail(ev) {
+  const container = document.getElementById('event-detail');
+  if (!ev) {
+    container.innerHTML = `<p class="empty">No event selected. <a href="./events.html">Browse events</a>.</p>`;
+    return;
+  }
+  const start = ev.start || ev.date;
+  const end = ev.end || start;
+  const loc = ev.location || '';
+  const url = ev.join_url || ev.url || '';
+  const state = stateCode(ev);
+  container.innerHTML = `
+    <article class="event-detail">
+      <h2>${escapeHtml(ev.title)}${state ? `<span class="state-tag">${escapeHtml(state)}</span>` : ''}</h2>
+      <p class="event-meta-row">📅 ${formatDateRange(start, end)} · 📍 ${escapeHtml(loc || 'TBD')}</p>
+      <p class="event-body">${escapeHtml(ev.desc || '')}</p>
+      ${ev.body ? `<p class="event-body">${escapeHtml(ev.body)}</p>` : ''}
+      ${url ? `<a class="event-link" href="${escapeHtml(url)}" target="_blank" rel="noopener noreferrer">View event page ↗</a>` : ''}
+    </article>
+  `;
+}
+
+function findEventById(events, id) {
+  if (!id) return null;
+  return events.find(ev => String(ev.id) === String(id)) || null;
+}
+
+function fallbackIdForCurrentPath() {
+  const path = String(location.pathname || '').replace(/\\/g, '/');
+  const file = path.split('/').pop().toLowerCase();
+  if (!file || file === 'event-detail.html') return null;
+  const fileId = file.replace(/\.html$/, '');
+
+  // Keep a stable, predefined fallback mapping. Designed for current events.json content.
+  const FALLBACK = {
+    'beach-cleanup': 'lb-72nd-place-cleanup-june-6',
+    'campus-talk': 'irvine-drive-recycle-april-26',
+    'challenge': 'lb-72nd-place-cleanup-june-6',
+    'composting': 'ocwr-free-compost-giveaway-april-18',
+    'tote-bag-diy': 'lb-72nd-place-cleanup-june-6',
+    'e-waste-day': 'co-tv-tire-recycling-june-12'
+  };
+  return FALLBACK[fileId] || null;
+}
+
+function normalizeUrlForFallback(id) {
+  if (!location.search && id) {
+    const qs = '?id=' + encodeURIComponent(id);
+    const next = location.pathname.replace(/\\/g, '/').replace(/\/$/, '') + qs;
+    history.replaceState(null, '', next);
+  }
+}
+
+fetch(EVENTS_PATH)
+  .then(r => r.text())
+  .then(t => {
+    let events = [];
+    try {
+      const raw = JSON.parse(t);
+      events = Array.isArray(raw) ? raw : (raw.events || []);
+    } catch (err) {
+      console.error('events.json parse failed', err);
+    }
+
+    const params = new URLSearchParams(location.search);
+    const idParam = params.get('id');
+    const ev = findEventById(events, idParam) || findEventById(events, fallbackIdForCurrentPath());
+
+    if (!ev && !idParam && fallbackIdForCurrentPath()) {
+      normalizeUrlForFallback(fallbackIdForCurrentPath());
+    }
+
+    renderDetail(ev);
+  })
+  .catch(err => {
+    console.error(err);
+    document.getElementById('event-detail').innerHTML = '<p class="empty">Could not load event details.</p>';
+  });
+</script>
 </body>
 </html>
