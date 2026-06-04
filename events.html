@@ -6,71 +6,7 @@
 <title>RecycleBin – Events</title>
 <link rel="stylesheet" href="./css/_site.css">
 <style>
-  /* RecycleBin shared shell + events page styles */
-  * { box-sizing: border-box; margin: 0; padding: 0; }
-  body {
-    font-family: "Segoe UI", Tahoma, Geneva, Verdana, sans-serif;
-    background: linear-gradient(135deg, #e0f7fa 0%, #fff3e0 100%);
-    min-height: 100vh;
-    color: #333;
-  }
-
-  .menu-bar {
-    background: #fff;
-    border-bottom: 2px solid #e0e0e0;
-    padding: 10px 20px;
-    display: flex;
-    flex-direction: column;
-    align-items: center;
-    gap: 8px;
-    position: sticky;
-    top: 0;
-    z-index: 100;
-    box-shadow: 0 2px 8px rgba(0,0,0,0.08);
-  }
-  .menu-logo {
-    font-size: 1.2em;
-    font-weight: 800;
-    color: #2e7d32;
-    text-decoration: none;
-    display: inline-flex;
-    align-items: center;
-    gap: 8px;
-  }
-  .menu-logo .logo {
-    display: inline-grid;
-    place-items: center;
-    width: 32px; height: 32px;
-    background: #2e7d32; color: #fff;
-    border-radius: 8px;
-    font-size: 1.1em;
-  }
-  .menu-nav {
-    display: flex;
-    flex-wrap: wrap;
-    gap: 6px;
-    justify-content: center;
-  }
-  .menu-link {
-    padding: 6px 10px;
-    border-radius: 18px;
-    background: #f5f5f5;
-    color: #555;
-    font-size: .85em;
-    font-weight: 600;
-    text-decoration: none;
-    transition: all .2s;
-    white-space: nowrap;
-  }
-  .menu-link:hover { background: #e8f5e9; color: #2e7d32; transform: translateY(-1px); }
-  .menu-link.active { background: #2e7d32; color: #fff; }
-
-  .page-content {
-    max-width: 960px;
-    margin: 0 auto;
-    padding: 24px 16px 40px;
-  }
-
+  /* Events page-specific overrides */
   .event-controls {
     display: flex;
     gap: 12px;
@@ -78,10 +14,32 @@
     align-items: center;
     margin: 10px 0 14px;
   }
-  .event-controls input[type="search"] { flex: 1 1 220px; padding: 10px 12px; border: 1px solid #cfe3d3; border-radius: 8px; }
-  .event-controls select { padding: 10px 12px; border: 1px solid #cfe3d3; background: #f1f8f4; color: #1b5e20; border-radius: 8px; }
-  .event-controls button { padding: 10px 12px; border: 1px solid #cfe3d3; background: #f1f8f4; color: #1b5e20; border-radius: 8px; cursor: pointer; font-weight: 600; }
-  .event-controls button.active { background: #e7f5ea; border-color: #8cc299; }
+  .event-controls input[type="search"] {
+    flex: 1 1 220px;
+    padding: 10px 12px;
+    border: 1px solid #cfe3d3;
+    border-radius: 8px;
+  }
+  .event-controls select {
+    padding: 10px 12px;
+    border: 1px solid #cfe3d3;
+    background: #f1f8f4;
+    color: #1b5e20;
+    border-radius: 8px;
+  }
+  .event-controls button {
+    padding: 10px 12px;
+    border: 1px solid #cfe3d3;
+    background: #f1f8f4;
+    color: #1b5e20;
+    border-radius: 8px;
+    cursor: pointer;
+    font-weight: 600;
+  }
+  .event-controls button.active {
+    background: #e7f5ea;
+    border-color: #8cc299;
+  }
 
   .event-card {
     border: 1px solid #e6f2ea;
@@ -97,6 +55,13 @@
   .event-link:hover { text-decoration: underline; }
   .event-count { color: #5a6f5e; margin: 0 0 12px; }
   .empty { color: #6a7a6e; text-align: center; padding: 18px 0; }
+
+  @media (max-width: 600px) {
+    header h1 { font-size: 1.5em; }
+    .section { padding: 24px 18px 36px; }
+    .menu-nav { gap: 4px; }
+    .menu-link { padding: 6px 10px; font-size: 0.75em; }
+  }
 </style>
 </head>
 <body>
@@ -118,7 +83,7 @@
     <div class="subtitle">Cleanups, talks, and workshops near you.</div>
   </header>
 
-  <section class="event-section" style="padding-top:24px;">
+  <section class="section">
     <div class="event-controls">
       <input id="event-search" type="search" placeholder="Search events..." />
       <select id="event-state"><option value="">All states</option></select>
@@ -160,7 +125,6 @@ function populateStates() {
   const states = collectStates();
   stateSelect.innerHTML = '<option value="">All states</option>' + states.map(st => `<option value="${st}">${st}</option>`).join('');
 }
-
 function isLocal(text) {
   const t = String(text || '').toLowerCase();
   return /irvine|orange county|huntington beach|long beach|los angeles|south gate|anaheim|fullerton|santa ana|o\.c\.|oc /.test(t);
@@ -170,7 +134,6 @@ function localPriority(ev) {
   const stateCA = String(ev.state || '').toUpperCase() === 'CA';
   return (loc ? 0 : 1) + (stateCA ? 0 : 1);
 }
-
 function formatDateRange(start, end) {
   const s = new Date(start);
   const e = new Date(end);

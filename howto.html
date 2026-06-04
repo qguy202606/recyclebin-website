@@ -6,28 +6,11 @@
 <title>RecycleBin.com - How-To</title>
 <link rel="stylesheet" href="./css/_site.css">
 <style>
-  .container {
-    max-width: 900px;
-    margin: 0 auto;
-    background: rgba(255, 255, 255, 0.95);
-    min-height: calc(100vh - 60px);
-    box-shadow: 0 10px 40px rgba(0,0,0,0.1);
-    animation: fadeIn 0.6s;
-    display: flex;
-    flex-direction: column;
+  .section {
+    max-width: 100%;
+    padding: 32px 30px 48px;
+    flex: 1;
   }
-  @keyframes fadeIn { from { opacity: 0; transform: translateY(20px); } to { opacity: 1; transform: translateY(0); } }
-  header {
-    background: linear-gradient(135deg, #2e7d32 0%, #66bb6a 100%);
-    color: #e6fff0;
-    padding: 64px 20px 56px;
-    text-align: center;
-    position: relative;
-    overflow: hidden;
-  }
-  h1 { font-size: 38px; font-weight: 800; letter-spacing: 0.2px; margin-bottom: 12px; position: relative; z-index: 1; }
-  .subtitle { opacity: 0.95; font-size: 17px; line-height: 1.6; color: #c8e6c9; position: relative; z-index: 1; }
-
   .howto-section {
     padding: 30px;
     flex: 1;
@@ -35,12 +18,8 @@
     grid-template-columns: repeat(3, minmax(0, 1fr));
     gap: 16px;
   }
-  @media (max-width: 860px) {
-    .howto-section { grid-template-columns: repeat(2, minmax(0, 1fr)); }
-  }
-  @media (max-width: 540px) {
-    .howto-section { grid-template-columns: 1fr; }
-  }
+  @media (max-width: 860px) { .howto-section { grid-template-columns: repeat(2, minmax(0, 1fr)); } }
+  @media (max-width: 540px) { .howto-section { grid-template-columns: 1fr; } }
   .howto-card {
     background: #ffffff;
     border: 1px solid #e6f0ea;
@@ -58,10 +37,17 @@
     font-size: 14px;
     line-height: 1.55;
   }
+
+  @media (max-width: 600px) {
+    header h1 { font-size: 1.5em; }
+    .section { padding: 24px 18px 36px; }
+    .menu-nav { gap: 4px; }
+    .menu-link { padding: 6px 10px; font-size: 0.75em; }
+  }
 </style>
 </head>
 <body>
-<!-- Compact Menu Bar (uses shared CSS in css/_site.css and auto highlight in js/menu.js) -->
+
 <div class="menu-bar">
   <a href="./index.html"><span class="logo">♻️</span><span>RecycleBin</span></a>
   <nav class="menu-nav">
@@ -69,7 +55,7 @@
     <a class="menu-link" href="./guides.html" data-menu="guides">📚 Guides</a>
     <a class="menu-link" href="./centers.html" data-menu="centers">📍 Centers</a>
     <a class="menu-link" href="./events.html" data-menu="events">📅 Events</a>
-    <a class="menu-link" href="./howto.html" data-menu="howto">🛠️ How-To</a>
+    <a class="menu-link active" href="./howto.html" data-menu="howto">🛠️ How-To</a>
   </nav>
 </div>
 
@@ -107,9 +93,9 @@
   </section>
 
   <div id="site-footer"></div>
+</div>
 
 <script src="./js/menu.js"></script>
 <script src="./js/footer.js"></script>
-</div>
 </body>
 </html>
