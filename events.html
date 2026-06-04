@@ -12,24 +12,59 @@
     background: rgba(255, 255, 255, 0.95);
     min-height: calc(100vh - 60px);
     box-shadow: 0 10px 40px rgba(0,0,0,0.1);
-    border-radius: 10px;
     animation: fadeIn 0.6s;
     display: flex;
     flex-direction: column;
   }
   @keyframes fadeIn { from { opacity: 0; transform: translateY(20px); } to { opacity: 1; transform: translateY(0); } }
-  .page-header {
+  header {
+    background: linear-gradient(135deg, #2e7d32 0%, #66bb6a 100%);
+    color: white;
+    padding: 30px 20px;
     text-align: center;
-    margin-bottom: 30px;
+    position: relative;
+    overflow: hidden;
   }
-  .page-header h1 {
-    color: #2e7d32;
-    font-size: 2em;
-    margin-bottom: 10px;
+  h1 { font-size: 2em; margin-bottom: 10px; position: relative; z-index: 1; }
+  .subtitle { opacity: 0.95; font-size: 1.1em; position: relative; z-index: 1; }
+
+  .events-section {
+    padding: 30px;
+    flex: 1;
   }
-  .page-header p {
+  .event-grid {
+    display: grid;
+    grid-template-columns: repeat(3, minmax(0, 1fr));
+    gap: 16px;
+  }
+  @media (max-width: 860px) {
+    .event-grid { grid-template-columns: repeat(2, minmax(0, 1fr)); }
+  }
+  @media (max-width: 540px) {
+    .event-grid { grid-template-columns: 1fr; }
+  }
+  .event-card {
+    background: #ffffff;
+    border: 1px solid #e6f0ea;
+    border-radius: 12px;
+    padding: 16px;
+    box-shadow: 0 4px 14px rgba(46, 125, 50, 0.06);
+  }
+  .event-card h3 {
+    font-size: 15px;
+    color: #1b5e20;
+    margin-bottom: 4px;
+  }
+  .event-card .meta {
+    color: #555;
+    font-size: 13px;
+    margin-bottom: 6px;
+  }
+  .event-card .meta span { margin-right: 10px; }
+  .event-card p {
     color: #666;
-    font-size: 1.1em;
+    font-size: 13px;
+    line-height: 1.5;
   }
 </style>
 </head>
@@ -49,11 +84,11 @@
 <div class="container">
   <header>
     <h1>📅 Events</h1>
-    <div class="subtitle">Community events coming soon.</div>
+    <div class="subtitle">Community recycling events and workshops.</div>
   </header>
 
-  <section style="padding: 30px; flex: 1;">
-    <p style="text-align:center; color:#666;">Community events coming soon.</p>
+  <section class="events-section">
+    <div id="results" class="event-grid"></div>
   </section>
 
   <div id="site-footer"></div>
@@ -61,5 +96,38 @@
 
 <script src="./js/menu.js"></script>
 <script src="./js/footer.js"></script>
+<script>
+(function() {
+  var events = [];
+  fetch("./events/events.json", {cache: "no-store"}).then(function(r) {
+    return r.ok ? r.json() : [];
+  }).then(function(data) {
+    events = data || [];
+    render(events);
+  }).catch(function() {
+    document.getElementById("results").innerHTML = '<p style="color:#555;font-size:14px;">Events are currently unavailable.</p>';
+  });
+
+  function render(list) {
+    var box = document.getElementById("results");
+    if (!list.length) {
+      box.innerHTML = '<p style="color:#555;font-size:14px;">No upcoming events.</p>';
+      return;
+    }
+    box.innerHTML = list.map(function(e) {
+      return '<div class="event-card">' +
+        '<h3>' + e.title + '</h3>' +
+        '<div class="meta">' +
+          '<span>📅 ' + e.date + '</span>' +
+          '<span>⏰ ' + e.time + '</span>' +
+        '</div>' +
+        '<div class="meta">📍 ' + e.location + '</div>' +
+        '<p>' + e.description + '</p>' +
+      '</div>';
+    }).join("");
+  }
+})();
+</script>
+
 </body>
 </html>

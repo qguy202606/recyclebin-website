@@ -1,0 +1,37 @@
+[
+  {
+    "title": "Community Cleanup Day",
+    "date": "2026-06-14",
+    "time": "09:00 - 12:00",
+    "location": "Northwood Community Park, Irvine, CA",
+    "description": "Join neighbors for a morning litter cleanup and recycling sorting demo. Gloves and bags provided."
+  },
+  {
+    "title": "Household Hazardous Waste Drop-off",
+    "date": "2026-06-21",
+    "time": "08:00 - 14:00",
+    "location": "Irvine Ranch Water District, Irvine, CA",
+    "description": "Free drop-off for paint, batteries, oil, electronics, and fluorescent bulbs."
+  },
+  {
+    "title": "Composting Workshop",
+    "date": "2026-07-02",
+    "time": "10:00 - 11:30",
+    "location": "Orange County Great Park, Irvine, CA",
+    "description": "Beginner-friendly backyard composting basics and Q&A with UC Master Gardeners."
+  },
+  {
+    "title": "Zero-Waste Market Pop-Up",
+    "date": "2026-07-19",
+    "time": "11:00 - 16:00",
+    "location": "Central Market, Irvine, CA",
+    "description": "Bring your own containers for bulk goods, refills, and reusable packaging demos."
+  },
+  {
+    "title": "E-Waste Collection Drive",
+    "date": "2026-08-08",
+    "time": "09:00 - 15:00",
+    "location": "UCI Student Center, Irvine, CA",
+    "description": "Free e-waste drop-off for phones, laptops, cables, and small appliances."
+  }
+]
