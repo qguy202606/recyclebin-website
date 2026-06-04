@@ -66,16 +66,7 @@
 </head>
 <body>
 
-<div class="menu-bar">
-  <a href="./index.html"><span class="logo">♻️</span><span>RecycleBin</span></a>
-  <nav class="menu-nav">
-    <a class="menu-link" href="./games.html" data-menu="games">🎮 Games</a>
-    <a class="menu-link" href="./guides.html" data-menu="guides">📚 Guides</a>
-    <a class="menu-link" href="./centers.html" data-menu="centers">📍 Centers</a>
-    <a class="menu-link active" href="./events.html" data-menu="events">📅 Events</a>
-    <a class="menu-link" href="./howto.html" data-menu="howto">🛠️ How-To</a>
-  </nav>
-</div>
+<div id="site-header"></div>
 
 <div class="container">
   <header class="menu-header">
@@ -97,8 +88,8 @@
   <div id="site-footer"></div>
 </div>
 
-<script src="./js/menu.js"></script>
-<script src="./js/footer.js"></script>
+<script src="./js/i18n.js"></script>
+<script src="./js/site.js"></script>
 <script>
 const EVENTS_PATH = './events/events.json';
 const grid = document.getElementById('event-grid');
