@@ -89,30 +89,3 @@
 .site-footer .footer-copy {
   padding-bottom: 4px;
 }
-
-.events .state-badge {
-  display: inline-block;
-  padding: 2px 8px;
-  border-radius: 999px;
-  font-size: 12px;
-  font-weight: 700;
-  border: 1px solid currentColor;
-  margin-right: 6px;
-  vertical-align: middle;
-}
-.events .state-badge.ca {
-  color: #1b5e20;
-  background: #e8f5e9;
-  border-color: #a5d6a7;
-}
-.events .state-badge.default {
-  color: #2e2e2e;
-  background: #eeeeee;
-  border-color: #bdbdbd;
-}
-.events .local-pin {
-  font-size: 12px;
-  color: #7b5ea7;
-  margin-left: 6px;
-  vertical-align: middle;
-}

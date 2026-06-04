@@ -28,16 +28,78 @@
     header h1 { font-size: 38px; font-weight: 800; letter-spacing: 0.2px; margin-bottom: 12px; position: relative; z-index: 1; }
     header .subtitle { opacity: 0.95; font-size: 17px; line-height: 1.6; color: #c8e6c9; position: relative; z-index: 1; }
 
-    .section { max-width: 100%; padding: 32px 30px 48px; flex: 1; }
-    .section-title { font-size: 22px; font-weight: 700; color: #1b5e20; margin-bottom: 18px; }
-    .guides-accordion { display: flex; flex-direction: column; gap: 14px; }
-    .guide-card { background: #ffffff; border: 1px solid #e6f0ea; border-radius: 16px; box-shadow: 0 6px 18px rgba(46, 125, 50, 0.08); overflow: hidden; }
-    .guide-card summary { list-style: none; padding: 18px 22px; cursor: pointer; display: flex; align-items: center; gap: 14px; font-weight: 700; color: #1b5e20; }
+    .section {
+      max-width: 100%;
+      padding: 32px 30px 48px;
+      flex: 1;
+    }
+    .section-title {
+      font-size: 22px;
+      font-weight: 700;
+      color: #1b5e20;
+      margin-bottom: 18px;
+    }
+    .guides-accordion {
+      display: flex;
+      flex-direction: column;
+      gap: 14px;
+    }
+    .guide-card {
+      background: #ffffff;
+      border: 1px solid #e6f0ea;
+      border-radius: 16px;
+      box-shadow: 0 6px 18px rgba(46, 125, 50, 0.08);
+      overflow: hidden;
+    }
+    .guide-card summary {
+      list-style: none;
+      padding: 18px 22px;
+      cursor: pointer;
+      display: flex;
+      align-items: center;
+      gap: 14px;
+      font-weight: 700;
+      color: #1b5e20;
+    }
     .guide-card summary::-webkit-details-marker { display: none; }
-    .guide-card .card-icon { width: 36px; height: 36px; border-radius: 10px; background: #e8f5e9; color: #1b5e20; display: inline-flex; align-items: center; justify-content: center; font-size: 20px; flex-shrink: 0; }
-    .guide-card .chevron { margin-left: auto; transition: transform 0.2s ease; color: #2e7d32; font-size: 18px; }
+    .guide-card .card-icon {
+      width: 36px;
+      height: 36px;
+      border-radius: 10px;
+      background: #e8f5e9;
+      color: #1b5e20;
+      display: inline-flex;
+      align-items: center;
+      justify-content: center;
+      font-size: 20px;
+      flex-shrink: 0;
+    }
+    .guide-card .chevron {
+      margin-left: auto;
+      transition: transform 0.2s ease;
+      color: #2e7d32;
+      font-size: 18px;
+    }
     .guide-card[open] .chevron { transform: rotate(180deg); }
-    .guide-card .card-body { padding: 0 22px 18px 72px; color: #4a6a52; line-height: 1.6; font-size: 0.97em; }
+    .guide-card .card-body {
+      padding: 0 22px 18px 72px;
+      color: #4a6a52;
+      line-height: 1.6;
+      font-size: 0.97em;
+    }
+
+    footer.site-footer {
+      text-align: center;
+      padding: 16px 20px;
+      color: #666;
+      border-top: 2px solid #e8f5e9;
+      font-size: 0.85em;
+      background: white;
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      gap: 8px;
+    }
 
     @media (max-width: 600px) {
       header h1 { font-size: 1.5em; }
@@ -48,69 +110,100 @@
   </style>
 </head>
 <body>
-  <div id="site-header"></div>
+<!-- Compact Menu Bar -->
+<div class="menu-bar">
+  <a href="./index.html"><span class="logo">♻️</span><span>RecycleBin</span></a>
+  <nav class="menu-nav">
+    <a class="menu-link" href="./games.html" data-menu="games">🎮 Games</a>
+    <a class="menu-link" href="./guides.html" data-menu="guides">📚 Guides</a>
+    <a class="menu-link" href="./centers.html" data-menu="centers">📍 Centers</a>
+    <a class="menu-link" href="./events.html" data-menu="events">📅 Events</a>
+    <a class="menu-link" href="./howto.html" data-menu="howto">🛠️ How-To</a>
+  </nav>
+</div>
 
-  <div class="container">
-    <header>
-      <h1>📚 Step-by-Step Recycling Guides</h1>
-      <div class="subtitle">Practical recycling tips and step-by-step guides to keep materials out of landfill.</div>
-    </header>
+<div class="container">
+  <header>
+    <h1>📚 Step-by-Step Recycling Guides</h1>
+    <div class="subtitle">Practical recycling tips and step-by-step guides to keep materials out of landfill.</div>
+  </header>
 
-    <section class="section">
-      <h2 class="section-title">Browse guides</h2>
-      <div class="guides-accordion">
-        <details class="guide-card">
-          <summary><span class="card-icon">♻️</span><span>Know Your Bins</span><span class="chevron">▼</span></summary>
-          <div class="card-body">
-            <strong>Recycling (Blue)</strong> – clean and dry plastics #1–#2, glass jars, aluminum cans, paper, and cardboard.<br>
-            <strong>Compost (Green)</strong> – food scraps, coffee grounds, tea bags, leaves, and small branches.<br>
-            <strong>Trash (Black/Gray)</strong> – plastic bags, styrofoam, chip bags, diapers, and food-soiled paper.<br>
-            <strong>Hazardous Waste</strong> – batteries, paint, motor oil, electronics, and fluorescent bulbs. Drop off at a certified center.
-          </div>
-        </details>
-        <details class="guide-card">
-          <summary><span class="card-icon">🧼</span><span>Prep Recyclables</span><span class="chevron">▼</span></summary>
-          <div class="card-body">
-            <strong>Rinse it.</strong> A quick rinse removes food and grease that can ruin an entire batch.<br>
-            <strong>Remove caps/lids.</strong> Twist off plastic caps and recycle separately if accepted locally; put lids in trash if unsure.<br>
-            <strong>Flatten cardboard.</strong> Breaking down boxes saves space in the bin and makes collection easier.<br>
-            <strong>Keep it loose.</strong> Never bag recyclables loose in plastic bags — they will not be opened and will be landfilled.
-          </div>
-        </details>
-        <details class="guide-card">
-          <summary><span class="card-icon">🥡</span><span>Avoid Common Mistakes</span><span class="chevron">▼</span></summary>
-          <div class="card-body">
-            Plastic bags go in the trash or at grocery store drop-offs — never in the curbside bin.<br>
-            Greasy pizza boxes and paper towels belong in compost or trash; oil-soaked paper is not recyclable.<br>
-            Broken glass is a safety hazard. Wrap it tightly and place it in the trash, or check for a local glass recycling program.<br>
-            Coffee pods and K-cups are usually trash unless your program explicitly accepts mixed materials.
-          </div>
-        </details>
-        <details class="guide-card">
-          <summary><span class="card-icon">🏠</span><span>Start at Home</span><span class="chevron">▼</span></summary>
-          <div class="card-body">
-            <strong>Set up two bins.</strong> Keep a recycling bin in the kitchen and a larger one in the garage.<br>
-            <strong>Use a cheat sheet.</strong> Tape the local list of accepted and rejected items on your fridge.<br>
-            <strong>Empty one at a time.</strong> Rinse and sort items right after use instead of letting them pile up.<br>
-            <strong>Check locally.</strong> Rules vary by city. Visit your trash hauler or city website for Irvine-specific recycling updates and pickup schedules.
-          </div>
-        </details>
-        <details class="guide-card">
-          <summary><span class="card-icon">🏭</span><span>Specialty Recycling</span><span class="chevron">▼</span></summary>
-          <div class="card-body">
-            <strong>Electronics (e-waste).</strong> Drop off at a certified drop-off point or scheduled HHW event — never trash.<br>
-            <strong>Batteries.</strong> Single-use, rechargeable, and button cells need separate collection to prevent fires.<br>
-            <strong>Plastic bags & film.</strong> Return to grocery store drop-offs; curbside bins will reject them.<br>
-            <strong>Textiles.</strong> Donate wearable clothing; use textile recycling bins for worn items — they become new fiber.<br>
-            <strong>Appliances.</strong> Refrigerators and other large devices may require a special pick-up or eco-fee return program.
-          </div>
-        </details>
-      </div>
-    </section>
+  <section class="section">
+    <h2 class="section-title">Browse guides</h2>
+    <div class="guides-accordion">
+      <details class="guide-card">
+        <summary>
+          <span class="card-icon">♻️</span>
+          <span>Know Your Bins</span>
+          <span class="chevron">▼</span>
+        </summary>
+        <div class="card-body">
+          <strong>Recycling (Blue)</strong> – clean and dry plastics #1–#2, glass jars, aluminum cans, paper, and cardboard.
+          <strong>Compost (Green)</strong> – food scraps, coffee grounds, tea bags, leaves, and small branches.
+          <strong>Trash (Black/Gray)</strong> – plastic bags, styrofoam, chip bags, diapers, and food-soiled paper.
+          <strong>Hazardous Waste</strong> – batteries, paint, motor oil, electronics, and fluorescent bulbs. Drop off at a certified center.
+        </div>
+      </details>
+      <details class="guide-card">
+        <summary>
+          <span class="card-icon">🧼</span>
+          <span>Prep Recyclables</span>
+          <span class="chevron">▼</span>
+        </summary>
+        <div class="card-body">
+          <strong>Rinse it.</strong> A quick rinse removes food and grease that can ruin an entire batch.
+          <strong>Remove caps/lids.</strong> Twist off plastic caps and recycle separately if accepted locally; put lids in trash if unsure.
+          <strong>Flatten cardboard.</strong> Breaking down boxes saves space in the bin and makes collection easier.
+          <strong>Keep it loose.</strong> Never bag recyclables loose in plastic bags — they will not be opened and will be landfilled.
+        </div>
+      </details>
+      <details class="guide-card">
+        <summary>
+          <span class="card-icon">🥡</span>
+          <span>Avoid Common Mistakes</span>
+          <span class="chevron">▼</span>
+        </summary>
+        <div class="card-body">
+          Plastic bags go in the trash or at grocery store drop-offs — never in the curbside bin.
+          Greasy pizza boxes and paper towels belong in compost or trash; oil-soaked paper is not recyclable.
+          Broken glass is a safety hazard. Wrap it tightly and place it in the trash, or check for a local glass recycling program.
+          Coffee pods and K-cups are usually trash unless your program explicitly accepts mixed materials.
+        </div>
+      </details>
+      <details class="guide-card">
+        <summary>
+          <span class="card-icon">🏠</span>
+          <span>Start at Home</span>
+          <span class="chevron">▼</span>
+        </summary>
+        <div class="card-body">
+          <strong>Set up two bins.</strong> Keep a recycling bin in the kitchen and a larger one in the garage.
+          <strong>Use a cheat sheet.</strong> Tape the local list of accepted and rejected items on your fridge.
+          <strong>Empty one at a time.</strong> Rinse and sort items right after use instead of letting them pile up.
+          <strong>Check locally.</strong> Rules vary by city. Visit your trash hauler or city website for Irvine-specific recycling updates and pickup schedules.
+        </div>
+      </details>
+      <details class="guide-card">
+        <summary>
+          <span class="card-icon">🏭</span>
+          <span>Specialty Recycling</span>
+          <span class="chevron">▼</span>
+        </summary>
+        <div class="card-body">
+          <strong>Electronics (e-waste).</strong> Drop off at a certified drop-off point or scheduled HHW event — never trash.
+          <strong>Batteries.</strong> Single-use, rechargeable, and button cells need separate collection to prevent fires.
+          <strong>Plastic bags & film.</strong> Return to grocery store drop-offs; curbside bins will reject them.
+          <strong>Textiles.</strong> Donate wearable clothing; use textile recycling bins for worn items — they become new fiber.
+          <strong>Appliances.</strong> Refrigerators and other large devices may require a special pick-up or eco-fee return program.
+        </div>
+      </details>
+    </div>
+  </section>
 
-    <div id="site-footer"></div>
-  </div>
+  <div id="site-footer"></div>
+</div>
 
-  <script src="./js/site.js"></script>
+<script src="./js/menu.js"></script>
+<script src="./js/footer.js"></script>
 </body>
 </html>

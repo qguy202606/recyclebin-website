@@ -237,17 +237,6 @@ function localPriority(ev) {
   return (loc ? 0 : 1) + (stateCA ? 0 : 1);
 }
 
-function stateBadge(ev) {
-  const c = stateCode(ev);
-  if (!c) return '';
-  const cls = c === 'CA' ? 'ca' : 'default';
-  return ` <span class="state-badge ${cls}">${escapeHtml(c)}</span>`;
-}
-
-function localTag(ev) {
-  return (isLocal(ev.location) || isLocal(ev.address || '') || isLocal(ev.body || '')) ? ' <span class="local-pin">⚠️ Irvine priority</span>' : '';
-}
-
 function formatDateRange(start, end) {
   const s = new Date(start);
   const e = new Date(end);
@@ -281,7 +270,7 @@ function render() {
         const loc = ev.location || '';
         const url = ev.join_url || ev.url || '';
         return `<article class="event-card">
-          <h3>${escapeHtml(ev.title)}${stateBadge(ev)}${localTag(ev)}</h3>
+          <h3>${escapeHtml(ev.title)}</h3>
           <p class="event-meta">📅 ${formatDateRange(start, end)} · ${escapeHtml(loc || 'TBD')}</p>
           <p>${escapeHtml(ev.desc || '')}</p>
           ${url ? `<a class="event-link" href="${escapeHtml(url)}" target="_blank" rel="noopener noreferrer">View details</a>` : ''}
