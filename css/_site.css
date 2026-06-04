@@ -93,7 +93,7 @@
   flex-direction: column;
 }
 @keyframes fadeIn { from { opacity: 0; transform: translateY(20px); } to { opacity: 1; transform: translateY(0); } }
-header {
+header.menu-header {
   background: linear-gradient(135deg, #2e7d32 0%, #66bb6a 100%);
   color: #e6fff0;
   padding: 64px 20px 56px;
