@@ -123,19 +123,6 @@
     font-size: 14px;
     padding: 10px 0;
   }
-  .radius-btn {
-    padding: 8px 12px;
-    border-radius: 999px;
-    border: 1px solid #2e7d32;
-    background: white;
-    color: #2e7d32;
-    font-weight: 700;
-    cursor: pointer;
-  }
-  .radius-btn.active {
-    background: #2e7d32;
-    color: white;
-  }
 </style>
 </head>
 <body>
@@ -166,10 +153,12 @@
     </div>
     <div class="controls">
       <span style="font-weight:700;color:#1b5e20;">Radius:</span>
-      <button class="radius-btn" data-miles="5">5 mi</button>
-      <button class="radius-btn" data-miles="10">10 mi</button>
-      <button class="radius-btn" data-miles="15">15 mi</button>
-      <button id="radiusAllBtn" class="secondary">All</button>
+      <select id="radiusSelect" style="padding:8px 10px;border-radius:10px;border:1px solid #2e7d32;background:white;color:#1b5e20;font-weight:700;">
+        <option value="">All</option>
+        <option value="5">5 miles</option>
+        <option value="10">10 miles</option>
+        <option value="15">15 miles</option>
+      </select>
     </div>
     <div id="results" class="center-grid"></div>
   </section>
@@ -273,30 +262,21 @@
   document.getElementById("searchInput").addEventListener("keydown", function(e) { if (e.key === "Enter") activate(); });
   document.getElementById("showAllBtn").addEventListener("click", function() {
     document.getElementById("searchInput").value = "";
+    var sel = document.getElementById("radiusSelect");
+    if (sel) sel.value = "";
     radiusMiles = null;
-    setActiveRadius(null);
     activate();
   });
 
-  document.querySelectorAll(".radius-btn").forEach(function(btn) {
-    btn.addEventListener("click", function() {
-      var val = parseInt(this.getAttribute("data-miles"), 10);
+  (function() {
+    var sel = document.getElementById("radiusSelect");
+    if (!sel) return;
+    sel.addEventListener("change", function() {
+      var val = parseInt(this.value, 10);
       radiusMiles = isNaN(val) ? null : val;
-      setActiveRadius(this);
       activate();
     });
-  });
-
-  document.getElementById("radiusAllBtn").addEventListener("click", function() {
-    radiusMiles = null;
-    setActiveRadius(null);
-    activate();
-  });
-
-  function setActiveRadius(activeBtn) {
-    document.querySelectorAll(".radius-btn").forEach(function(b) { b.classList.remove("active"); });
-    if (activeBtn) activeBtn.classList.add("active");
-  }
+  })();
 
   var DEFAULT_LAT = 33.6846;
   var DEFAULT_LNG = -117.8265;
