@@ -4,148 +4,105 @@
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 <title>RecycleBin.com - Centers</title>
+<link rel="stylesheet" href="./css/_site.css">
 <style>
-  * { box-sizing: border-box; margin: 0; padding: 0; }
-  body {
-    background: #000;
-    color: #fff;
-    font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, Helvetica, Arial, sans-serif;
-    min-height: 100vh;
-  }
-  a { color: #66bb6a; text-decoration: none; }
-  a:hover { text-decoration: underline; }
-
-  /* Header */
-  .site-header {
-    display: flex;
-    align-items: center;
-    justify-content: space-between;
-    padding: 14px 20px;
-    background: rgba(255,255,255,0.05);
-    border-bottom: 1px solid #1f1f1f;
-    gap: 12px;
-    flex-wrap: wrap;
-  }
-  .brand {
-    display: inline-flex;
-    align-items: center;
-    gap: 10px;
-    font-weight: 800;
-    font-size: 1.1em;
-    color: #fff;
-    text-decoration: none;
-  }
-  .brand .logo {
-    background: #2e7d32;
-    color: #fff;
-    width: 36px;
-    height: 36px;
-    border-radius: 8px;
-    display: inline-flex;
-    align-items: center;
-    justify-content: center;
-    font-size: 18px;
-  }
-  .nav-links {
-    display: flex;
-    gap: 6px;
-    flex-wrap: wrap;
-  }
-  .nav-links a {
-    padding: 6px 10px;
-    border-radius: 999px;
-    background: #141414;
-    color: #ddd;
-    font-size: 0.85em;
-    font-weight: 600;
-    text-decoration: none;
-  }
-  .nav-links a:hover { background: #1f1f1f; }
-  .nav-links a.active {
-    background: #2e7d32;
-    color: #fff;
-  }
-
-  /* Page */
-  .page {
-    max-width: 960px;
+  .container {
+    max-width: 900px;
     margin: 0 auto;
-    padding: 40px 20px 40px;
+    background: rgba(255, 255, 255, 0.95);
+    min-height: calc(100vh - 60px);
+    box-shadow: 0 10px 40px rgba(0,0,0,0.1);
+    animation: fadeIn 0.6s;
+    display: flex;
+    flex-direction: column;
   }
-  .page-header { margin-bottom: 24px; }
-  .page-header h1 { font-size: 28px; margin-bottom: 8px; }
-  .page-header p { color: #bbb; font-size: 15px; }
+  @keyframes fadeIn { from { opacity: 0; transform: translateY(20px); } to { opacity: 1; transform: translateY(0); } }
+  header {
+    background: linear-gradient(135deg, #2e7d32 0%, #66bb6a 100%);
+    color: white;
+    padding: 30px 20px;
+    text-align: center;
+    position: relative;
+    overflow: hidden;
+  }
+  h1 { font-size: 2em; margin-bottom: 10px; position: relative; z-index: 1; }
+  .subtitle { opacity: 0.95; font-size: 1.1em; position: relative; z-index: 1; }
 
-  /* Controls */
-  .location-line {
-    color: #bbb;
-    font-size: 13px;
-    margin-bottom: 10px;
-    min-height: 18px;
+  .center-section {
+    padding: 30px;
+    flex: 1;
+    display: flex;
+    flex-direction: column;
   }
   .controls {
     display: flex;
     gap: 10px;
-    margin: 10px 0 18px;
+    margin-bottom: 18px;
     flex-wrap: wrap;
   }
   .controls input {
     flex: 1 1 220px;
     padding: 10px 12px;
     border-radius: 10px;
-    border: 1px solid #2f2f2f;
-    background: #141414;
-    color: #fff;
+    border: 1px solid #e6f0ea;
+    background: #fff;
+    color: #1b5e20;
     outline: none;
   }
   .controls input:focus { border-color: #2e7d32; }
   .controls button {
     padding: 10px 14px;
     border-radius: 10px;
-    border: 1px solid #2f2f2f;
-    background: #141414;
-    color: #ddd;
-    cursor: pointer;
-    font-weight: 600;
-  }
-  .controls button:hover { background: #1f1f1f; }
-  .controls button.primary {
+    border: 1px solid #2e7d32;
     background: #2e7d32;
-    border-color: #2e7d32;
-    color: #fff;
+    color: white;
+    cursor: pointer;
+    font-weight: 700;
   }
-  .controls button.primary:hover { background: #1b5e20; }
+  .controls button:hover { background: #1b5e20; }
+  .controls button.secondary {
+    background: white;
+    color: #2e7d32;
+  }
+  .controls button.secondary:hover { background: #e8f5e9; }
+  .location-line {
+    color: #2e7d32;
+    font-size: 13px;
+    margin-bottom: 8px;
+    min-height: 18px;
+  }
 
-  /* Center cards */
-  .center-list {
+  .center-grid {
     display: grid;
     grid-template-columns: repeat(3, minmax(0, 1fr));
     gap: 16px;
   }
   @media (max-width: 860px) {
-    .center-list { grid-template-columns: repeat(2, minmax(0, 1fr)); }
+    .center-grid { grid-template-columns: repeat(2, minmax(0, 1fr)); }
   }
   @media (max-width: 540px) {
-    .center-list { grid-template-columns: 1fr; }
+    .center-grid { grid-template-columns: 1fr; }
   }
   .center-card {
-    background: #0a0a0a;
-    border: 1px solid #1f1f1f;
+    background: #ffffff;
+    border: 1px solid #e6f0ea;
     border-radius: 12px;
     padding: 16px;
+    box-shadow: 0 4px 14px rgba(46, 125, 50, 0.06);
   }
   .center-card h3 {
-    font-size: 16px;
+    font-size: 15px;
+    color: #1b5e20;
     margin-bottom: 4px;
   }
   .center-card .meta {
-    color: #bbb;
+    color: #555;
     font-size: 13px;
-    margin-bottom: 6px;
+    margin-bottom: 4px;
   }
-  .center-card .meta span { margin-right: 14px; }
+  .center-card .meta span { margin-right: 10px; }
   .center-card .actions {
-    margin-top: 8px;
+    margin-top: 10px;
     display: flex;
     gap: 10px;
     flex-wrap: wrap;
@@ -153,51 +110,55 @@
   }
   .pill {
     display: inline-block;
-    padding: 4px 8px;
+    padding: 3px 8px;
     border-radius: 999px;
-    background: #142214;
-    color: #81c784;
+    background: #e8f5e9;
+    color: #1b5e20;
     font-size: 11px;
     font-weight: 700;
-    border: 1px solid #1f3a1f;
+    border: 1px solid #c8e6c9;
   }
   .no-results {
-    color: #bbb;
+    color: #555;
     font-size: 14px;
     padding: 10px 0;
   }
 </style>
 </head>
 <body>
-
-<div class="site-header">
-  <a class="brand" href="./index.html">
-    <span class="logo">Recycle</span>
-    <span>Bin.com</span>
-  </a>
-  <nav class="nav-links">
-    <a href="./games.html">Home</a>
-    <a href="./guides.html">Guides</a>
-    <a href="./centers.html" class="active">Centers</a>
-    <a href="./events.html">Events</a>
-    <a href="./howto.html">How-To Tutorials</a>
+<!-- Compact Menu Bar (uses shared CSS in css/_site.css and auto highlight in js/menu.js) -->
+<div class="menu-bar">
+  <a href="./index.html"><span class="logo">♻️</span><span>RecycleBin</span></a>
+  <nav class="menu-nav">
+    <a class="menu-link" href="./games.html" data-menu="games">🎮 Games</a>
+    <a class="menu-link" href="./guides.html" data-menu="guides">📚 Guides</a>
+    <a class="menu-link" href="./centers.html" data-menu="centers">📍 Centers</a>
+    <a class="menu-link" href="./events.html" data-menu="events">📅 Events</a>
+    <a class="menu-link" href="./howto.html" data-menu="howto">🛠️ How-To</a>
   </nav>
 </div>
 
-<div class="page">
-  <div class="page-header">
-    <h1>Find a Recycling Center</h1>
-    <p>Find the nearest recycling drop-off locations.</p>
-  </div>
-  <div id="locationLine" class="location-line"></div>
-  <div class="controls">
-    <input id="searchInput" type="text" placeholder="Enter city">
-    <button id="searchBtn" class="primary">Search</button>
-    <button id="showAllBtn">Show All</button>
-  </div>
-  <div id="results" class="center-list"></div>
+<div class="container">
+  <header>
+    <h1>📍 Recycling Centers</h1>
+    <div class="subtitle">Find a recycling center near you in Orange County.</div>
+  </header>
+
+  <section class="center-section">
+    <p id="locationLine" class="location-line"></p>
+    <div class="controls">
+      <input id="searchInput" type="text" placeholder="Enter city">
+      <button id="searchBtn">Search</button>
+      <button id="showAllBtn" class="secondary">Show All</button>
+    </div>
+    <div id="results" class="center-grid"></div>
+  </section>
+
+  <div id="site-footer"></div>
 </div>
 
+<script src="./js/menu.js"></script>
+<script src="./js/footer.js"></script>
 <script>
 (function() {
   var centers = [];
@@ -239,8 +200,8 @@
         '</div>' +
         '<div class="actions">' +
           '<a href="' + directionsUrl(c) + '" target="_blank" rel="noopener">Get Directions</a>' +
-          '<span style="color:#444;font-size:12px;">|</span>' +
-          (c.phone ? '<span style="color:#bbb;font-size:13px;">' + c.phone + '</span>' : '') +
+          '<span style="color:#c8e6c9;font-size:12px;">|</span>' +
+          (c.phone ? '<span style="color:#555;font-size:13px;">' + c.phone + '</span>' : '') +
           '<span style="flex:1"></span>' +
           c.materials.map(function(m) { return '<span class="pill">' + m + '</span>'; }).join(' ') +
         '</div>' +
@@ -256,25 +217,17 @@
     });
   }
 
-  function sortByDistance() {
-    if (userLat === null || userLng === null) return centers.slice();
-    return centers.slice().sort(function(a, b) {
+  function sortByDistance(list) {
+    if (userLat === null || userLng === null) return list || centers.slice();
+    return (list || centers.slice()).sort(function(a, b) {
       return haversineKm({lat: userLat, lng: userLng}, a) - haversineKm({lat: userLat, lng: userLng}, b);
     });
-  }
-
-  function blurByProximity() {
-    if (userLat !== null && userLng !== null) {
-      centers.forEach(function(c) {
-        c.distanceKm = haversineKm({lat: userLat, lng: userLng}, c);
-      });
-    }
   }
 
   function activate() {
     var q = document.getElementById("searchInput").value.trim();
     var list = filtered(q);
-    list = sortByDistance();
+    list = sortByDistance(list);
     render(list);
   }
 
