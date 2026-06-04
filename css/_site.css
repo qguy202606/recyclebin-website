@@ -80,12 +80,28 @@
   outline: none;
 }
 
-.site-footer .footer-tagline,
-.site-footer .footer-copy {
+.site-footer .footer-link {
+  color: #2e7d32;
+  text-decoration: none;
+  font-weight: 600;
+}
+.site-footer .footer-link:hover {
+  text-decoration: underline;
+}
+.site-footer .footer-links {
+  display: flex;
+  gap: 14px;
+  flex-wrap: wrap;
+  justify-content: center;
+}
+.site-footer .footer-tagline {
   text-align: center;
   color: #666;
   font-size: 0.85em;
 }
 .site-footer .footer-copy {
+  text-align: center;
+  color: #666;
+  font-size: 0.85em;
   padding-bottom: 4px;
 }
