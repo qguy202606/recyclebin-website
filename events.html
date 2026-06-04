@@ -123,6 +123,14 @@
     cursor: pointer;
   }
   .event-controls button.active { background: #e7f5ea; border-color: #8cc299; }
+  .event-controls select {
+    padding: 10px 12px;
+    border: 1px solid #cfe3d3;
+    background: #f1f8f4;
+    color: #1b5e20;
+    border-radius: 8px;
+    cursor: pointer;
+  }
 
   .event-card {
     background: #fff;
@@ -168,6 +176,9 @@
   <section class="event-section" style="padding:24px; flex:1;">
     <div class="event-controls">
       <input id="event-search" type="search" placeholder="Search events..." />
+      <select id="event-state">
+        <option value="">All states</option>
+      </select>
       <button id="event-all" class="active">Show All</button>
       <button id="event-upcoming">Upcoming</button>
     </div>
@@ -194,19 +205,36 @@ const EVENTS_PATH = './events/events.json';
 const grid = document.getElementById('event-grid');
 const countEl = document.getElementById('event-count');
 const searchInput = document.getElementById('event-search');
+const stateSelect = document.getElementById('event-state');
 const btnAll = document.getElementById('event-all');
 const btnUpcoming = document.getElementById('event-upcoming');
 let events = [];
 let mode = 'all';
 
+function stateCode(ev) {
+  const direct = String(ev.state || '').trim().toUpperCase();
+  if (direct) return direct;
+  const m = String(ev.location || '').match(/([A-Z]{2})$/);
+  return m ? m[1] : '';
+}
+function collectStates() {
+  const s = new Set();
+  events.forEach(ev => { const c = stateCode(ev); if (c) s.add(c); });
+  return Array.from(s).sort();
+}
+function populateStates() {
+  const states = collectStates();
+  stateSelect.innerHTML = '<option value="">All states</option>' + states.map(st => `<option value="${st}">${st}</option>`).join('');
+}
+
 function isLocal(text) {
   const t = String(text || '').toLowerCase();
-  return /irvine|orange county|huntington beach|long beach|los angeles|south gate|anaheim|fullerton|santa ana|o.c\.|oc /.test(t);
+  return /irvine|orange county|huntington beach|long beach|los angeles|south gate|anaheim|fullerton|santa ana|o\.c\.|oc /.test(t);
 }
 function localPriority(ev) {
   const loc = isLocal(ev.location) || isLocal(ev.address || '') || isLocal(ev.body || '');
-  const state = String(ev.state || '').toUpperCase() === 'CA';
-  return (loc ? 0 : 1) + (state ? 0 : 1);
+  const stateCA = String(ev.state || '').toUpperCase() === 'CA';
+  return (loc ? 0 : 1) + (stateCA ? 0 : 1);
 }
 
 function formatDateRange(start, end) {
@@ -217,20 +245,21 @@ function formatDateRange(start, end) {
   if (s.toDateString() === e.toDateString()) return s.toLocaleDateString('en-US', opts);
   return `${s.toLocaleDateString('en-US', opts)} – ${e.toLocaleDateString('en-US', opts)}`;
 }
-
 function escapeHtml(str) {
   return String(str || '').replace(/[&<>"']/g, m => ({ '&':'&amp;', '<':'&lt;', '>':'&gt;', '"':'&quot;', "'":'&#39;' }[m]));
 }
 
 function render() {
   const q = searchInput.value.trim().toLowerCase();
+  const state = String(stateSelect.value || '').trim().toUpperCase();
   const now = new Date();
   let list = events.filter(ev => {
     const start = ev.start ? new Date(ev.start) : (ev.date ? new Date(ev.date) : null);
     const inFuture = !start || isNaN(start) || start >= now;
     const textMatch = [ev.title, ev.desc, ev.location, ev.body].some(v => String(v || '').toLowerCase().includes(q));
-    if (mode === 'upcoming') return textMatch && inFuture;
-    return textMatch;
+    const stateMatch = !state || stateCode(ev) === state;
+    if (mode === 'upcoming') return textMatch && stateMatch && inFuture;
+    return textMatch && stateMatch;
   });
   list.sort((a, b) => (localPriority(a) - localPriority(b)) || new Date(a.start || a.date || '9999') - new Date(b.start || b.date || '9999'));
   countEl.textContent = `${list.length} event${list.length === 1 ? '' : 's'}`;
@@ -253,6 +282,7 @@ function render() {
 btnAll.addEventListener('click', () => { mode = 'all'; btnAll.classList.add('active'); btnUpcoming.classList.remove('active'); render(); });
 btnUpcoming.addEventListener('click', () => { mode = 'upcoming'; btnUpcoming.classList.add('active'); btnAll.classList.remove('active'); render(); });
 searchInput.addEventListener('input', render);
+stateSelect.addEventListener('change', render);
 
 fetch(EVENTS_PATH)
   .then(r => r.text())
@@ -261,6 +291,7 @@ fetch(EVENTS_PATH)
       const raw = JSON.parse(t);
       events = Array.isArray(raw) ? raw : (raw.events || []);
     } catch (err) { events = []; console.error('events.json parse failed', err); }
+    populateStates();
     render();
   })
   .catch(err => { console.error(err); grid.innerHTML = '<p class="empty">Could not load events.</p>'; });
