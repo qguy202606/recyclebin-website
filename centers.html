@@ -1,5 +1,5 @@
 <!DOCTYPE html>
-<html lang="zh">
+<html lang="en">
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
@@ -8,14 +8,16 @@
 <style>
   .container {
     max-width: 900px;
-    margin: 20px auto;
+    margin: 0 auto;
     background: rgba(255, 255, 255, 0.95);
-    min-height: calc(100vh - 120px);
+    min-height: calc(100vh - 60px);
     box-shadow: 0 10px 40px rgba(0,0,0,0.1);
     border-radius: 10px;
-    padding: 30px 20px;
+    animation: fadeIn 0.6s;
+    display: flex;
+    flex-direction: column;
   }
-
+  @keyframes fadeIn { from { opacity: 0; transform: translateY(20px); } to { opacity: 1; transform: translateY(0); } }
   .page-header {
     text-align: center;
     margin-bottom: 30px;
@@ -32,23 +34,32 @@
 </style>
 </head>
 <body>
-  <div id="site-header"></div>
+<!-- Compact Menu Bar (uses shared CSS in css/_site.css and auto highlight in js/menu.js) -->
+<div class="menu-bar">
+  <a href="./index.html"><span class="logo">♻️</span><span>RecycleBin</span></a>
+  <nav class="menu-nav">
+    <a class="menu-link" href="./games.html" data-menu="games">🎮 Games</a>
+    <a class="menu-link" href="./guides.html" data-menu="guides">📚 Guides</a>
+    <a class="menu-link" href="./centers.html" data-menu="centers">📍 Centers</a>
+    <a class="menu-link" href="./events.html" data-menu="events">📅 Events</a>
+    <a class="menu-link" href="./howto.html" data-menu="howto">🛠️ How-To</a>
+  </nav>
+</div>
 
-  <main>
-    <section class="page-header">
-      <div class="container">
-        <h1>Centers</h1>
-      </div>
-    </section>
-    <section>
-      <div class="container">
-        <p>Find a recycling center near you.</p>
-      </div>
-    </section>
-  </main>
+<div class="container">
+  <header>
+    <h1>📍 Recycling Centers</h1>
+    <div class="subtitle">Find a recycling center near you.</div>
+  </header>
+
+  <section style="padding: 30px; flex: 1;">
+    <p style="text-align:center; color:#666;">Recycling center locator coming soon.</p>
+  </section>
+
   <div id="site-footer"></div>
+</div>
 
-  <script src="./js/site.js"></script>
-  <script src="./js/i18n.js"></script>
+<script src="./js/menu.js"></script>
+<script src="./js/footer.js"></script>
 </body>
 </html>
