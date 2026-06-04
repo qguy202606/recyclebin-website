@@ -210,5 +210,17 @@
   <script>
     try { var y = new Date().getFullYear(); var el = document.getElementById('footerYear'); if (el) el.textContent = y; } catch (e) {}
   </script>
+  <script src="./js/i18n.js"></script>
+  <script>
+    document.addEventListener('DOMContentLoaded', function () {
+      document.querySelectorAll('[data-i18n-toggle]').forEach(function (btn) {
+        btn.addEventListener('click', function () {
+          if (window.__recyclebinI18n && typeof window.__recyclebinI18n.toggle === 'function') {
+            window.__recyclebinI18n.toggle();
+          }
+        });
+      });
+    });
+  </script>
 </body>
 </html>
