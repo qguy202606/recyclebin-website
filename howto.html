@@ -28,87 +28,53 @@
   h1 { font-size: 38px; font-weight: 800; letter-spacing: 0.2px; margin-bottom: 12px; position: relative; z-index: 1; }
   .subtitle { opacity: 0.95; font-size: 17px; line-height: 1.6; color: #c8e6c9; position: relative; z-index: 1; }
 
-  .howto-section {
-    padding: 30px;
-    flex: 1;
-    display: grid;
-    grid-template-columns: repeat(3, minmax(0, 1fr));
-    gap: 16px;
-  }
-  @media (max-width: 860px) {
-    .howto-section { grid-template-columns: repeat(2, minmax(0, 1fr)); }
-  }
-  @media (max-width: 540px) {
-    .howto-section { grid-template-columns: 1fr; }
-  }
-  .howto-card {
-    background: #ffffff;
-    border: 1px solid #e6f0ea;
-    border-radius: 12px;
-    padding: 18px;
-    box-shadow: 0 6px 18px rgba(46, 125, 50, 0.08);
-  }
-  .howto-card h3 {
-    font-size: 15px;
-    color: #1b5e20;
-    margin-bottom: 6px;
-  }
-  .howto-card p {
-    color: #555;
-    font-size: 14px;
-    line-height: 1.55;
-  }
+  .howto-section { padding: 30px; flex: 1; display: grid; grid-template-columns: repeat(3, minmax(0, 1fr)); gap: 16px; }
+  @media (max-width: 860px) { .howto-section { grid-template-columns: repeat(2, minmax(0, 1fr)); } }
+  @media (max-width: 540px) { .howto-section { grid-template-columns: 1fr; } }
+  .howto-card { background: #ffffff; border: 1px solid #e6f0ea; border-radius: 12px; padding: 18px; box-shadow: 0 6px 18px rgba(46, 125, 50, 0.08); }
+  .howto-card h3 { font-size: 15px; color: #1b5e20; margin-bottom: 6px; }
+  .howto-card p { color: #555; font-size: 14px; line-height: 1.55; }
 </style>
 </head>
 <body>
-<!-- Compact Menu Bar (uses shared CSS in css/_site.css and auto highlight in js/menu.js) -->
-<div class="menu-bar">
-  <a href="./index.html"><span class="logo">♻️</span><span>RecycleBin</span></a>
-  <nav class="menu-nav">
-    <a class="menu-link" href="./games.html" data-menu="games">🎮 Games</a>
-    <a class="menu-link" href="./guides.html" data-menu="guides">📚 Guides</a>
-    <a class="menu-link" href="./centers.html" data-menu="centers">📍 Centers</a>
-    <a class="menu-link" href="./events.html" data-menu="events">📅 Events</a>
-    <a class="menu-link" href="./howto.html" data-menu="howto">🛠️ How-To</a>
-  </nav>
-</div>
+  <div id="site-header"></div>
 
-<div class="container">
-  <header>
-    <h1>🛠️ How-To Guides</h1>
-    <div class="subtitle">Practical tutorials for smarter recycling at home and on the go.</div>
-  </header>
+  <div class="container">
+    <header>
+      <h1>🛠️ How-To Guides</h1>
+      <div class="subtitle">Practical tutorials for smarter recycling at home and on the go.</div>
+    </header>
 
-  <section class="howto-section">
-    <div class="howto-card">
-      <h3>Recycle Plastic Right</h3>
-      <p>Check the resin code, rinse containers, and keep caps on if accepted. When in doubt, leave it out — wishcycling hurts more than it helps.</p>
-    </div>
-    <div class="howto-card">
-      <h3>Sort Kitchen Waste</h3>
-      <p>Use separate bins for recycling, compost, and trash. Label them clearly and empty the recycling stream before food dries on containers.</p>
-    </div>
-    <div class="howto-card">
-      <h3>Handle E-Waste Safely</h3>
-      <p>Remove batteries when possible, wipe personal data, and drop off at certified events or HHW facilities — never in curbside bins.</p>
-    </div>
-    <div class="howto-card">
-      <h3>Donate or Textile Recycle</h3>
-      <p>Wearable clothes belong at donation centers. Damaged textiles go to textile recycling bins so fibers can be reused instead of landfilled.</p>
-    </div>
-    <div class="howto-card">
-      <h3>Set Up a Home Station</h3>
-      <p>Place a small kitchen caddy for scraps, a larger sorting bin in the garage, and a cheat sheet of local dos and don’ts on the fridge.</p>
-    </div>
-    <div class="howto-card">
-      <h3>Read Local Rules</h3>
-      <p>Every city is different. Bookmark your hauler’s accepted-materials list and check holiday schedule changes before setting out bins.</p>
-    </div>
-  </section>
+    <section class="howto-section">
+      <div class="howto-card">
+        <h3>Recycle Plastic Right</h3>
+        <p>Check the resin code, rinse containers, and keep caps on if accepted. When in doubt, leave it out — wishcycling hurts more than it helps.</p>
+      </div>
+      <div class="howto-card">
+        <h3>Sort Kitchen Waste</h3>
+        <p>Use separate bins for recycling, compost, and trash. Label them clearly and empty the recycling stream before food dries on containers.</p>
+      </div>
+      <div class="howto-card">
+        <h3>Handle E-Waste Safely</h3>
+        <p>Remove batteries when possible, wipe personal data, and drop off at certified events or HHW facilities — never in curbside bins.</p>
+      </div>
+      <div class="howto-card">
+        <h3>Donate or Textile Recycle</h3>
+        <p>Wearable clothes belong at donation centers. Damaged textiles go to textile recycling bins so fibers can be reused instead of landfilled.</p>
+      </div>
+      <div class="howto-card">
+        <h3>Set Up a Home Station</h3>
+        <p>Place a small kitchen caddy for scraps, a larger sorting bin in the garage, and a cheat sheet of local dos and don’ts on the fridge.</p>
+      </div>
+      <div class="howto-card">
+        <h3>Read Local Rules</h3>
+        <p>Every city is different. Bookmark your hauler’s accepted-materials list and check holiday schedule changes before setting out bins.</p>
+      </div>
+    </section>
 
-  <div id="site-footer"></div>
-</div>
+    <div id="site-footer"></div>
+  </div>
 
-<script src="./js/menu.js"></script>
+  <script src="./js/site.js"></script>
 </body>
 </html>
