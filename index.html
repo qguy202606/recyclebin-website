@@ -32,15 +32,7 @@
       z-index: 1;
     }
 
-    .container {
-      max-width: 900px;
-      margin: 0 auto;
-    }
-    .section {
-      max-width: 900px;
-      margin: 0 auto;
-      padding: 32px 20px 48px;
-    }
+    .section { padding: 32px 0 48px; }
     .section-title {
       font-size: 22px;
       font-weight: 700;
@@ -67,26 +59,11 @@
       box-shadow: 0 14px 36px rgba(0,0,0,0.1);
       border-color: #bbdfc7;
     }
-    .nav-card .icon {
-      font-size: 26px;
-      margin-bottom: 10px;
-    }
-    .nav-card h3 {
-      font-size: 18px;
-      font-weight: 700;
-      margin-bottom: 6px;
-    }
-    .nav-card p {
-      color: #4a6a52;
-      font-size: 14px;
-      line-height: 1.5;
-    }
-    .site-footer {
-      margin-top: auto;
-    }
-    .footer-inner {
-      text-align: center;
-    }
+    .nav-card .icon { font-size: 26px; margin-bottom: 10px; }
+    .nav-card h3 { font-size: 18px; font-weight: 700; margin-bottom: 6px; }
+    .nav-card p { color: #4a6a52; font-size: 14px; line-height: 1.5; }
+    .site-footer { margin-top: auto; }
+    .footer-inner { text-align: center; }
     @media (max-width: 860px) {
       .card-grid { grid-template-columns: repeat(2, 1fr); }
     }
@@ -128,49 +105,63 @@
     <div class="leaf">🌱</div>
     <div class="leaf">☘️</div>
   </div>
-  <section class="hero" id="top">
-    <h1>Recycle smarter. Waste less.</h1>
-    <p>Explore guides, find centers, and discover local events to make recycling easier and more effective.</p>
-  </section>
+
+  <div class="menu-bar">
+    <a href="./index.html"><span class="logo">♻️</span><span>RecycleBin</span></a>
+    <nav class="menu-nav">
+      <a class="menu-link active" href="./index.html" data-menu="home">🏠 Home</a>
+      <a class="menu-link" href="./guides.html" data-menu="guides">📚 Guides</a>
+      <a class="menu-link" href="./centers.html" data-menu="centers">📍 Centers</a>
+      <a class="menu-link" href="./events.html" data-menu="events">📅 Events</a>
+      <a class="menu-link" href="./howto.html" data-menu="howto">🛠️ How-To</a>
+      <a class="menu-link" href="./games.html" data-menu="games">🎮 Games</a>
+    </nav>
+  </div>
 
   <div class="container">
-  <section class="section" id="start">
-    <h2 class="section-title">Start here</h2>
-    <div class="card-grid">
-      <a class="nav-card" href="./guides.html">
-        <div class="icon">📖</div>
-        <h3>Guides</h3>
-        <p>Step-by-step help for sorting, drop-off, and special materials.</p>
-      </a>
-      <a class="nav-card" href="./howto.html">
-        <div class="icon">🛠</div>
-        <h3>How-To</h3>
-        <p>Practical tips to build better recycling habits at home.</p>
-      </a>
-      <a class="nav-card" href="./centers.html">
-        <div class="icon">📍</div>
-        <h3>Centers</h3>
-        <p>Find nearby recycling centers and check accepted materials.</p>
-      </a>
-      <a class="nav-card" href="./events.html">
-        <div class="icon">📅</div>
-        <h3>Events</h3>
-        <p>Discover community cleanups, drop-off days, and workshops.</p>
-      </a>
-      <a class="nav-card" href="./games.html">
-        <div class="icon">🎮</div>
-        <h3>Games</h3>
-        <p>Learn recycling rules through quick interactive challenges.</p>
-      </a>
-    </div>
-  </section>
+    <header class="hero">
+      <h1>Recycle smarter. Waste less.</h1>
+      <p>Explore guides, find centers, and discover local events to make recycling easier and more effective.</p>
+    </header>
 
-  <footer class="site-footer">
-    <div class="footer-inner">
-      <p class="footer-tagline">Made with 💚 for Earth 🌍</p>
-      <p class="footer-copy">&copy; <span id="footerYear">2026</span> RecycleBin.com. All rights reserved.</p>
-    </div>
-  </footer>
+    <section class="section" id="start">
+      <h2 class="section-title">Start here</h2>
+      <div class="card-grid">
+        <a class="nav-card" href="./guides.html">
+          <div class="icon">📖</div>
+          <h3>Guides</h3>
+          <p>Step-by-step help for sorting, drop-off, and special materials.</p>
+        </a>
+        <a class="nav-card" href="./howto.html">
+          <div class="icon">🛠</div>
+          <h3>How-To</h3>
+          <p>Practical tips to build better recycling habits at home.</p>
+        </a>
+        <a class="nav-card" href="./centers.html">
+          <div class="icon">📍</div>
+          <h3>Centers</h3>
+          <p>Find nearby recycling centers and check accepted materials.</p>
+        </a>
+        <a class="nav-card" href="./events.html">
+          <div class="icon">📅</div>
+          <h3>Events</h3>
+          <p>Discover community cleanups, drop-off days, and workshops.</p>
+        </a>
+        <a class="nav-card" href="./games.html">
+          <div class="icon">🎮</div>
+          <h3>Games</h3>
+          <p>Learn recycling rules through quick interactive challenges.</p>
+        </a>
+      </div>
+    </section>
+
+    <footer class="site-footer">
+      <div class="footer-inner">
+        <p class="footer-tagline">Made with 💚 for Earth 🌍</p>
+        <p class="footer-copy">&copy; <span id="footerYear">2026</span> RecycleBin.com. All rights reserved.</p>
+      </div>
+    </footer>
+  </div>
 
   <script src="./js/menu.js"></script>
   <script>
