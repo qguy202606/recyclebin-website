@@ -188,7 +188,7 @@
     box.innerHTML = list.map(function(c) {
       var distance = '';
       if (userLat !== null && userLng !== null) {
-        distance = '<span>Distance: ~' + haversineKm({lat: userLat, lng: userLng}, {lat: c.lat, lng: c.lng}).toFixed(1) + ' km</span>';
+        distance = '<span>Distance: ~' + (haversineKm({lat: userLat, lng: userLng}, {lat: c.lat, lng: c.lng}) * 0.621371).toFixed(1) + ' miles</span>';
       }
       return '<div class="center-card">' +
         '<h3>' + c.name + '</h3>' +
@@ -246,6 +246,9 @@
     activate();
   });
 
+  var DEFAULT_LAT = 33.6846;
+  var DEFAULT_LNG = -117.8265;
+
   if (navigator.geolocation) {
     navigator.geolocation.getCurrentPosition(function(pos) {
       userLat = pos.coords.latitude;
@@ -253,8 +256,16 @@
       document.getElementById("locationLine").textContent = "Detected area (" + userLat.toFixed(2) + ", " + userLng.toFixed(2) + ") — approximate location";
       activate();
     }, function() {
-      document.getElementById("locationLine").textContent = "";
+      userLat = DEFAULT_LAT;
+      userLng = DEFAULT_LNG;
+      document.getElementById("locationLine").textContent = "Showing results sorted by approximate distance from Irvine, CA";
+      activate();
     });
+  } else {
+    userLat = DEFAULT_LAT;
+    userLng = DEFAULT_LNG;
+    document.getElementById("locationLine").textContent = "Showing results sorted by approximate distance from Irvine, CA";
+    activate();
   }
 })();
 </script>
