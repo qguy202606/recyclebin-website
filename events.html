@@ -1,296 +1,46 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-<meta charset="UTF-8">
-<meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>RecycleBin.com - Events</title>
-<link rel="stylesheet" href="./css/_site.css">
-<style>
-  .container {
-    max-width: 900px;
-    margin: 0 auto;
-    background: rgba(255, 255, 255, 0.95);
-    min-height: calc(100vh - 60px);
-    box-shadow: 0 10px 40px rgba(0,0,0,0.1);
-    animation: fadeIn 0.6s;
-    display: flex;
-    flex-direction: column;
-  }
-  @keyframes fadeIn { from { opacity: 0; transform: translateY(20px); } to { opacity: 1; transform: translateY(0); } }
-  header {
-    background: linear-gradient(135deg, #2e7d32 0%, #66bb6a 100%);
-    color: #e6fff0;
-    padding: 64px 20px 56px;
-    text-align: center;
-    position: relative;
-    overflow: hidden;
-  }
-  h1 { font-size: 38px; font-weight: 800; letter-spacing: 0.2px; margin-bottom: 12px; position: relative; z-index: 1; }
-  .subtitle { opacity: 0.95; font-size: 17px; line-height: 1.6; color: #c8e6c9; position: relative; z-index: 1; }
-
-  .events-section {
-    padding: 30px;
-    flex: 1;
-    display: flex;
-    flex-direction: column;
-  }
-  .event-grid {
-    display: grid;
-    grid-template-columns: repeat(3, minmax(0, 1fr));
-    gap: 16px;
-  }
-  @media (max-width: 860px) {
-    .event-grid { grid-template-columns: repeat(2, minmax(0, 1fr)); }
-  }
-  @media (max-width: 540px) {
-    .event-grid { grid-template-columns: 1fr; }
-  }
-  .event-card {
-    background: #ffffff;
-    border: 1px solid #e6f0ea;
-    border-radius: 12px;
-    padding: 16px;
-    box-shadow: 0 4px 14px rgba(46, 125, 50, 0.06);
-  }
-  .event-card h3 {
-    font-size: 15px;
-    color: #1b5e20;
-    margin-bottom: 4px;
-  }
-  .event-card .meta {
-    color: #555;
-    font-size: 13px;
-    margin-bottom: 6px;
-  }
-  .event-card .meta span { margin-right: 10px; }
-  .event-card p {
-    color: #666;
-    font-size: 13px;
-    line-height: 1.5;
-  }
-  .event-card .actions {
-    margin-top: 10px;
-    display: flex;
-    gap: 10px;
-    flex-wrap: wrap;
-    align-items: center;
-  }
-  .pill {
-    display: inline-block;
-    padding: 3px 8px;
-    border-radius: 999px;
-    background: #e8f5e9;
-    color: #1b5e20;
-    font-size: 11px;
-    font-weight: 700;
-    border: 1px solid #c8e6c9;
-  }
-  .no-results {
-    color: #555;
-    font-size: 14px;
-    padding: 10px 0;
-  }
-  .filter-bar {
-    display: flex;
-    gap: 10px;
-    margin-bottom: 18px;
-    flex-wrap: wrap;
-    align-items: center;
-  }
-  .filter-bar input {
-    flex: 1 1 220px;
-    padding: 10px 12px;
-    border-radius: 10px;
-    border: 1px solid #e6f0ea;
-    background: #fff;
-    color: #1b5e20;
-    outline: none;
-  }
-  .filter-bar input:focus { border-color: #2e7d32; }
-  .filter-bar select,
-  .filter-bar button {
-    padding: 9px 11px;
-    border-radius: 999px;
-    border: 1px solid #e6f0ea;
-    background: #fff;
-    color: #2e7d32;
-    font-weight: 700;
-    font-size: 13px;
-    cursor: pointer;
-  }
-  .filter-bar select:hover,
-  .filter-bar button:hover { background: #e8f5e9; }
-  .filter-bar button.active {
-    background: #2e7d32;
-    border-color: #2e7d32;
-    color: white;
-  }
-</style>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>RecycleBin.com - Events</title>
+  <link rel="stylesheet" href="./css/_site.css" />
+  <link rel="stylesheet" href="./css/main.css" />
+  <style>
+    .container {
+      max-width: 980px;
+      margin: 0 auto;
+      background: rgba(255,255,255,0.96);
+      min-height: calc(100vh - 56px);
+      box-shadow: 0 10px 40px rgba(0,0,0,0.06);
+      border-radius: 14px;
+      animation: fadeIn 0.4s;
+      display: flex;
+      flex-direction: column;
+    }
+    @keyframes fadeIn { from { opacity: 0; transform: translateY(18px); } to { opacity: 1; transform: translateY(0); } }
+    .page-header { text-align: center; padding: 44px 24px 24px; }
+    .page-header h1 { color: #1b5e20; font-size: 2em; margin-bottom: 6px; }
+    .page-header p { color: #5a6f5e; }
+    .event-section { padding: 24px; flex: 1; }
+    @media (max-width: 640px) {
+      .event-section { padding: 16px; }
+    }
+  </style>
 </head>
 <body>
-<div class="menu-bar">
-  <a href="./index.html"><span class="logo">♻️</span><span>RecycleBin</span></a>
-  <nav class="menu-nav">
-    <a class="menu-link" href="./games.html" data-menu="games">🎮 Games</a>
-    <a class="menu-link" href="./guides.html" data-menu="guides">📚 Guides</a>
-    <a class="menu-link" href="./centers.html" data-menu="centers">📍 Centers</a>
-    <a class="menu-link" href="./events.html" data-menu="events">📅 Events</a>
-    <a class="menu-link" href="./howto.html" data-menu="howto">🛠️ How-To</a>
-  </nav>
-</div>
-
-<div class="container">
-  <header>
+<div id="site-header"></div>
+<main class="container">
+  <header class="page-header">
     <h1>📅 Events</h1>
-    <div class="subtitle">Community recycling events and workshops.</div>
+    <p>Local cleanups, talks, and workshops — Irvine first.</p>
   </header>
-
-  <section class="events-section">
-    <div class="filter-bar">
-      <input id="searchInput" type="text" placeholder="Search by title or location">
-      <button id="allBtn" class="active">All</button>
-      <select id="stateSelect" title="Filter by state">
-        <option value="">All states</option>
-        <option value="CA">CA</option>
-      </select>
-      <button id="upcomingBtn" title="Show events from today onward">Upcoming</button>
-    </div>
-    <div id="results" class="event-grid"></div>
+  <section class="event-section">
+    <p style="text-align:center; color:#5a6f5e;">Full event calendar is being finalized. Check back soon.</p>
   </section>
-
   <div id="site-footer"></div>
-</div>
-
+</main>
 <script src="./js/menu.js"></script>
-<script>
-(function() {
-  var allEvents = [];
-  var filterMode = 'all';
-  var keyword = '';
-  var stateValue = '';
-
-  function parseDate(value) {
-    if (!value || String(value).indexOf('-') < 0) return new Date(NaN);
-    var p = String(value).split('-');
-    return new Date(Number(p[0]), Number(p[1]) - 1, Number(p[2]));
-  }
-  function formatDateLabel(value) {
-    var d = parseDate(value);
-    if (isNaN(d)) return String(value);
-    return d.toLocaleDateString('en-US', {year:'numeric', month:'short', day:'numeric'});
-  }
-  function todayStart() {
-    var d = new Date();
-    return new Date(d.getFullYear(), d.getMonth(), d.getDate());
-  }
-
-  function populateStates() {
-    var seen = [];
-    var list = [];
-    allEvents.forEach(function(e) {
-      var s = String(e.state || '').trim();
-      if (s && list.indexOf(s) < 0) {
-        list.push(s);
-        seen.push({code: s, label: s});
-      }
-    });
-    seen.sort(function(a, b) { return a.label < b.label ? -1 : 1; });
-    var box = document.getElementById('stateSelect');
-    if (!box) return;
-    var current = box.value;
-    var frag = document.createDocumentFragment();
-    var blank = document.createElement('option');
-    blank.value = '';
-    blank.textContent = 'All states';
-    frag.appendChild(blank);
-    seen.forEach(function(item) {
-      var opt = document.createElement('option');
-      opt.value = item.code;
-      opt.textContent = item.label;
-      frag.appendChild(opt);
-    });
-    box.innerHTML = '';
-    box.appendChild(frag);
-    box.value = current;
-  }
-
-  function filtered() {
-    var q = keyword.trim().toLowerCase();
-    var upcomingOnly = filterMode === 'upcoming';
-    var start = todayStart();
-    return allEvents.filter(function(e) {
-      var title = String(e.title || '');
-      var location = String(e.location || '');
-      var state = String(e.state || '').trim();
-      var dateOk = true;
-      if (upcomingOnly) {
-        dateOk = parseDate(e.date) >= start;
-      }
-      var kwOk = !q || (title + ' ' + location).toLowerCase().indexOf(q) !== -1;
-      var stateOk = !stateValue || state === stateValue;
-      return kwOk && stateOk && dateOk;
-    }).sort(function(a, b) {
-      return parseDate(a.date) - parseDate(b.date);
-    });
-  }
-
-  function render() {
-    var box = document.getElementById('results');
-    var list = filtered();
-    if (!list.length) {
-      box.innerHTML = '<p class="no-results">No matching events.</p>';
-      return;
-    }
-    box.innerHTML = list.map(function(e) {
-      return '<div class="event-card">' +
-        '<h3>' + (e.title || '') + '</h3>' +
-        '<div class="meta">' +
-          '<span>📅 ' + formatDateLabel(e.date) + '</span>' +
-          '<span>📍 ' + (e.location || '') + '</span>' +
-        '</div>' +
-        '<p>' + (e.desc || '') + '</p>' +
-        (e.join_url ? '<div class="actions"><a href="' + e.join_url + '" target="_blank" rel="noopener">View Event</a><span class="pill">' + (e.state || '') + '</span></div>' : '') +
-      '</div>';
-    }).join('');
-  }
-
-  fetch('./events/events.json', {cache:'no-store'}).then(function(r) {
-    return r.ok ? r.json() : [];
-  }).then(function(data) {
-    allEvents = Array.isArray(data) ? data.slice() : [];
-    populateStates();
-    render();
-  }).catch(function() {
-    document.getElementById('results').innerHTML = '<p class="no-results">Events are currently unavailable.</p>';
-  });
-
-  document.getElementById('searchInput').addEventListener('input', function(e) {
-    keyword = e.target.value;
-    render();
-  });
-  document.getElementById('allBtn').addEventListener('click', function() {
-    filterMode = 'all';
-    setActiveBtn(this);
-    render();
-  });
-  document.getElementById('upcomingBtn').addEventListener('click', function() {
-    filterMode = 'upcoming';
-    setActiveBtn(this);
-    render();
-  });
-  document.getElementById('stateSelect').addEventListener('change', function(e) {
-    stateValue = String(e.target.value || '').trim();
-    render();
-  });
-  function setActiveBtn(btn) {
-    ['allBtn','upcomingBtn'].forEach(function(id) {
-      var el = document.getElementById(id);
-      if (!el) return;
-      el.classList.toggle('active', el === btn);
-    });
-  }
-})();
-</script>
-
+<script src="./js/footer.js"></script>
 </body>
 </html>

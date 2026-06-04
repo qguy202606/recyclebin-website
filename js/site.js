@@ -1,76 +1,137 @@
-/* site.js - shared behavior for all pages */
-(function () {
+/* site.js - shared layout, i18n toggle, mobile nav, dark mode */
+(() => {
   'use strict';
 
-  function getActive() {
-    var p = location.pathname.replace(/\\/g, '/');
+  const applyI18nLang = (lang, root = document) => {
+    root.querySelectorAll('[data-i18n]').forEach((el) => {
+      const key = el.getAttribute('data-i18n');
+      if (!key) return;
+      const text = (window.__recyclebinI18n &&
+        window.__recyclebinI18n.translate &&
+        window.__recyclebinI18n.translate(lang, key)) || key;
+      el.textContent = text;
+    });
+    root.querySelectorAll('[data-i18n-toggle]').forEach((btn) => {
+      btn.textContent = lang === 'en' ? '中文' : 'EN';
+      btn.setAttribute('aria-pressed', lang === 'zh' ? 'true' : 'false');
+    });
+  };
+
+  const toggleLang = () => {
+    let next = 'zh';
+    if (window.__recyclebinI18n) {
+      const current = window.__recyclebinI18n.resolveLang ? window.__recyclebinI18n.resolveLang() : null;
+      next = (current === 'en') ? 'zh' : 'en';
+    }
+    if (window.__recyclebinI18n && typeof window.__recyclebinI18n.apply === 'function') {
+      window.__recyclebinI18n.apply(next);
+    }
+    applyI18nLang(next);
+  };
+
+  const getActive = () => {
+    const p = location.pathname.replace(/\\/g, '/');
     if (p === '/' || p === '/index.html') return 'home';
     if (p.indexOf('/guides') !== -1) return 'guides';
     if (p.indexOf('/centers') !== -1) return 'centers';
     if (p.indexOf('/events') !== -1) return 'events';
     if (p.indexOf('/howto') !== -1) return 'howto';
+    if (p.indexOf('/games') !== -1) return 'games';
     return '';
-  }
+  };
 
-  function loadHeader() {
-    var el = document.getElementById('site-header');
+  const loadHeader = (root = document) => {
+    const el = root.getElementById('site-header');
     if (!el) return;
     fetch('./_header.html', { cache: 'no-store' })
-      .then(function (r) { return r.ok ? r.text() : ''; })
-      .then(function (html) {
+      .then((r) => r.ok ? r.text() : '')
+      .then((html) => {
         el.innerHTML = html;
-        var active = getActive();
-        var map = { home: 'home', guides: 'guides', centers: 'centers', events: 'events', howto: 'howto' };
-        var key = map[active];
+        const active = getActive();
+        const map = { home: 'home', guides: 'guides', centers: 'centers', events: 'events', howto: 'howto', games: 'games' };
+        const key = map[active];
         if (key) {
-          var link = el.querySelector('[data-nav="' + key + '"]');
+          const link = el.querySelector('[data-nav="' + key + '"]');
           if (link) link.classList.add('active');
         }
         initMobileNav(el);
         initLangToggle(el);
+        const lang = (window.__recyclebinI18n && window.__recyclebinI18n.resolveLang && window.__recyclebinI18n.resolveLang()) || 'en';
+        applyI18nLang(lang, el);
       });
-  }
+  };
 
-  function loadFooter() {
-    var el = document.getElementById('site-footer');
+  const loadFooter = (root = document) => {
+    const el = root.getElementById('site-footer');
     if (!el) return;
     fetch('./_footer.html', { cache: 'no-store' })
-      .then(function (r) { return r.ok ? r.text() : ''; })
-      .then(function (html) { el.innerHTML = html; });
-  }
+      .then((r) => r.ok ? r.text() : '')
+      .then((html) => el.innerHTML = html);
+  };
 
-  function initMobileNav(root) {
-    root = root || document;
-    var toggle = root.getElementById('navToggle');
-    var links = root.querySelector('.nav-links');
+  const initMobileNav = (root = document) => {
+    const toggle = root.getElementById('navToggle');
+    const links = root.querySelector('.nav-links');
     if (!toggle || !links) return;
-    toggle.addEventListener('click', function (e) {
+    const open = () => {
+      links.classList.add('open');
+      toggle.setAttribute('aria-expanded', 'true');
+      toggle.textContent = '✕';
+    };
+    const close = () => {
+      links.classList.remove('open');
+      toggle.setAttribute('aria-expanded', 'false');
+      toggle.textContent = '☰';
+    };
+    toggle.addEventListener('click', (e) => {
       e.preventDefault();
-      links.classList.toggle('open');
-      toggle.textContent = links.classList.contains('open') ? '✕' : '☰';
+      links.classList.contains('open') ? close() : open();
     });
-    root.addEventListener('click', function (e) {
-      if (!links.contains(e.target) && e.target !== toggle) {
-        links.classList.remove('open');
-        toggle.textContent = '☰';
-      }
+    const doc = root === document ? root : document;
+    doc.addEventListener('click', (e) => {
+      if (!links.contains(e.target) && e.target !== toggle) close();
     });
-  }
+  };
 
-  function initLangToggle(root) {
-    var btn = root.querySelector('[data-i18n-toggle]');
+  const initLangToggle = (root = document) => {
+    const btn = root.querySelector('[data-i18n-toggle]');
     if (!btn) return;
-    btn.addEventListener('click', function () {
-      if (window.__recyclebinI18n && typeof window.__recyclebinI18n.toggle === 'function') {
-        window.__recyclebinI18n.toggle();
-      }
+    btn.addEventListener('click', (e) => {
+      e.preventDefault();
+      toggleLang();
     });
-  }
+  };
+
+  const applyDark = (enabled) => {
+    document.documentElement.setAttribute('data-theme', enabled ? 'dark' : 'light');
+    try { localStorage.setItem('recyclebin.theme', enabled ? 'dark' : 'light'); } catch {}
+  };
+
+  const toggleDark = () => {
+    const enabled = document.documentElement.getAttribute('data-theme') !== 'dark';
+    applyDark(enabled);
+  };
+
+  const initDark = () => {
+    const btn = document.querySelector('[data-theme-toggle]');
+    if (btn) btn.addEventListener('click', () => toggleDark());
+  };
+
+  document.addEventListener('DOMContentLoaded', () => {
+    loadHeader();
+    loadFooter();
+    initDark();
+    const lang = (window.__recyclebinI18n && window.__recyclebinI18n.resolveLang && window.__recyclebinI18n.resolveLang()) || 'en';
+    applyI18nLang(lang);
+  });
 
   window.RecycleBin = {
-    loadHeader: loadHeader,
-    loadFooter: loadFooter,
-    initMobileNav: initMobileNav,
-    initLangToggle: initLangToggle
+    loadHeader,
+    loadFooter,
+    initMobileNav,
+    initLangToggle,
+    applyI18nLang,
+    toggleDark,
+    applyDark
   };
 })();
