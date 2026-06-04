@@ -1,0 +1,65 @@
+[
+  {
+    "name": "Irvine Recycling Center",
+    "address": "8 Middleton St., Irvine, CA 92620",
+    "lat": 33.73,
+    "lng": -117.75,
+    "hours": "09:00 - 18:00",
+    "phone": "(949) 555-0100",
+    "materials": ["Paper", "Cardboard", "Plastic #1-2", "Glass", "Aluminum"]
+  },
+  {
+    "name": "Santa Ana Recycling Center",
+    "address": "600 Ward St, Santa Ana, CA 92701",
+    "lat": 33.75,
+    "lng": -117.87,
+    "hours": "08:00 - 17:00",
+    "phone": "(714) 555-0101",
+    "materials": ["Paper", "Cardboard", "Plastic #1-2", "Glass", "E-waste"]
+  },
+  {
+    "name": "Anaheim Recycling Center",
+    "address": "1000 S Anaheim Blvd, Anaheim, CA 92805",
+    "lat": 33.84,
+    "lng": -117.91,
+    "hours": "10:00 - 18:00",
+    "phone": "(714) 555-0102",
+    "materials": ["Paper", "Cardboard", "Glass", "Aluminum", "Textiles"]
+  },
+  {
+    "name": "Long Beach Recycling Center",
+    "address": "2000 E Anaheim St, Long Beach, CA 90804",
+    "lat": 33.77,
+    "lng": -118.15,
+    "hours": "09:30 - 18:30",
+    "phone": "(562) 555-0103",
+    "materials": ["Paper", "Cardboard", "Plastic #1-2", "Glass", "E-waste"]
+  },
+  {
+    "name": "Los Angeles Recycling Center",
+    "address": "1500 E Olympic Blvd, Los Angeles, CA 90021",
+    "lat": 34.04,
+    "lng": -118.24,
+    "hours": "07:00 - 19:00",
+    "phone": "(213) 555-0104",
+    "materials": ["Paper", "Cardboard", "Plastic #1-2", "Glass", "Aluminum", "E-waste"]
+  },
+  {
+    "name": "Garden Grove Recycling Center",
+    "address": "11481 Trask Ave, Garden Grove, CA 92843",
+    "lat": 33.78,
+    "lng": -117.96,
+    "hours": "08:30 - 17:30",
+    "phone": "(714) 555-0105",
+    "materials": ["Paper", "Cardboard", "Plastic #1-2", "Glass"]
+  },
+  {
+    "name": "Huntington Beach Recycling Center",
+    "address": "18111 Goldenwest St, Huntington Beach, CA 92647",
+    "lat": 33.71,
+    "lng": -118.00,
+    "hours": "09:00 - 17:00",
+    "phone": "(714) 555-0106",
+    "materials": ["Paper", "Cardboard", "Plastic #1-2", "Glass", "Aluminum"]
+  }
+]
