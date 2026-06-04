@@ -31,6 +31,8 @@
   .events-section {
     padding: 30px;
     flex: 1;
+    display: flex;
+    flex-direction: column;
   }
   .event-grid {
     display: grid;
@@ -66,10 +68,64 @@
     font-size: 13px;
     line-height: 1.5;
   }
+  .event-card .actions {
+    margin-top: 10px;
+    display: flex;
+    gap: 10px;
+    flex-wrap: wrap;
+    align-items: center;
+  }
+  .pill {
+    display: inline-block;
+    padding: 3px 8px;
+    border-radius: 999px;
+    background: #e8f5e9;
+    color: #1b5e20;
+    font-size: 11px;
+    font-weight: 700;
+    border: 1px solid #c8e6c9;
+  }
+  .no-results {
+    color: #555;
+    font-size: 14px;
+    padding: 10px 0;
+  }
+  .filter-bar {
+    display: flex;
+    gap: 10px;
+    margin-bottom: 18px;
+    flex-wrap: wrap;
+    align-items: center;
+  }
+  .filter-bar input {
+    flex: 1 1 220px;
+    padding: 10px 12px;
+    border-radius: 10px;
+    border: 1px solid #e6f0ea;
+    background: #fff;
+    color: #1b5e20;
+    outline: none;
+  }
+  .filter-bar input:focus { border-color: #2e7d32; }
+  .filter-bar button {
+    padding: 8px 11px;
+    border-radius: 999px;
+    border: 1px solid #e6f0ea;
+    background: #fff;
+    color: #2e7d32;
+    cursor: pointer;
+    font-weight: 700;
+    font-size: 13px;
+  }
+  .filter-bar button:hover { background: #e8f5e9; }
+  .filter-bar button.active {
+    background: #2e7d32;
+    border-color: #2e7d32;
+    color: white;
+  }
 </style>
 </head>
 <body>
-<!-- Compact Menu Bar (uses shared CSS in css/_site.css and auto highlight in js/menu.js) -->
 <div class="menu-bar">
   <a href="./index.html"><span class="logo">♻️</span><span>RecycleBin</span></a>
   <nav class="menu-nav">
@@ -88,6 +144,12 @@
   </header>
 
   <section class="events-section">
+    <div class="filter-bar">
+      <input id="searchInput" type="text" placeholder="Search by title or location">
+      <button id="allBtn" class="active">All</button>
+      <button id="caBtn">CA</button>
+      <button id="upcomingBtn">Upcoming</button>
+    </div>
     <div id="results" class="event-grid"></div>
   </section>
 
@@ -98,36 +160,89 @@
 <script src="./js/footer.js"></script>
 <script>
 (function() {
-  var events = [];
-  fetch("./events/events.json", {cache: "no-store"}).then(function(r) {
-    return r.ok ? r.json() : [];
-  }).then(function(data) {
-    events = data || [];
-    render(events);
-  }).catch(function() {
-    document.getElementById("results").innerHTML = '<p style="color:#555;font-size:14px;">Events are currently unavailable.</p>';
-  });
+  var allEvents = [];
+  var filter = 'all';
+  var keyword = '';
 
-  function render(list) {
-    var box = document.getElementById("results");
+  function parseDate(s) {
+    var parts = s.split('-');
+    return new Date(parts[0], parts[1] - 1, parts[2]);
+  }
+  function formatDateLabel(s) {
+    var d = parseDate(s);
+    return d.toLocaleDateString('en-US', {year: 'numeric', month: 'short', day: 'numeric'});
+  }
+  function todayStart() {
+    var d = new Date();
+    return new Date(d.getFullYear(), d.getMonth(), d.getDate());
+  }
+
+  function filtered() {
+    return allEvents.filter(function(e) {
+      var matchKeyword = !keyword || (e.title + ' ' + e.location).toLowerCase().indexOf(keyword) !== -1;
+      if (!matchKeyword) return false;
+      if (filter === 'ca') return e.state === 'CA';
+      if (filter === 'upcoming') return parseDate(e.date) >= todayStart();
+      return true;
+    }).sort(function(a, b) {
+      return parseDate(a.date) - parseDate(b.date);
+    });
+  }
+
+  function render() {
+    var box = document.getElementById('results');
+    var list = filtered();
     if (!list.length) {
-      box.innerHTML = '<p style="color:#555;font-size:14px;">No upcoming events.</p>';
+      box.innerHTML = '<p class="no-results">No matching events.</p>';
       return;
     }
     box.innerHTML = list.map(function(e) {
       return '<div class="event-card">' +
         '<h3>' + e.title + '</h3>' +
         '<div class="meta">' +
-          '<span>📅 ' + e.date + '</span>' +
-          '<span>⏰ ' + e.time + '</span>' +
+          '<span>📅 ' + formatDateLabel(e.date) + '</span>' +
+          '<span>📍 ' + e.location + '</span>' +
         '</div>' +
-        '<div class="meta">📍 ' + e.location + '</div>' +
-        '<p>' + e.description + '</p>' +
+        '<p>' + e.desc + '</p>' +
+        (e.join_url ? '<div class="actions"><a href="' + e.join_url + '" target="_blank" rel="noopener">View Event</a><span class="pill">' + e.state + '</span></div>' : '') +
       '</div>';
-    }).join("");
+    }).join('');
+  }
+
+  fetch("./events/events.json", {cache: "no-store"}).then(function(r) {
+    return r.ok ? r.json() : [];
+  }).then(function(data) {
+    allEvents = data || [];
+    render();
+  }).catch(function() {
+    document.getElementById("results").innerHTML = '<p class="no-results">Events are currently unavailable.</p>';
+  });
+
+  document.getElementById('searchInput').addEventListener('input', function(e) {
+    keyword = e.target.value.trim().toLowerCase();
+    render();
+  });
+  document.getElementById('allBtn').addEventListener('click', function() {
+    filter = 'all';
+    setActive(this);
+    render();
+  });
+  document.getElementById('caBtn').addEventListener('click', function() {
+    filter = 'ca';
+    setActive(this);
+    render();
+  });
+  document.getElementById('upcomingBtn').addEventListener('click', function() {
+    filter = 'upcoming';
+    setActive(this);
+    render();
+  });
+  function setActive(btn) {
+    ['allBtn', 'caBtn', 'upcomingBtn'].forEach(function(id) {
+      document.getElementById(id).classList.toggle('active', id === btn.id);
+    });
   }
 })();
 </script>
-
 </body>
 </html>
