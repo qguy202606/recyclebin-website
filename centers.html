@@ -170,7 +170,6 @@
 <script src="./js/menu.js"></script>
 <script>
 (function() {
-(function() {
   var centers = [];
   var userLat = null;
   var userLng = null;
@@ -252,12 +251,16 @@
   }
 
   fetch("./centers/centers.json", {cache: "no-store"}).then(function(r) {
-    return r.ok ? r.json() : [];
+    if (!r.ok) throw new Error("centers.json fetch failed: " + r.status);
+    return r.json();
   }).then(function(data) {
     centers = data || [];
-    activate();
-  }).catch(function() {
-    document.getElementById("results").innerHTML = '<p class="no-results">Center data is currently unavailable.</p>';
+    // Render all centers immediately so the page is never empty
+    render(centers);
+    resolveLocation();
+  }).catch(function(err) {
+    console.error("[centers] load failed:", err);
+    document.getElementById("results").innerHTML = '<p class="no-results">Center data could not be loaded. Please refresh the page.</p>';
   });
 
   document.getElementById("searchBtn").addEventListener("click", activate);
@@ -282,24 +285,34 @@
 
   var DEFAULT_LAT = 33.6846;
   var DEFAULT_LNG = -117.8265;
+  var locationResolved = false;
 
-  if (navigator.geolocation) {
-    navigator.geolocation.getCurrentPosition(function(pos) {
-      userLat = pos.coords.latitude;
-      userLng = pos.coords.longitude;
-      document.getElementById("locationLine").textContent = "Detected area (" + userLat.toFixed(2) + ", " + userLng.toFixed(2) + ") — approximate location";
-      activate();
-    }, function() {
+  function resolveLocation() {
+    var line = document.getElementById("locationLine");
+    function applyDefault() {
+      if (locationResolved) return;
+      locationResolved = true;
       userLat = DEFAULT_LAT;
       userLng = DEFAULT_LNG;
-      document.getElementById("locationLine").textContent = "Showing results sorted by approximate distance from Irvine, CA";
+      if (line) line.textContent = "Showing results sorted by approximate distance from Irvine, CA";
       activate();
-    });
-  } else {
-    userLat = DEFAULT_LAT;
-    userLng = DEFAULT_LNG;
-    document.getElementById("locationLine").textContent = "Showing results sorted by approximate distance from Irvine, CA";
-    activate();
+    }
+    if (!navigator.geolocation) return applyDefault();
+    navigator.geolocation.getCurrentPosition(
+      function(pos) {
+        if (locationResolved) return;
+        locationResolved = true;
+        userLat = pos.coords.latitude;
+        userLng = pos.coords.longitude;
+        if (line) line.textContent = "Detected area (" + userLat.toFixed(2) + ", " + userLng.toFixed(2) + ") — approximate location";
+        activate();
+      },
+      function() {
+        applyDefault();
+      },
+      { timeout: 3000 }
+    );
+    setTimeout(applyDefault, 3500);
   }
 })();
 </script>
