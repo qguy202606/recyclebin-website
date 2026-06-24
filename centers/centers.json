@@ -61,5 +61,113 @@
     "hours": "09:00 - 17:00",
     "phone": "(714) 555-0106",
     "materials": ["Paper", "Cardboard", "Plastic #1-2", "Glass", "Aluminum"]
+  },
+  {
+    "name": "San Antonio Bulverde Recycling Center",
+    "address": "15343 Waldron Rd, San Antonio, TX 78254",
+    "lat": 29.52,
+    "lng": -98.62,
+    "hours": "08:00 - 18:00",
+    "phone": "(210) 555-0201",
+    "materials": ["Paper", "Cardboard", "Plastic #1-2", "Glass", "Aluminum", "Scrap Metal"]
+  },
+  {
+    "name": "Miami-Dade South Recycling Center",
+    "address": "8831 SW 168th St, Miami, FL 33157",
+    "lat": 25.60,
+    "lng": -80.38,
+    "hours": "07:30 - 17:30",
+    "phone": "(305) 555-0301",
+    "materials": ["Paper", "Cardboard", "Plastic #1-2", "Glass", "Aluminum", "E-waste"]
+  },
+  {
+    "name": "Orlando Recycling Center",
+    "address": "5901 Young Pine Rd, Orlando, FL 32829",
+    "lat": 28.57,
+    "lng": -81.28,
+    "hours": "08:00 - 17:00",
+    "phone": "(407) 555-0302",
+    "materials": ["Paper", "Cardboard", "Glass", "Aluminum", "Batteries"]
+  },
+  {
+    "name": "Nassau County Convenience Recycling Center",
+    "address": "46026 Landfill Road, Callahan, FL 32011",
+    "lat": 30.56,
+    "lng": -81.65,
+    "hours": "Tue-Fri 08:00 - 16:00, Sat 08:00 - 15:00",
+    "phone": "(904) 555-0303",
+    "materials": ["Glass", "Office Paper", "Cardboard", "Plastic #1-2", "Aluminum", "Tires", "E-waste"]
+  },
+  {
+    "name": "New York City Curbside Compost & Recycle Hub",
+    "address": "12th Ave & 59th St, New York, NY 10019",
+    "lat": 40.77,
+    "lng": -73.99,
+    "hours": "06:00 - 20:00",
+    "phone": "(212) 555-0401",
+    "materials": ["Paper", "Cardboard", "Glass", "Metal", "Textiles", "Organic/Compost"]
+  },
+  {
+    "name": "Mobile Recycling Center",
+    "address": "7450 Hitt Rd, Mobile, AL 36608",
+    "lat": 30.65,
+    "lng": -88.15,
+    "hours": "07:00 - 17:00",
+    "phone": "(251) 555-0501",
+    "materials": ["Paper", "Cardboard", "Plastic #1-2", "Glass", "Aluminum", "E-waste"]
+  },
+  {
+    "name": "Newark Recycling Drop-Off",
+    "address": "123 Pointer Ave, Newark, NJ 07105",
+    "lat": 40.78,
+    "lng": -74.16,
+    "hours": "09:00 - 17:00",
+    "phone": "(973) 555-0601",
+    "materials": ["Paper", "Cardboard", "Glass", "Aluminum", "Batteries"]
+  },
+  {
+    "name": "Detroit Recycling Center",
+    "address": "20100 M-102, Detroit, MI 48223",
+    "lat": 42.38,
+    "lng": -83.20,
+    "hours": "08:00 - 18:00",
+    "phone": "(313) 555-0701",
+    "materials": ["Paper", "Cardboard", "Plastic #1-2", "Glass", "Aluminum", "E-waste"]
+  },
+  {
+    "name": "Chicago North Recycling Center",
+    "address": "2949 N Clybourn Ave, Chicago, IL 60618",
+    "lat": 41.94,
+    "lng": -87.68,
+    "hours": "07:00 - 18:00",
+    "phone": "(773) 555-0801",
+    "materials": ["Paper", "Cardboard", "Glass", "Aluminum", "Yard Waste"]
+  },
+  {
+    "name": "Atlanta Recycling Center - Downtown",
+    "address": "1800 Key Rd SE, Atlanta, GA 30316",
+    "lat": 33.74,
+    "lng": -84.36,
+    "hours": "08:00 - 17:30",
+    "phone": "(404) 555-0901",
+    "materials": ["Paper", "Cardboard", "Plastic #1-2", "Glass", "E-waste"]
+  },
+  {
+    "name": "Sacramento Florin-Perkins Resource Recovery Facility",
+    "address": "8551 Fruitridge Rd, Sacramento, CA 95828",
+    "lat": 38.51,
+    "lng": -121.44,
+    "hours": "08:00 - 17:00",
+    "phone": "(916) 555-1001",
+    "materials": ["Concrete", "Asphalt", "Wood", "Metal", "Cardboard", "Green Waste"]
+  },
+  {
+    "name": "Fairhope Curbside Recycling Drop-Off",
+    "address": "100 Fairhope Blvd, Fairhope, AL 36532",
+    "lat": 30.52,
+    "lng": -87.88,
+    "hours": "07:00 - 19:00",
+    "phone": "(251) 555-1101",
+    "materials": ["Paper", "Cardboard", "Plastic #1-2", "Glass", "Aluminum"]
   }
 ]
