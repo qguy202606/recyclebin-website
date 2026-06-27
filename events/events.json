@@ -1,15 +1,5 @@
 [
   {
-    "id": "usa-miami-gardens-community-cleanup-june-27",
-    "date": "2026-06-27",
-    "state": "FL",
-    "title": "Miami Gardens Community Cleanup Day",
-    "desc": "Join neighbors for a morning cleanup on 40th Avenue. Gloves and bags provided.",
-    "location": "40th Avenue, Miami Gardens, FL",
-    "body": "Starting at 7:00 AM. Families and beginners welcome. Refreshments provided afterward.",
-    "join_url": "https://www.instagram.com/p/DZF8LbYkik3"
-  },
-  {
     "id": "usa-dunedin-beach-cleanup-july-12",
     "date": "2026-07-12",
     "state": "FL",
@@ -18,16 +8,6 @@
     "location": "61 Causeway Blvd, Dunedin, FL 34698",
     "body": "Meet at 8:00 AM. Bring water, sunscreen, and closed-toe shoes. Bags and gloves provided.",
     "join_url": "https://www.eventbrite.com/b/united-states--florida/charity-and-causes/environment"
-  },
-  {
-    "id": "usa-walnut-creek-cleanup-crew-june-13",
-    "date": "2026-06-13",
-    "state": "CA",
-    "title": "Walnut Creek Community Cleanup",
-    "desc": "The Cleanup Crew hosts a litter cleanup in Walnut Creek and Alamo.",
-    "location": "Walnut Creek, CA",
-    "body": "Volunteer event. Meetup details posted by The Cleanup Crew. Bags and sanitizer provided.",
-    "join_url": "https://www.facebook.com/walnutcreekgov/posts/help-keep-walnut-creek-beautiful-local-volunteer-organization-the-cleanup-crew-i/1304720028505362"
   },
   {
     "id": "usa-recycle-better-july-2026",
@@ -48,26 +28,6 @@
     "location": "Genesee County, MI",
     "body": "Appointment required. Register through GCMPC. Typical hours 9:00 AM - 2:00 PM.",
     "join_url": "https://gcmpc.org/recycle-day"
-  },
-  {
-    "id": "usa-dupount-clean-up-green-up-day-june-27",
-    "date": "2026-06-27",
-    "state": "IL",
-    "title": "DuPage Clean-Up, Green-Up Day",
-    "desc": "Annual park cleanup and landscaping event at Westlake Park.",
-    "location": "Westlake Park, DuPage County, IL",
-    "body": "Help with park cleanup and landscaping. Bring gloves and enthusiasm. Supports 8th annual event.",
-    "join_url": "https://www.dupagecounty.gov/government/departments/environment_and_sustainability/events.php"
-  },
-  {
-    "id": "usa-san-bernardino-cleanup-apr-25",
-    "date": "2026-04-25",
-    "state": "CA",
-    "title": "San Bernardino Community Cleanup",
-    "desc": "Earth Day community cleanup at two San Bernardino locations.",
-    "location": "Muscoy Elementary School, San Bernardino, CA",
-    "body": "7:00 AM - 1:00 PM. Two convenient locations. Bring reusable water bottle and wear closed-toe shoes.",
-    "join_url": "https://www.facebook.com/SBCoPublicWorks/posts/1388221576684547"
   },
   {
     "id": "usa-new-york-boston-post-cleanup-august",
@@ -108,15 +68,5 @@
     "location": "Orion Township, MI",
     "body": "Saturday 8:00 AM - 1:00 PM. Registration opens July 11.",
     "join_url": "https://www.oakgov.com/community/community-development/waste-recycling/nohaz"
-  },
-  {
-    "id": "usa-free-bokashi-composting-workshop-june-25",
-    "date": "2026-06-25",
-    "state": "PA",
-    "title": "FREE Bokashi Composting Workshop",
-    "desc": "Hands-on composting workshop in Lansdowne.",
-    "location": "Lansdowne, PA",
-    "body": "Hosted by Pennsylvania Resources Council. Free admission.",
-    "join_url": "https://prc.org/workshops-collection-events/calendar"
   }
 ]
