@@ -102,7 +102,7 @@
 <script src="./js/menu.js"></script>
 <script src="./js/footer.js"></script>
 <script>
-const EVENTS_PATH = 'https://qguy202606.github.io/recyclebin-website/events/events.json';
+const EVENTS_PATH = 'https://qguy202606.github.io/recyclebin-website/events/events.json?v=2';
 const grid = document.getElementById('event-grid');
 const countEl = document.getElementById('event-count');
 const searchInput = document.getElementById('event-search');
@@ -195,7 +195,7 @@ fetch(EVENTS_PATH)
     try {
       const raw = JSON.parse(t);
       events = Array.isArray(raw) ? raw : (raw.events || []);
-    } catch (err) { events = []; console.error('events.json parse failed', err); }
+    } catch (err) { events = []; console.error('events.json?v=2 parse failed', err); }
     populateStates();
     render();
   })
