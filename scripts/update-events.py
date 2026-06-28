@@ -195,7 +195,7 @@ def main() -> int:
         except Exception as exc:
             print("[update-events] source failed:", exc, file=sys.stderr)
 
-    out = sorted(index.values(), key=lambda e: e.get("date", ""))
+    out = sorted(index.values(), key=lambda e: e.get("date", ""), reverse=True)
     out = prune_old(out)
 
     EVENTS_PATH.write_text(
