@@ -10,6 +10,16 @@
     "join_url": "https://www.eventbrite.com/e/tire-recycling-event-south-gate-park-tickets-1982304779959"
   },
   {
+    "id": "usa-venice-beach-cleanup-aug-22",
+    "date": "2026-08-22",
+    "state": "CA",
+    "title": "Venice Beach Cleanup Series",
+    "desc": "Community beach cleanup at Venice Beach.",
+    "location": "Venice Beach, CA",
+    "body": "Join the Venice Beach Cleanup Series. Details available on site.",
+    "join_url": "https://www.eventbrite.com/b/ca--santa-cruz/charity-and-causes/environment"
+  },
+  {
     "id": "usa-new-york-boston-post-cleanup-august",
     "date": "2026-08-15",
     "state": "NY",
@@ -20,6 +30,26 @@
     "join_url": "https://www.eventbrite.com/b/ct--tokeneke/charity-and-causes/environment"
   },
   {
+    "id": "usa-allegheny-household-chemicals-aug-15",
+    "date": "2026-08-15",
+    "state": "PA",
+    "title": "Allegheny County Household Chemicals Collection",
+    "desc": "Safe disposal of household chemicals in Boyce Park.",
+    "location": "Boyce Park, Allegheny County, PA",
+    "body": "Saturday, August 15, 2026. Registration required.",
+    "join_url": "https://prc.org/workshops-collection-events/collection-events"
+  },
+  {
+    "id": "usa-elpaso-clean-sweep-aug-14",
+    "date": "2026-08-14",
+    "state": "CO",
+    "title": "El Paso County Large TV & Tire Recycling",
+    "desc": "FREE Clean Sweep event for large TVs and tires. Registration required.",
+    "location": "El Paso County Household Hazardous Waste Facility, CO",
+    "body": "Friday, August 14, 2026. Registration required at eventbrite.com.",
+    "join_url": "https://www.eventbrite.com/e/friday-august-14-2026-large-tv-tire-recycling-event-ticket-required-registration-1992212263509"
+  },
+  {
     "id": "usa-nohaz-household-hazardous-waste-collection-aug-1",
     "date": "2026-08-01",
     "state": "MI",
@@ -28,6 +58,16 @@
     "location": "Orion Township, MI",
     "body": "Saturday 8:00 AM - 1:00 PM. Registration opens July 11.",
     "join_url": "https://www.oakgov.com/community/community-development/waste-recycling/nohaz"
+  },
+  {
+    "id": "usa-allegheny-hard-to-recycle-aug-1",
+    "date": "2026-08-01",
+    "state": "PA",
+    "title": "Allegheny County Hard-to-Recycle Collection",
+    "desc": "Household hazardous waste, electronics, tires, and foam collection.",
+    "location": "McKeesport, PA",
+    "body": "Saturday, August 1, 2026. 9:00 AM - 2:00 PM.",
+    "join_url": "https://prc.org/workshops-collection-events/collection-events"
   },
   {
     "id": "usa-recycle-better-july-2026",
