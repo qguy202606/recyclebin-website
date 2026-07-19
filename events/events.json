@@ -88,25 +88,5 @@
     "location": "Genesee County, MI",
     "body": "Appointment required. Register through GCMPC. Typical hours 9:00 AM - 2:00 PM.",
     "join_url": "https://gcmpc.org/recycle-day"
-  },
-  {
-    "id": "usa-dunedin-beach-cleanup-july-12",
-    "date": "2026-07-12",
-    "state": "FL",
-    "title": "Dunedin Beach Cleanup with Salty Soul",
-    "desc": "Coastal cleanup at Dunedin Causeway. All ages welcome.",
-    "location": "61 Causeway Blvd, Dunedin, FL 34698",
-    "body": "Meet at 8:00 AM. Bring water, sunscreen, and closed-toe shoes. Bags and gloves provided.",
-    "join_url": "https://www.eventbrite.com/b/united-states--florida/charity-and-causes/environment"
-  },
-  {
-    "id": "usa-huntington-beach-cleanup-with-veterans-july-12",
-    "date": "2026-07-12",
-    "state": "CA",
-    "title": "Huntington Beach Cleanup with Veterans",
-    "desc": "Open community cleanup on Huntington Beach with veteran volunteers.",
-    "location": "405 Pacific Coast Hwy, Huntington Beach, CA 92648",
-    "body": "Doors open 6:45 AM, cleanup 9:00-11:30 AM. Families and dogs welcome.",
-    "join_url": "https://www.eventbrite.com/e/huntington-beach-cleanup-with-veterans-tickets-1989396031082"
   }
 ]
